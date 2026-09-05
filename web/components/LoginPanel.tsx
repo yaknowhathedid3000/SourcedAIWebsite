@@ -28,7 +28,7 @@ export function LoginPanel({ next, error }: { next: string; error?: string }) {
     <>
       <div className="card w-full max-w-[420px] px-7 py-8 sm:px-9">
         <h1 className="font-serif text-[34px] font-bold leading-tight">Sign In</h1>
-        <p className="balance mt-1 text-[15px] text-ink2">Your saves, plans and journal, on any screen.</p>
+        <p className="balance mt-1 text-[15px] text-ink2">Your saves, plans and journal, on the big screen.</p>
         <div className="mt-7 flex flex-col gap-3">
           <button type="button" onClick={() => oauth("google")} disabled={busy !== null} className="btn-outline h-[52px] w-full justify-start gap-3 px-5 text-[16px]">
             <GoogleGlyph /> {busy === "google" ? "Opening Google…" : "Continue with Google"}

@@ -3,15 +3,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: "Albo", template: "%s · Albo" },
-  description: "Save anything from any app, find it later, and get plans out of the group chat.",
+  description: "Your Albo library on the big screen. Save anything, find it later, and get plans out of the group chat.",
   applicationName: "Albo",
-  manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, statusBarStyle: "default", title: "Albo" },
 };
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
-  viewportFit: "cover",
   width: "device-width",
   initialScale: 1,
 };

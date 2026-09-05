@@ -54,7 +54,7 @@ export function StatusControl({ save }: { save: Save }) {
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") commit("done"); }}
         tabIndex={0}
       >
-        <span className="absolute inset-0 flex items-center justify-center text-[17px] font-semibold">{cat.doneQuestion} <span className="ml-2 text-white/60">slide →</span></span>
+        <span className="absolute inset-0 flex items-center justify-center text-[17px] font-semibold">{cat.doneQuestion} <span className="ml-2 text-white/60">drag →</span></span>
         <div className="absolute left-1 top-1 flex h-12 w-12 cursor-grab items-center justify-center rounded-full bg-white text-ink transition-transform active:cursor-grabbing" style={{ transform: `translateX(${drag}px)`, transition: drag ? "none" : "transform .2s" }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
         </div>
@@ -63,7 +63,7 @@ export function StatusControl({ save }: { save: Save }) {
         <button type="button" disabled={pending} onClick={() => commit(status === "wantTo" ? "saved" : "wantTo")} className={`btn-outline flex-1 ${status === "wantTo" ? "border-ink bg-ink text-white" : ""}`}>
           {status === "wantTo" ? "✓ " : ""}{cat.wantTab}
         </button>
-        <button type="button" onClick={() => commit("done")} className="btn-outline flex-1 md:hidden">Mark {cat.doneTab.toLowerCase()}</button>
+        <button type="button" onClick={() => commit("done")} className="btn-outline flex-1">Mark {cat.doneTab.toLowerCase()}</button>
       </div>
     </div>
   );

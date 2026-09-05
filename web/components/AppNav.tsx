@@ -17,45 +17,28 @@ export function AppNav() {
   const path = usePathname();
   const active = (href: string) => path === href || path.startsWith(href + "/");
   return (
-    <>
-      {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-hairline bg-white px-4 py-6 md:flex">
-        <Link href="/library" className="mb-8 flex items-center gap-2 px-2">
-          <Mascot size={30} />
-          <Wordmark className="text-[24px]" />
-        </Link>
-        <nav className="flex flex-col gap-1">
-          {TABS.map((t) => (
-            <Link
-              key={t.href}
-              href={t.href}
-              className={`flex h-11 items-center gap-3 rounded-xl px-3 text-[15px] font-semibold transition ${active(t.href) ? "bg-option text-ink" : "text-ink2 hover:bg-surface"}`}
-            >
-              {t.icon ? <t.icon active={active(t.href)} /> : <Mascot size={22} />}
-              {t.label}
-            </Link>
-          ))}
-        </nav>
-        <p className="mt-auto px-2 text-[12px] leading-5 text-muted">Save anything, find it later, and get plans out of the group chat.</p>
-      </aside>
-
-      {/* Mobile bottom tab bar (matches the iOS bar, incl. the raised plus) */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-hairline bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
-        <div className="mx-auto flex h-[62px] max-w-lg items-center justify-around px-2">
-          {TABS.map((t) =>
-            t.primary ? (
-              <Link key={t.href} href={t.href} aria-label="Add" className="-mt-6 flex h-14 w-14 items-center justify-center rounded-full bg-ink text-white shadow-hard active:translate-y-[3px] active:shadow-none">
-                <PlusIcon active />
-              </Link>
-            ) : (
-              <Link key={t.href} href={t.href} aria-label={t.label} className={`flex h-12 w-14 items-center justify-center ${active(t.href) ? "text-ink" : "text-muted"}`}>
-                {t.icon ? <t.icon active={active(t.href)} /> : <span className={`rounded-full ${active(t.href) ? "ring-2 ring-ink ring-offset-2" : ""}`}><Mascot size={24} /></span>}
-              </Link>
-            ),
-          )}
-        </div>
+    <aside className="fixed inset-y-0 left-0 flex w-[72px] flex-col border-r border-hairline bg-white px-3 py-6 lg:w-60 lg:px-4">
+      <Link href="/library" className="mb-8 flex items-center justify-center gap-2 px-1 lg:justify-start lg:px-2" aria-label="Albo library">
+        <Mascot size={30} />
+        <Wordmark className="hidden text-[24px] lg:inline" />
+      </Link>
+      <nav className="flex flex-col gap-1">
+        {TABS.map((t) => (
+          <Link
+            key={t.href}
+            href={t.href}
+            title={t.label}
+            className={`flex h-11 items-center justify-center gap-3 rounded-xl px-0 text-[15px] font-semibold transition lg:justify-start lg:px-3 ${
+              t.primary ? "mt-2 mb-2 bg-ink text-white shadow-hard active:translate-y-[3px] active:shadow-none lg:rounded-pill" : active(t.href) ? "bg-option text-ink" : "text-ink2 hover:bg-surface"
+            }`}
+          >
+            {t.icon ? <t.icon active={t.primary || active(t.href)} /> : <span className={`rounded-full ${active(t.href) ? "ring-2 ring-ink ring-offset-2" : ""}`}><Mascot size={22} /></span>}
+            <span className="hidden lg:inline">{t.label}</span>
+          </Link>
+        ))}
       </nav>
-    </>
+      <p className="mt-auto hidden px-2 text-[12px] leading-5 text-muted lg:block">Save anything, find it later, and get plans out of the group chat.</p>
+    </aside>
   );
 }
 

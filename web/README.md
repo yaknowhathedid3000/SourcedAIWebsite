@@ -1,6 +1,6 @@
 # Albo web
 
-The companion web app for the Albo iOS app. It exists so a plan can leave the group chat: every collection gets a public link (`/c/<token>`) that anyone can open on their phone, and joining it drops the plan into their own library.
+The desktop companion to the Albo iOS app. It gives the library a big screen, and it is how a plan leaves the group chat: every public collection gets a link (`/c/<token>`) anyone can open, and joining it drops the plan into their own library.
 
 Built with Next.js 15 (App Router), React 19, Tailwind, and Supabase SSR auth. It shares the Postgres schema in `../supabase` with the iOS app, so a save made on the phone shows up here and a status change here syncs back.
 
@@ -45,7 +45,7 @@ Design tokens live in `tailwind.config.ts` and mirror `ios/Albo/Albo/DesignSyste
 
 ## Layout
 
-- `app/` routes. `(app)/` is the signed-in shell with the bottom tab bar on mobile and the sidebar on desktop. `c/` is public.
+- `app/` routes. `(app)/` is the signed-in shell with the permanent sidebar. `c/` is public.
 - `components/` UI. Client components are the interactive ones: `StatusControl`, `Checklist`, `LoginPanel`, `AddForm`, `JoinButton`, `CopyButton`, `CategoryTabs`, `AppNav`.
 - `lib/data.ts` server-only data access with the demo fallback. `app/actions.ts` server actions (status, join, create save, sign out).
 - `middleware.ts` refreshes the Supabase session and redirects signed-out visitors to `/login`. Public paths: `/login`, `/auth`, `/c/`.

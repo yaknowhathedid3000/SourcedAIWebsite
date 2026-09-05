@@ -59,7 +59,7 @@ export default async function ProfilePage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <p className="balance text-[13px] leading-5 text-muted">Account settings, subscription and appearance live in the Albo app on your phone.</p>
+        <p className="balance text-[13px] leading-5 text-muted">Account settings, subscription and appearance live in the Albo app.</p>
         {user && !user.demo ? <SignOutButton /> : <Link href="/login" className="btn-secondary">Sign in</Link>}
       </section>
     </div>

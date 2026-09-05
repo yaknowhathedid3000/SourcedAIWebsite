@@ -22,8 +22,8 @@ export function SaveCover({ save, className = "" }: { save: Save; className?: st
 /** Library "Recently saved" tile (teardown 6.2). */
 export function SaveCard({ save }: { save: Save }) {
   return (
-    <Link href={`/saves/${save.id}`} className="card group flex w-[168px] shrink-0 flex-col overflow-hidden transition active:scale-[0.98] sm:w-[188px]">
-      <SaveCover save={save} className="h-[132px]" />
+    <Link href={`/saves/${save.id}`} className="card group flex flex-col overflow-hidden transition hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.08)] active:scale-[0.98]">
+      <SaveCover save={save} className="h-[150px]" />
       <div className="flex flex-col gap-0.5 p-3">
         <span className="text-[11px] font-semibold uppercase tracking-wide text-muted">{CATEGORY[save.category].emoji} {CATEGORY[save.category].title}</span>
         <span className="line-clamp-2 text-[15px] font-semibold leading-tight text-ink">{save.title}</span>

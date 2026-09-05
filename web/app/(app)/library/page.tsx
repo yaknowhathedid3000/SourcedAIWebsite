@@ -24,7 +24,7 @@ export default async function LibraryPage() {
       </header>
 
       <section>
-        <div className="-mx-4 flex gap-2 overflow-x-auto px-4 md:mx-0 md:flex-wrap md:px-0">
+        <div className="flex flex-wrap gap-2">
           {cats.map((c) => (
             <Link key={c} href={`/library/${c}`} className="chip h-10 whitespace-nowrap px-4 text-[15px]">
               {CATEGORY[c].emoji} {CATEGORY[c].plural} <span className="text-muted">{counts.get(c)}</span>
@@ -47,7 +47,7 @@ export default async function LibraryPage() {
             <Link href="/add" className="btn-primary mx-auto mt-5 max-w-[240px]">Save something</Link>
           </div>
         ) : (
-          <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:px-0 lg:grid-cols-4">
+          <div className="grid grid-cols-3 gap-4 lg:grid-cols-4 xl:grid-cols-5">
             {saves.slice(0, 12).map((s) => <SaveCard key={s.id} save={s} />)}
           </div>
         )}
@@ -58,7 +58,7 @@ export default async function LibraryPage() {
           <h2 className="font-serif text-[22px] font-bold">Collections</h2>
           <span className="text-[13px] text-muted">Shared plans live here</span>
         </div>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-3 xl:grid-cols-3">
           {collections.map((c) => (
             <Link key={c.id} href={`/collections/${c.id}`} className="card flex items-center gap-4 p-3 transition active:scale-[0.99]">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-[32px]" style={{ background: tint(c.cover_tint) }}>{c.cover_emoji}</div>
