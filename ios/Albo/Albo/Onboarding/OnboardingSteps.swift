@@ -217,10 +217,11 @@ struct ImportResultView: View {
     }
 
     private var jerkIngredients: [Ingredient] {
-        [("🍗", "chicken legs", 10.0, "pieces"), ("🫒", "olive oil", 1.0 / 3.0, "cup"), ("🍬", "light brown sugar", 2, "tbsp"), ("🌿", "dried thyme", 1, "tbsp"),
-         ("🫘", "ground allspice", 2, "tsp"), ("🌶️", "smoked paprika", 2, "tsp"), ("🪵", "cinnamon", 0.5, "tsp"), ("🫚", "ground ginger", 1, "tsp"),
-         ("🌰", "ground cloves", 1, "tsp"), ("🔥", "cayenne pepper", 1, "tsp"), ("🧄", "garlic powder", 1, "tsp")]
-            .map { Ingredient(emoji: $0.0, name: $0.1, quantity: $0.2, unit: $0.3) }
+        let rows: [(String, String, Double, String)] = [
+            ("🍗", "chicken legs", 10.0, "pieces"), ("🫒", "olive oil", 1.0 / 3.0, "cup"), ("🍬", "light brown sugar", 2, "tbsp"), ("🌿", "dried thyme", 1, "tbsp"),
+            ("🫘", "ground allspice", 2, "tsp"), ("🌶️", "smoked paprika", 2, "tsp"), ("🪵", "cinnamon", 0.5, "tsp"), ("🫚", "ground ginger", 1, "tsp"),
+            ("🌰", "ground cloves", 1, "tsp"), ("🔥", "cayenne pepper", 1, "tsp"), ("🧄", "garlic powder", 1, "tsp")]
+        return rows.map { Ingredient(emoji: $0.0, name: $0.1, quantity: $0.2, unit: $0.3) }
     }
 }
 
@@ -455,8 +456,10 @@ struct ValueGraphStep: View {
                         Text("Booked\n& Busy").font(.alboSans(15, weight: .semibold)).foregroundStyle(.white).multilineTextAlignment(.center)
                             .padding(.horizontal, 14).padding(.vertical, 10).background(AlboColor.systemBlue, in: RoundedRectangle(cornerRadius: 12))
                             .position(x: end.x, y: end.y - 52)
-                        Text("Now").font(.alboSans(15, weight: .semibold)).foregroundStyle(AlboColor.danger).position(x: start.x, y: h * 0.94)
-                        Text("Your goal").font(.alboSans(15, weight: .semibold)).foregroundStyle(AlboColor.systemBlue).position(x: end.x, y: h * 0.94)
+                        Group {
+                            Text("Now").font(.alboSans(15, weight: .semibold)).foregroundStyle(AlboColor.danger).position(x: start.x, y: h * 0.94)
+                            Text("Your goal").font(.alboSans(15, weight: .semibold)).foregroundStyle(AlboColor.systemBlue).position(x: end.x, y: h * 0.94)
+                        }
                     }
                 }
                 .frame(height: 380)
