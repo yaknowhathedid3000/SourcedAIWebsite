@@ -1,0 +1,3404 @@
+<title>Albo, Front to Back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #FCFCFA;
+    --surface: #F3F2ED;
+    --surface-2: #E9E7E0;
+    --ink: #161615;
+    --ink-2: #4A4945;
+    --muted: #7C7A73;
+    --rule: #E2E0D8;
+    --accent: #F0821E;
+    --accent-ink: #9A4E0A;
+    --blue: #2C6FDB;
+    --blue-ink: #1E4FA3;
+    --green: #1F9D55;
+    --danger: #C8203A;
+    --code-bg: #F3F2ED;
+    --toc-w: 250px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #141413;
+      --surface: #1D1D1B;
+      --surface-2: #272724;
+      --ink: #EDEBE4;
+      --ink-2: #C9C6BD;
+      --muted: #97948B;
+      --rule: #2C2C29;
+      --accent: #F59A45;
+      --accent-ink: #F6B06C;
+      --blue: #6D9CF0;
+      --blue-ink: #9DBCF6;
+      --green: #4FC57F;
+      --danger: #F0687C;
+      --code-bg: #1D1D1B;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #141413;
+    --surface: #1D1D1B;
+    --surface-2: #272724;
+    --ink: #EDEBE4;
+    --ink-2: #C9C6BD;
+    --muted: #97948B;
+    --rule: #2C2C29;
+    --accent: #F59A45;
+    --accent-ink: #F6B06C;
+    --blue: #6D9CF0;
+    --blue-ink: #9DBCF6;
+    --green: #4FC57F;
+    --danger: #F0687C;
+    --code-bg: #1D1D1B;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--blue-ink); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--blue) 40%, transparent); }
+  a:hover { border-bottom-color: var(--blue); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Masthead */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding: 40px 24px 28px;
+  }
+  .masthead-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600;
+  }
+  .masthead h1 {
+    font-family: "Source Serif 4", "New York", Georgia, serif;
+    font-weight: 700; font-size: clamp(40px, 6vw, 68px); line-height: 1; margin: 0; letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .masthead h1 em { font-style: italic; font-weight: 700; color: var(--accent-ink); }
+  .masthead p.lede {
+    font-family: "Source Serif 4", Georgia, serif; font-size: 20px; line-height: 1.45; color: var(--ink-2); max-width: 62ch; margin: 0;
+  }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; color: var(--muted); }
+  .facts span b { color: var(--ink); font-weight: 600; }
+
+  /* Layout */
+  .page { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 0 48px; padding: 0 24px 96px; }
+  @media (min-width: 1024px) {
+    .page { grid-template-columns: var(--toc-w) minmax(0, 1fr); }
+    .toc { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 32px 0 32px; }
+  }
+  .toc { padding: 24px 0 0; font-size: 13.5px; }
+  .toc .eyebrow { margin-bottom: 10px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; }
+  .toc li { margin: 0; }
+  .toc a { display: block; padding: 5px 0 5px 12px; border-left: 2px solid transparent; color: var(--ink-2); border-bottom: 0; line-height: 1.35; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.active { border-left-color: var(--accent); color: var(--ink); font-weight: 600; }
+  .toc li.h3 a { padding-left: 24px; font-size: 12.5px; color: var(--muted); }
+  .toc li.h3 a.active { color: var(--ink); }
+
+  /* Article */
+  article { max-width: 72ch; padding-top: 32px; }
+  article h2 {
+    font-family: "Source Serif 4", "New York", Georgia, serif; font-weight: 700; font-size: 34px; line-height: 1.12;
+    margin: 72px 0 18px; padding-top: 24px; border-top: 1px solid var(--rule); letter-spacing: -0.01em; text-wrap: balance;
+  }
+  article h2:first-of-type { margin-top: 24px; }
+  article h3 {
+    font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.25; margin: 40px 0 10px; text-wrap: balance;
+  }
+  article p { margin: 0 0 16px; }
+  article p, article li { color: var(--ink); }
+  article strong { font-weight: 600; }
+  article em { font-style: italic; }
+  article ul, article ol { padding-left: 22px; margin: 0 0 18px; }
+  article li { margin: 4px 0; }
+  article li::marker { color: var(--muted); }
+  article hr { border: 0; height: 0; margin: 0; }
+  article blockquote { margin: 0 0 18px; padding: 4px 0 4px 18px; border-left: 3px solid var(--rule); color: var(--ink-2); font-style: italic; }
+
+  /* Callouts: Pattern / Why it works / Build */
+  .callout {
+    margin: 14px 0 16px; padding: 10px 16px 10px 16px; border-left: 3px solid var(--rule); background: transparent;
+  }
+  .callout p { margin: 0; }
+  .callout .label { display: block; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+  .callout.pattern { border-left-color: var(--ink); }
+  .callout.pattern .label { color: var(--ink); }
+  .callout.why { border-left-color: var(--accent); }
+  .callout.why .label { color: var(--accent-ink); }
+  .callout.build { border-left-color: var(--blue); background: color-mix(in srgb, var(--blue) 6%, transparent); }
+  .callout.build .label { color: var(--blue-ink); }
+  .callout.fontmatch { border-left-color: var(--green); }
+  .callout.fontmatch .label { color: var(--green); }
+
+  /* Screen refs */
+  .ref { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.86em; color: var(--accent-ink); border-bottom: 1px dotted color-mix(in srgb, var(--accent) 60%, transparent); }
+  .ref:hover { border-bottom-style: solid; }
+
+  /* Tables */
+  .tbl { overflow-x: auto; margin: 6px 0 22px; border: 1px solid var(--rule); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; vertical-align: top; border-bottom: 1px solid var(--rule); }
+  th { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--surface); }
+  tr:last-child td { border-bottom: 0; }
+  td { font-variant-numeric: tabular-nums; }
+  td code { font-size: 12.5px; }
+
+  .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); vertical-align: -1px; margin-right: 5px; }
+
+  /* Code */
+  code { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 18px; overflow-x: auto; margin: 6px 0 22px; line-height: 1.5; }
+  pre code { background: transparent; padding: 0; font-size: 13px; }
+
+  /* Appendix */
+  #appendix-table td:nth-child(1) { color: var(--muted); }
+  #appendix-table td:nth-child(2) { font-family: "JetBrains Mono", monospace; font-size: 12.5px; }
+  .type-pill { display: inline-block; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); font-weight: 600; white-space: nowrap; }
+  .type-pill.onboarding { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent-ink); }
+  .type-pill.paywall, .type-pill.checkout { background: color-mix(in srgb, var(--green) 18%, transparent); color: var(--green); }
+  .type-pill.permissions { background: color-mix(in srgb, var(--blue) 16%, transparent); color: var(--blue-ink); }
+
+  .footer { max-width: 1120px; margin: 0 auto; padding: 24px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
+  .toc-toggle { display: none; }
+  @media (max-width: 1023px) {
+    .toc { border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; margin-top: 24px; }
+    .toc ol { display: none; }
+    .toc.open ol { display: block; }
+    .toc-toggle { display: inline-block; background: none; border: 0; color: var(--ink); font: inherit; font-weight: 600; padding: 0; cursor: pointer; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="eyebrow">A textbook teardown · 206 recorded screens · SwiftUI build spec</div>
+    <h1>Albo, <em>Front to Back</em></h1>
+    <p class="lede">Every screen of Albo: Save &amp; Organize, from the cold ATT prompt to the sign-out dialog, with the pattern behind each one, why it works, and how to build it in Swift.</p>
+    <div class="facts">
+      <span><b>App</b> Albo: Save &amp; Organize, v1.13.4 (657P)</span>
+      <span><b>Developer</b> The Feel Good Project Ltd</span>
+      <span><b>Recording</b> 23m41s, iPhone, June 2026</span>
+      <span><b>Source</b> <a href="https://screensdesign.com/apps/albo-save-organise/">ScreensDesign</a></span>
+      <span><b>Est. revenue</b> $50k/mo (Jul 2026)</span>
+      <span><b>Rating</b> 4.9</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+  <nav class="toc" id="toc" aria-label="Contents">
+    <button class="toc-toggle" id="tocToggle" aria-expanded="false">Contents ▾</button>
+    <div class="eyebrow">Contents</div>
+    <ol id="tocList"></ol>
+  </nav>
+  <article id="doc"><p>A complete teardown of <strong>Albo: Save &amp; Organize</strong> (The Feel Good Project Ltd), written as a build spec for a SwiftUI rebuild. Every claim below is grounded in the ScreensDesign recording of app version 1.13.4 (build 657P), a 23-minute session of 206 screens captured on an iPhone in June 2026, plus ScreensDesign&#39;s market data for the app.</p>
+<p>Screen numbers in this document (for example <strong>#41</strong>) refer to the index in the Appendix, where each row links to the recorded screen on ScreensDesign.</p>
+<hr>
+<h2>0. Orientation</h2>
+<h3>0.1 What the numbers say</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Category</td>
+<td>Lifestyle</td>
+<td>App Store</td>
+</tr>
+<tr>
+<td>Released</td>
+<td>16 May 2025</td>
+<td>App Store</td>
+</tr>
+<tr>
+<td>Last updated</td>
+<td>27 Aug 2026</td>
+<td>App Store</td>
+</tr>
+<tr>
+<td>App Store rating</td>
+<td>4.9 (3K+ ratings shown in-app)</td>
+<td>App Store, screen #4</td>
+</tr>
+<tr>
+<td>Est. monthly downloads</td>
+<td>150,000</td>
+<td>ScreensDesign</td>
+</tr>
+<tr>
+<td>Est. monthly revenue</td>
+<td>$50k (Jul 2026), up from $20k (May) and $35k (Jun)</td>
+<td>ScreensDesign</td>
+</tr>
+<tr>
+<td>Price</td>
+<td>$29.99 / year after a 3-day free trial (&quot;Yearly Hoarder&quot;)</td>
+<td>Screen #42</td>
+</tr>
+<tr>
+<td>Tiers</td>
+<td>Pro and Max</td>
+<td>Screen #198</td>
+</tr>
+<tr>
+<td>Onboarding length</td>
+<td>25 steps, 3m46s to first home screen</td>
+<td>Recording</td>
+</tr>
+<tr>
+<td>Team</td>
+<td>Isaac, Karolina and Jake (&quot;Made with love by...&quot;)</td>
+<td>Screen #204</td>
+</tr>
+</tbody></table>
+<p>Revenue was zero through April 2026 and hit $50k by July. The app is fifteen months old. The ScreensDesign profile flags it as a &quot;Free Trial, Soft Paywall&quot; app. That growth curve plus a $30/year price point means the onboarding funnel below is doing very heavy lifting. Study it accordingly.</p>
+<h3>0.2 What Albo is</h3>
+<p>Albo is a universal save-for-later app. You share a TikTok, Instagram reel, web page, or screenshot into it, and Albo extracts structured objects: places with pins on a map, recipes with ingredients and steps, films, books, products, workouts, events. It then nags you (gently) to actually use what you saved, and rewards you with streaks, stamps, credits and a leaderboard when you do.</p>
+<p>The tagline on the welcome screen is &quot;A new way to explore a new city&quot;. The value proposition on the social-proof screen is sharper: <strong>&quot;Albo helps you actually do the things you save.&quot;</strong> The paywall&#39;s final framing is a graph from &quot;Endless Doomscrolling&quot; to &quot;Booked &amp; Busy&quot;. That is the thesis. Every feature maps back to it.</p>
+<h3>0.3 How to read this</h3>
+<p>Chapters 1 through 3 give the product, the object model and the design language. Chapters 4 through 15 walk every flow screen by screen. Chapter 16 is the Swift build spec: architecture, data model, frameworks, component inventory and a screen-to-view map. Chapter 17 is a build order. The Appendix indexes all 206 screens.</p>
+<p>Each flow section uses three recurring callouts:</p>
+<ul>
+<li><strong>Pattern</strong> names the reusable UX mechanism.</li>
+<li><strong>Why it works</strong> explains the behavioral reasoning.</li>
+<li><strong>Build</strong> gives the SwiftUI implementation note.</li>
+</ul>
+<hr>
+<h2>1. Product thesis and business model</h2>
+<h3>1.1 The job to be done</h3>
+<p>People save things on social platforms and never return to them. Albo&#39;s job is to move a save from &quot;bookmarked and forgotten&quot; to &quot;done&quot;. The onboarding quiz options on screen #5 spell out the six sub-jobs the team has validated:</p>
+<ol>
+<li>Actually do the things I save</li>
+<li>Keep all my saves in one place</li>
+<li>See all my saves pinned on a map</li>
+<li>See my saved recipes as ingredients and steps</li>
+<li>Stop losing things I find online</li>
+<li>Be able to find my saves much easier</li>
+</ol>
+<p>These six lines are the product roadmap in user language. The rest of the app is the delivery mechanism for each.</p>
+<h3>1.2 Revenue model</h3>
+<ul>
+<li><strong>Subscription</strong>: &quot;Yearly Hoarder&quot;, $29.99/year, 3-day free trial, soft paywall (skippable via the X on screen #41).</li>
+<li><strong>Tiers</strong> (screen #198): Pro = &quot;Unlimited imports, AI chat &amp; limited bulk import&quot;. Max = &quot;Unlimited bulk import, early access to Pro features&quot;.</li>
+<li><strong>Credits</strong>: imports are metered in lightning-bolt credits. The Get Started checklist (screens #146 to #149) unlocks &quot;520 extra imports&quot; for completing seven tasks, and referrals pay &quot;100 credits for every friend who joins&quot;. Credits are the free-tier throttle and the growth loop at once.</li>
+<li><strong>Referral and ambassador program</strong>: Settings has &quot;Redeem Referral Code&quot; and &quot;Ambassador Program&quot; (screen #191), and Edit Profile links to the ambassador program (screen #175).</li>
+</ul>
+<h3>1.3 Platforms</h3>
+<ul>
+<li>iOS app (this teardown).</li>
+<li>Web app at albo.inc with a &quot;Bulk Import&quot; section (screen #102).</li>
+<li>Browser extension &quot;Albo Browse&quot; for Chrome and Edge, used to bulk-sync saves from social platforms (screen #102).</li>
+<li>iOS share extension &quot;Add to Albo&quot; (screens #53, #77, #90).</li>
+<li>Invite links at join.albo.inc (screen #77).</li>
+</ul>
+<hr>
+<h2>2. Information architecture and object model</h2>
+<h3>2.1 Navigation skeleton</h3>
+<p>A five-item tab bar, visible from screen #56 onward:</p>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Icon</th>
+<th>Screen</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Home</td>
+<td>Library</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Globe</td>
+<td>Map</td>
+<td>12</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Plus (center)</td>
+<td>Add anything sheet</td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>People</td>
+<td>Community feed (Following / Community / Nearby / Events)</td>
+<td>13</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Avatar</td>
+<td>Profile</td>
+<td>14</td>
+</tr>
+</tbody></table>
+<p>Every top-level tab also carries a floating action button bottom-right with a bookmark or mascot glyph, which opens Ask Albo (screens #56, #57, #85, #93). Library&#39;s header has a bell (Notifications, screen #131) and a share icon.</p>
+<h3>2.2 The object model</h3>
+<p>Albo has one core noun, the <strong>Save</strong>, which is polymorphic by category. The categories appear in the Library chip row, in the review picker (screen #104) and in the list picker (screen #108):</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Icon on screen #104</th>
+<th>Detail view seen</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Recipe</td>
+<td>Dutch oven</td>
+<td>#69, #85, #86, #121, #157</td>
+</tr>
+<tr>
+<td>Place</td>
+<td>Map</td>
+<td>#137, #140</td>
+</tr>
+<tr>
+<td>Film</td>
+<td>VHS tape</td>
+<td>store screenshots only</td>
+</tr>
+<tr>
+<td>Book</td>
+<td>Novel</td>
+<td>search results #105</td>
+</tr>
+<tr>
+<td>Product</td>
+<td>Shopping basket</td>
+<td>not opened in recording</td>
+</tr>
+<tr>
+<td>Workout</td>
+<td>Kettlebell</td>
+<td>search results #110, #111</td>
+</tr>
+<tr>
+<td>Software</td>
+<td>Vintage computer</td>
+<td>not opened</td>
+</tr>
+<tr>
+<td>TV Show</td>
+<td>Retro TV</td>
+<td>not opened</td>
+</tr>
+<tr>
+<td>Event</td>
+<td>Ticket</td>
+<td>#167</td>
+</tr>
+<tr>
+<td>Article</td>
+<td>Newspaper</td>
+<td>#56 (web link card)</td>
+</tr>
+<tr>
+<td>Tutorial</td>
+<td>Blueprints</td>
+<td>not opened</td>
+</tr>
+<tr>
+<td>Game</td>
+<td>Controller</td>
+<td>not opened</td>
+</tr>
+</tbody></table>
+<p>Around the Save sit the secondary nouns:</p>
+<ul>
+<li><strong>Collection</strong>: user-named folder with cover image, description (200 chars), privacy (Public / Private), collaborators via invite link. Every save also lives in the implicit &quot;All My Saves&quot; collection (screen #70).</li>
+<li><strong>List</strong>: a typed, optionally ranked, ordered set of saves with a title, description and photos (screens #108, #109, #112). Lists appear on profiles under &quot;Lists&quot;.</li>
+<li><strong>Category view</strong> (&quot;Saved Recipes&quot;, &quot;Saved Books&quot;, and so on): a system-generated smart view per category with tabs All / Want to try / Made (screen #113). Note the verb changes by category: recipes are &quot;Made&quot;, places are &quot;Visited&quot;.</li>
+<li><strong>Review</strong> (a &quot;Journal&quot; entry): sentiment tag, title, stars, completion date, photos, tagged friends, friends-only flag (screen #83). Reviews surface on the item, on the profile Journal, on the community feed and in the Calendar.</li>
+<li><strong>Private note</strong>: free text on an item (screen #88, &quot;Lessen sugar&quot;).</li>
+<li><strong>Comment</strong>: public, threaded, with like / reply / share (screen #88).</li>
+<li><strong>Reminder</strong>: scheduled local notification on a save (screen #92).</li>
+<li><strong>Note</strong> (a save type): a markdown document Albo analyzes for entities (screens #67, #68).</li>
+<li><strong>Social graph</strong>: follow / followers, friends, &quot;common saves&quot; count, tagging friends in reviews.</li>
+<li><strong>Gamification state</strong>: credits, streak weeks, stamps, leaderboard rank.</li>
+</ul>
+<h3>2.3 Item states</h3>
+<p>A save moves through these states, visible in the tab bars and toggles:</p>
+<ol>
+<li><strong>Saved</strong> (default; appears in All)</li>
+<li><strong>Want to try / Want to go / Wanna</strong> (explicit intent, drives map filter &quot;Want to go&quot; and profile &quot;Wants to Try&quot;)</li>
+<li><strong>Made / Visited / Read / Cooked</strong> (done; unlocks review, streak and stamp progress)</li>
+</ol>
+<p>The &quot;Made it?&quot; and &quot;Visited?&quot; controls on detail screens (#69, #137) are slider-style buttons, not toggles, to make completion feel like an act.</p>
+<hr>
+<h2>3. Design language</h2>
+<p>The notes in this chapter were verified against the rendered screens, not only the text transcripts. Where the two disagree, the screen wins.</p>
+<h3>3.1 Typography</h3>
+<p>Albo runs two families and uses the contrast deliberately:</p>
+<ul>
+<li><strong>Display serif</strong>, bold, high contrast, used for: the &quot;Library&quot; header, &quot;Add anything&quot;, &quot;How was it?&quot;, &quot;Saved Recipes&quot;, every item title (&quot;Triple Chocolate Cookies&quot;, &quot;New York City Bar&quot;, &quot;Crispy Smashed Potato Salad&quot;), the profile name (&quot;Julia&quot;), and, in italic, the category tabs (&quot;Want to try&quot;, &quot;Made&quot;) and journal entries (&quot;Cooked Carbonara, loved it&quot;). The wordmark &quot;Albo&quot; is a heavier, chunkier cut of the same idea with the mascot peeking from the left and &quot;BY THE FEEL GOOD PROJECT&quot; stacked small at top-right.</li>
+<li><strong>Sans</strong>, for everything else: onboarding headlines (&quot;What brings you to Albo?&quot;, &quot;How the trial works&quot;), body, buttons, chips, metadata, settings rows. Onboarding headlines are set in a heavy sans weight; body sans is regular with slightly open letter-spacing.</li>
+<li><strong>Uppercase labels</strong> with wide tracking and a hairline on each side: &quot;OR MANUALLY SEARCH THESE&quot;.</li>
+</ul>
+<p><strong>Font match.</strong> The serif has ball terminals on the y and a, a tall x-height, and a true italic. That is Apple&#39;s <strong>New York</strong> (the system serif), which is what an iOS app gets from <code>.fontDesign(.serif)</code>. Match it directly rather than licensing anything:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Albo uses</th>
+<th>SwiftUI</th>
+<th>Web or design-file stand-in</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Display serif (titles, &quot;Library&quot;, &quot;How was it?&quot;)</td>
+<td>New York Bold</td>
+<td><code>.font(.system(.largeTitle, design: .serif, weight: .bold))</code></td>
+<td>Source Serif 4 700, or Fraunces 700 for a warmer take</td>
+</tr>
+<tr>
+<td>Italic serif (tabs, journal lines)</td>
+<td>New York Bold Italic</td>
+<td><code>.fontDesign(.serif).italic()</code></td>
+<td>Source Serif 4 Italic</td>
+</tr>
+<tr>
+<td>Sans (headlines, body, buttons)</td>
+<td>SF Pro Display / Text</td>
+<td><code>.fontDesign(.default)</code></td>
+<td>Instrument Sans or Public Sans</td>
+</tr>
+<tr>
+<td>Wordmark</td>
+<td>custom heavy slab-ish serif</td>
+<td>asset</td>
+<td>asset</td>
+</tr>
+</tbody></table>
+<p><strong>Build</strong>: Use <code>.fontDesign(.serif)</code> at <code>.title</code> or <code>.largeTitle</code> with <code>.bold</code> for the serif roles and <code>.fontDesign(.default)</code> for the rest. Italic serif tabs are <code>.italic()</code>. Ship the wordmark as an image asset.</p>
+<h3>3.2 Color</h3>
+<p>Approximate values sampled from the screens:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Approx. hex</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ground</td>
+<td>#FFFFFF, with #F4F4F4 for grouped surfaces and sheet scrims</td>
+<td>everywhere</td>
+</tr>
+<tr>
+<td>Ink</td>
+<td>#1C1C1E</td>
+<td>text, primary button fill</td>
+</tr>
+<tr>
+<td>Option fill</td>
+<td>#EFEFEF</td>
+<td>quiz option pills, chips, secondary buttons</td>
+</tr>
+<tr>
+<td>Disabled button</td>
+<td>#C8C8C8 fill, white text</td>
+<td>&quot;Show me how!&quot; before the animation finishes, &quot;Submit&quot; before a chip is chosen</td>
+</tr>
+<tr>
+<td>System blue</td>
+<td>#0A7AFF</td>
+<td>&quot;Tap here&quot; callouts, blue checkmarks, location warm-up Continue, &quot;Start now&quot;, trial progress bar gradient</td>
+</tr>
+<tr>
+<td>Reward green</td>
+<td>#22C55E (gradient to #16A34A)</td>
+<td>&quot;Claim! +2&quot; buttons, the trial &quot;Today&quot; unlock icon</td>
+</tr>
+<tr>
+<td>Danger red</td>
+<td>#D6203A</td>
+<td>&quot;Sign Out&quot;, &quot;Cancel my subscription&quot;, &quot;Remove from All My Saves&quot;, the trial &quot;Reminder&quot; bell icon, &quot;Endless Doomscrolling&quot; pill</td>
+</tr>
+<tr>
+<td>Brand orange</td>
+<td>#F5891F</td>
+<td>app icon square, list-editor timer pill, TIPS card</td>
+</tr>
+<tr>
+<td>Rating yellow</td>
+<td>#FFF4CC fill, #F5B800 stars</td>
+<td>the 4.9 card</td>
+</tr>
+<tr>
+<td>Category purple</td>
+<td>#9B4DFF</td>
+<td>the word &quot;film&quot; highlighted inside &quot;See a film you love?&quot; (each category gets its own highlight color)</td>
+</tr>
+<tr>
+<td>Map night</td>
+<td>#0B1B2B to black, with stars</td>
+<td>globe screen background</td>
+</tr>
+</tbody></table>
+<p>Dark mode is a full theme (#200), not an inversion: surfaces go to dark grey and the serif titles stay.</p>
+<h3>3.3 Shape and depth</h3>
+<ul>
+<li><strong>Primary CTA</strong>: full-width pill, ink fill, white bold label, with a <strong>hard black offset shadow</strong> roughly 4pt below (a chunky, almost 3D look). The red &quot;Sign Out&quot; and &quot;Cancel my subscription&quot; buttons use the same construction in red. This shadow is the single most recognizable detail in the app; do not flatten it.</li>
+<li><strong>Option pills</strong>: fully rounded, light grey fill, emoji leading, filled black circular check trailing when selected (#5). Sentiment chips invert to black fill with white text when selected (#83).</li>
+<li><strong>Cards</strong>: white, corner radius around 20pt, very soft drop shadow. Category cards in the Add sheet and the review picker carry a photorealistic 3D object.</li>
+<li><strong>Sheets</strong>: all secondary flows are bottom sheets with a grab handle, large radius top corners, white on a dimmed background.</li>
+<li><strong>Slide-to-confirm</strong>: &quot;Made it?&quot; and &quot;Visited?&quot; are not buttons. They are a grey pill track with a dark circular knob and chevron on the left; the user drags to confirm (#69, #137, #157). Completion should feel like an act.</li>
+<li><strong>Glass</strong>: the location warm-up (#133) is a frosted-glass card over the dark globe, with a white inner note box and a system-blue Continue.</li>
+<li><strong>Watermark</strong>: recipe detail with no hero image shows a faint repeating fork-and-knife pattern behind the title (#69).</li>
+<li><strong>Hero fade</strong>: place and recipe heroes fade to white at the bottom, with the serif title overlaid on the fade (#137, #157).</li>
+</ul>
+<h3>3.4 Illustration system</h3>
+<ul>
+<li><strong>The mascot</strong> is a black rounded shape with two curved white eye slits, drawn like a tooth or a friendly ghost. It is the logo, the Ask Albo button, the default avatar, and the alternate app icons. Costume variants seen: chef hat with spatula (&quot;Cooks&quot;), reading a blue book on a stack of books (&quot;Reads&quot;), holding a newspaper (&quot;News&quot;), crown and red ermine robe with scepter (&quot;King&quot;, Pro plan), purple robe with lightning bolt (Max plan), safari hat with sunglasses and backpack (traveler), 3D glasses with popcorn (film fan), safari hat reading a map (explorer, location warm-up), at a laptop (bulk import), on a rocket (ambassador). Leaderboard avatars default to these variants.</li>
+<li><strong>Category objects</strong> are photorealistic 3D renders on white: red Dutch oven (Recipes), folded paper map (Places), stack of VHS tapes (Films), a book (&quot;The Housemaid&quot;, Books), green shopping basket (Products), pink exercise ball with blue dumbbells (Workouts), beige Macintosh (Software), vintage TV (TV Show), red ticket stubs (Event), newspaper (Article), rolled blueprints (Tutorial), GameCube controller (Game). Add-sheet actions use the same style: chain links, sticky note, Polaroid camera, cardboard boxes, gold star, mix tape.</li>
+<li><strong>Emoji as icons</strong> in chips, ingredient rows, quiz options and sentiment chips.</li>
+<li><strong>Confetti</strong>: thin colored parallelograms scattered over celebratory screens (#26, #31, #44, #147).</li>
+<li><strong>Tutorial cursor</strong>: a pixel-art white hand with black outline (#6, #22) and a yellow pointing-hand emoji next to a bright blue &quot;Tap here&quot; box.</li>
+</ul>
+<h3>3.5 Navigation chrome</h3>
+<ul>
+<li>Tab bar: house, a globe with mascot eyes, plus, two people, the user&#39;s avatar (ring when selected). No labels.</li>
+<li>Floating Ask Albo button: the mascot face in a white circle with shadow, bottom-right, on Library and detail screens.</li>
+<li>Category views add two stacked white circular FABs: dice (Decider) and plus.</li>
+<li>Progress header on every guided flow: back chevron left, thin grey track with a black fill, optional &quot;Skip&quot; right.</li>
+</ul>
+<h3>3.6 Component vocabulary</h3>
+<p>You will build these once and reuse them across the whole app:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>First seen</th>
+<th>Used on</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Progress header (back arrow + thin progress bar, optional Skip)</td>
+<td>#4</td>
+<td>every onboarding step, import carousel, pin-shortcut tutorial</td>
+</tr>
+<tr>
+<td>Primary pill button (black)</td>
+<td>#3</td>
+<td>everywhere</td>
+</tr>
+<tr>
+<td>Selectable option card (icon, label, trailing check)</td>
+<td>#5</td>
+<td>quizzes, discovery survey, platform picker</td>
+</tr>
+<tr>
+<td>Social-proof stat cards</td>
+<td>#4</td>
+<td>onboarding</td>
+</tr>
+<tr>
+<td>Testimonial card (avatar, handle, flag, 5 stars, snippet)</td>
+<td>#4, #32</td>
+<td>onboarding</td>
+</tr>
+<tr>
+<td>Feature carousel card with floating metadata chip</td>
+<td>#15</td>
+<td>onboarding</td>
+</tr>
+<tr>
+<td>&quot;Tap here&quot; callout with pointing-hand emoji</td>
+<td>#22</td>
+<td>tutorials</td>
+</tr>
+<tr>
+<td>Bottom sheet action menu (grab handle, header row, two big square buttons, list rows, red destructive row)</td>
+<td>#91</td>
+<td>item overflow everywhere</td>
+</tr>
+<tr>
+<td>Sentiment chip row (emoji + label)</td>
+<td>#80</td>
+<td>review</td>
+</tr>
+<tr>
+<td>Star rating widget</td>
+<td>#83</td>
+<td>review, Apple prompt</td>
+</tr>
+<tr>
+<td>Ingredient row (emoji, name, quantity, checkbox, strike-through when checked)</td>
+<td>#31, #69, #132</td>
+<td>recipe detail</td>
+</tr>
+<tr>
+<td>Serving multiplier (minus, 1x, plus, Convert / Original)</td>
+<td>#31, #86</td>
+<td>recipe detail</td>
+</tr>
+<tr>
+<td>Category chip row (Recipes, Places, Films, Books, Products, Workouts, ...)</td>
+<td>#6, #47</td>
+<td>Library, Add sheet</td>
+</tr>
+<tr>
+<td>Masonry two-column card grid</td>
+<td>#145</td>
+<td>community feeds</td>
+</tr>
+<tr>
+<td>Reaction bar (heart, laugh, wow, sad, fire, thumbs up, plus)</td>
+<td>#164</td>
+<td>community cards</td>
+</tr>
+<tr>
+<td>Reminder date grid (This week / Next week / In 2 weeks / In 3 weeks)</td>
+<td>#92</td>
+<td>reminders</td>
+</tr>
+<tr>
+<td>Get Started task card with credit reward</td>
+<td>#146</td>
+<td>community tab overlay</td>
+</tr>
+<tr>
+<td>Settings row (icon, title, subtitle, chevron or toggle)</td>
+<td>#191</td>
+<td>settings tree</td>
+</tr>
+<tr>
+<td>Toast pill (top, black, icon + text)</td>
+<td>#78, #194</td>
+<td>confirmations</td>
+</tr>
+<tr>
+<td>Empty state (illustration, headline, subline, pill CTA)</td>
+<td>#47, #116, #127, #130, #161</td>
+<td>everywhere</td>
+</tr>
+</tbody></table>
+<h3>3.7 Copy voice</h3>
+<p>Albo writes in second person, short, playful, slightly self-deprecating. Real strings from the recording, verbatim:</p>
+<ul>
+<li>&quot;Choose wisely. This is how your friends find you.&quot; (username)</li>
+<li>&quot;First name, full name, your alter ego, up to you.&quot; (name)</li>
+<li>&quot;Add a profile picture please&quot; (note the &quot;please&quot;)</li>
+<li>&quot;Helps us make Albo feel like home faster.&quot; (quiz subline)</li>
+<li>&quot;Pick anything that catches your eye.&quot;</li>
+<li>&quot;Importing... watching everything at 2x speed&quot; (loading state)</li>
+<li>&quot;12 places found in Instagram video. Just like magic!&quot;</li>
+<li>&quot;Don&#39;t let a good save go to waste&quot; (notifications)</li>
+<li>&quot;ALBO&#39;S BOX OF UNUSED SAVES&quot; (building your plan)</li>
+<li>&quot;Less scrolling, more doing&quot; / &quot;Endless Doomscrolling&quot; to &quot;Booked &amp; Busy&quot;</li>
+<li>&quot;Welcome to the Digital Hoarder&#39;s Club!&quot;</li>
+<li>&quot;Let&#39;s send in your first thing!&quot;</li>
+<li>&quot;Nothing to decide yet. Save some recipes first so the Decider has something to pick from.&quot;</li>
+<li>&quot;Report bad extract&quot; (an honest name for an AI-failure report)</li>
+<li>&quot;Hoarders&quot; and &quot;Yappers&quot; (leaderboard tabs: most saves, most reviews)</li>
+<li>&quot;Made with love by Isaac, Karolina &amp; Jake, from the feel good project&quot;</li>
+</ul>
+<p>Rules to copy: name the user&#39;s world, not the system&#39;s (&quot;Things Albo found&quot;, not &quot;Extracted entities&quot;). Always pair a loading state with a joke. Name the brand&#39;s users (&quot;Digital Hoarder&quot;) and let them wear it as a badge.</p>
+<hr>
+<h2>4. Onboarding, screen by screen (0:00 to 3:46)</h2>
+<p>Twenty-five steps, one paywall, three quiz questions, two social-proof screens, two feature carousels, one notification warm-up, zero ATT warm-up. ScreensDesign&#39;s own rating calls out the magic-import demos as the standout moment (uniqueness 9/10) and the orbiting-icon intro, the &quot;building your plan&quot; box and the post-purchase welcome as distinctive (8, 8 and 7).</p>
+<h3>4.1 Cold ATT prompt (#1, 0:00)</h3>
+<p>The very first frame is the iOS App Tracking Transparency dialog, with no warm-up screen. Copy: &quot;This allows Albo to provide you with a more personalised experience and measure the effectiveness of our campaigns.&quot;</p>
+<p><strong>Pattern</strong>: Cold permission ask.
+<strong>Why it works (or does not)</strong>: It gets the ask out of the way before the user has any reason to say no, and Albo relies on paid social acquisition (see the discovery survey). ScreensDesign scores this as friction. If you rebuild, consider a one-screen warm-up; otherwise copy as-is and measure.
+<strong>Build</strong>: <code>ATTrackingManager.requestTrackingAuthorization</code> on first launch, before any UI. Include <code>NSUserTrackingUsageDescription</code> in Info.plist.</p>
+<h3>4.2 Splash (#2, 0:03)</h3>
+<p>White ground, black blob logo centered, &quot;Albo&quot; wordmark bottom-center with &quot;BY THE FEEL GOOD PROJECT&quot; beside it.</p>
+<p><strong>Build</strong>: A <code>LaunchScreen</code> storyboard or SwiftUI splash that matches the first onboarding view so the transition is seamless.</p>
+<h3>4.3 Welcome with orbiting icons (#3, 0:07 to 0:18)</h3>
+<p>Language chip &quot;EN&quot; top-right. A ring of pastel circular icons (fitness, food, browser, social apps, book, film) orbits the black logo. Tagline &quot;A new way to explore a new city&quot;. Black &quot;Get Started&quot; pill, then &quot;Already have an account? Sign in&quot;.</p>
+<p><strong>Pattern</strong>: Animated integration carousel replacing static slides.
+<strong>Why it works</strong>: Motion signals product quality in the first two seconds and shows breadth (every platform Albo pulls from) without a bullet list.
+<strong>Build</strong>: <code>TimelineView(.animation)</code> driving a <code>ForEach</code> of icon views positioned with <code>cos</code>/<code>sin</code> around a center; rotate the phase over time. Reuse the same component on the sign-in screen (#45), where it appears again.</p>
+<h3>4.4 Social proof wall (#4, 0:21)</h3>
+<p>Progress header. Illustration of stylized people cooking, traveling, watching films. Headline <strong>&quot;Albo helps you actually do the things you save&quot;</strong>. Two white stat cards: &quot;148k+ Happy users&quot;, &quot;3.9M+ Saves made&quot;. A yellow-tinted card: &quot;4.9&quot; with stars and &quot;3K+ App Ratings&quot;. Then a testimonial list (avatar, handle, country flag, five stars, one-line review), partly covered by the fixed &quot;Continue&quot; button.</p>
+<p><strong>Pattern</strong>: Stats plus testimonials, before any ask.
+<strong>Why it works</strong>: Trust is established before the quiz asks for anything. The fixed CTA overlapping the list signals &quot;there is more&quot; and invites a scroll.
+<strong>Build</strong>: <code>ScrollView</code> with a <code>safeAreaInset(edge: .bottom)</code> containing the button so content scrolls under it.</p>
+<h3>4.5 Quiz 1: &quot;What brings you to Albo?&quot; (#5, 0:31)</h3>
+<p>Sub-heading &quot;Because I want to...&quot;. Six multi-select option cards (listed in 1.1). Selected state: black checkmark at the trailing edge.</p>
+<p><strong>Pattern</strong>: Goal quiz, multi-select.
+<strong>Build</strong>: <code>SelectableOptionCard</code> with a <code>Set&lt;Goal&gt;</code> binding. Persist answers; they drive the &quot;Building your plan&quot; checklist copy later (#37).</p>
+<h3>4.6 Reinforcement mockup (#6, 0:38)</h3>
+<p>&quot;You came to the right place&quot;. Sub-copy: &quot;Albo pulls ingredients and step-by-step instructions straight out of your TikTok recipes.&quot; A large mockup of the Library home (search bar, category chips, Recently imported cards, Collections with names like &quot;I&#39;m Totally Coming Back To This Later&quot; and &quot;Brussels Baybeee&quot;). A pixel-art hand cursor points into the mockup. CTA &quot;Let&#39;s go&quot;.</p>
+<p><strong>Pattern</strong>: Answer-reactive reinforcement. The sub-copy responds to the recipe goal chosen in #5.
+<strong>Build</strong>: Map each quiz goal to a headline + subline + mockup asset. Show the one matching the first selected goal.</p>
+<h3>4.7 Profile creation (#7 to #13, 0:53 to 1:10)</h3>
+<p>Four sub-steps, all under the same progress header:</p>
+<ol>
+<li><strong>Username</strong> (#7): field with live availability check (green check + &quot;Available&quot;), &quot;12/20&quot; counter, helper &quot;3-20 characters, letters, numbers, and underscore&quot;, and a requirements card with five checkmarks: at least 3, max 20, no spaces, only letters/numbers/underscores, available.</li>
+<li><strong>Name</strong> (#8): &quot;What should I call you?&quot; single field.</li>
+<li><strong>Profile picture</strong> (#9 to #13): circular plus placeholder above name and @handle. Continue is disabled until a photo exists. Tapping opens a two-option sheet: &quot;Choose from Gallery&quot; / &quot;Take a Photo&quot;. Gallery is the iOS limited-photos picker (#11), then a dark &quot;Crop Image&quot; screen with Cancel / rotate-flip / Done (#12), then the filled state (#13).</li>
+</ol>
+<p><strong>Pattern</strong>: Front-loaded identity. Username before any content is unusual and signals the social layer is core.
+<strong>Why it works</strong>: The &quot;friends find you&quot; framing makes it feel purposeful. Live validation removes anxiety. ScreensDesign counts this as friction; keep it only if you are building the social layer.
+<strong>Build</strong>: <code>TextField</code> with a debounced <code>Task</code> calling an availability endpoint; <code>PhotosPicker</code> from PhotosUI; a crop view via <code>UIViewControllerRepresentable</code> wrapping a cropping library or a custom <code>GeometryReader</code>-based crop.</p>
+<h3>4.8 Discovery survey (#14, 1:15)</h3>
+<p>&quot;How did you end up here?&quot; Single-select list: Friend or Family, TikTok, Instagram, YouTube, Threads, X, Search Engine, LinkedIn, Reddit, Other.</p>
+<p><strong>Pattern</strong>: Self-reported attribution.
+<strong>Why it works</strong>: With ATT declined by most users, this is the team&#39;s channel data. Post to analytics immediately.</p>
+<h3>4.9 Feature carousel (#15 to #18, 1:18 to 1:27)</h3>
+<p>Four cards, each with the same shape: headline &quot;See a [film / recipe / spot] you love? Save it to Albo in one tap.&quot;, a large rounded media card with a floating metadata chip (clapperboard, &quot;Once Upon a Tim...&quot;, Comedy, 2019; or ingredient tags &quot;Garlic 1 clove&quot;, &quot;Prawns 200g&quot; floating over a cooking video; or emoji food icons over a moody London restaurant photo captioned &quot;VIBEY LONDON RESTAURANTS for 2025&quot;), then a fourth card with a light map and food-emoji pins: &quot;Every place you save gets pinned on a map.&quot; CTA on each: &quot;Show me how!&quot;</p>
+<p><strong>Pattern</strong>: Before/after value demo, one object type per card.
+<strong>Build</strong>: <code>TabView(.page)</code> with a shared <code>FeatureCard</code> view; the floating chip is an overlay aligned <code>.bottomTrailing</code> with a small offset.</p>
+<h3>4.10 Quiz 2: where do you save now (#19, 1:33)</h3>
+<p>&quot;Where do you save things at the moment?&quot; / &quot;Helps us make Albo feel like home faster.&quot; Four cards: Social Media (row of seven platform icons), Websites (globe, Google, Safari), My notes app, Screenshots. Multi-select.</p>
+<h3>4.11 Reassurance (#20, 1:36)</h3>
+<p>&quot;No problem! Albo can import anything from Instagram, TikTok, Facebook, Pinterest and YouTube.&quot; Phone illustration with floating platform icons. CTA &quot;Show me how&quot;.</p>
+<p><strong>Pattern</strong>: Objection handling immediately after the answer that raised it.</p>
+<h3>4.12 Quiz 3: content interests (#21, 1:43)</h3>
+<p>&quot;What kind of videos, posts or links do you typically save?&quot; / &quot;Pick anything that catches your eye.&quot; Cards: Travel, Restaurants, Recipes, Workout routines, Shopping, Books, Articles. Blue checkmarks here (the only quiz with blue rather than black; treat as an inconsistency, pick one).</p>
+<h3>4.13 Magic import demo 1: Instagram (#22 to #26, 1:50 to 2:00)</h3>
+<p>Header &quot;How to save to Albo&quot; with a row of five platform icons. A phone mockup plays a simulated sequence:</p>
+<ol>
+<li>An Instagram post &quot;JAPAN FOOD GUIDE&quot; with a blue &quot;Tap here&quot; box and yellow pointing hand over the share icon.</li>
+<li>The Instagram share sheet, &quot;Tap here&quot; over &quot;Share to...&quot;.</li>
+<li>The iOS share sheet, &quot;Tap here&quot; over the Albo icon.</li>
+<li>A modal &quot;Importing... watching everything at 2x speed&quot;.</li>
+<li>Result screen (#26): &quot;12 places found in Instagram video. Just like magic!&quot; A white card &quot;Japan Food Guide&quot; with a Japan map, pins, and a list: Suba (Soba noodle shop, 3.7, $$), Yakumo (Ramen, 4.2, $$), Iseya Sohonten (Izakaya, 3.7, $$), Warito... Confetti. Black &quot;Continue&quot;.</li>
+</ol>
+<p><strong>Pattern</strong>: Simulated tutorial with a real payoff.
+<strong>Why it works</strong>: The user has not installed the share extension yet, but has now watched the entire happy path end to end and seen a concrete, impressive output. This is the &quot;aha&quot; before the paywall.
+<strong>Build</strong>: A scripted <code>TutorialPlayer</code> view: an array of steps <code>(mockupImage, calloutRect, calloutText)</code> advanced by a timer, with a spring-animated callout. The result card is the same <code>PlaceListCard</code> used in the real product.</p>
+<h3>4.14 Magic import demo 2: web link (#27 to #31, 2:12 to 2:23)</h3>
+<p>Same header. A Safari mockup of chewoutloud.com &quot;Easy Jamaican Jerk Chicken Recipe&quot; (378 ratings, 112 comments). Steps: &quot;Tap here&quot; on the browser &quot;...&quot; menu, then Share (blue ring), then the Albo icon, then &quot;Importing...&quot;, then result (#31): &quot;1 recipe found in web link. Just like magic!&quot; Card with the dish photo, an Ingredients section with a 1x quantity adjuster and an emoji-prefixed checklist (chicken legs 10 pieces, olive oil 1/3 cup, light brown sugar 2 tbsp, dried thyme, allspice, smoked paprika, cinnamon, ginger, cloves, cayenne, garlic powder). Confetti. Continue.</p>
+<p><strong>Build</strong>: Same <code>TutorialPlayer</code>; the result is the real <code>RecipeIngredientsSection</code> component.</p>
+<h3>4.15 Team photo and scrolling reviews (#32, 2:32)</h3>
+<p>A composite photo of three kids (the founders as children) above a horizontally scrolling testimonial carousel. First review by &quot;Mialdonetti&quot;: &quot;As a college student, the LAST thing I wanna do is go on to Instagram to find one of the hundr...&quot; Second: &quot;I LOVE IT!&quot;</p>
+<p><strong>Pattern</strong>: Founder humanization. The team-as-kids photo is the single most personal moment in the flow.</p>
+<h3>4.16 Notification warm-up with a rating ask riding along (#33 to #36, 2:46 to 2:50)</h3>
+<p>Headline &quot;Don&#39;t let a good save go to waste&quot;. Subline (sic): &quot;Let Albo will remind you about events and limited time offers.&quot; Illustration: calendar plus the mascot. Skip is available. CTA &quot;Enable notifications&quot;.</p>
+<p>Before the system prompt appears, the Apple in-app rating dialog fires (#33: &quot;Enjoying Albo? Tap a star to rate it on the App Store&quot;), followed by &quot;Thanks for your feedback. You can also write a review.&quot; (#34). Then the notification system prompt (#36): &quot;Albo needs notification access to send you reminders, updates, and important information.&quot;</p>
+<p><strong>Pattern</strong>: Piggybacked rating request at the emotional peak after the magic demos.
+<strong>Why it works</strong>: The 4.9 rating with 3K+ ratings is partly manufactured here. Users who just watched &quot;12 places found... just like magic&quot; are primed.
+<strong>Build</strong>: <code>SKStoreReviewController.requestReview(in:)</code> (or <code>RequestReviewAction</code> in SwiftUI) immediately before <code>UNUserNotificationCenter.requestAuthorization</code>. Fix the copy typo.</p>
+<h3>4.17 Building your plan (#37, 2:55)</h3>
+<p>Illustration: a cardboard box labeled &quot;ALBO&#39;S BOX OF UNUSED SAVES&quot; with a game controller, an old TV, a newspaper and a vinyl record flying out. Progress bar &quot;Making Albo yours / Building your watchlist...&quot; at 98%. Checklist &quot;Setting up your Albo for&quot;: Trips you want to plan, Saved places &amp; restaurants, Workouts to try, Things to buy, Films &amp; shows to watch (last one spinning).</p>
+<p><strong>Pattern</strong>: Fake progress with personalized checklist items.
+<strong>Why it works</strong>: It makes the quiz answers feel used and adds a beat of anticipation before the sell.
+<strong>Build</strong>: A <code>ProgressView</code> driven by a timer, with checklist rows that flip from spinner to check in sequence. Compose the checklist from quiz answers.</p>
+<h3>4.18 Final value proposition (#38 to #40, 2:59 to 3:04)</h3>
+<ol>
+<li><strong>Graph</strong> (#38): &quot;Less scrolling, more doing&quot;. A curve rising from &quot;Endless Doomscrolling&quot; (Now) to &quot;Booked &amp; Busy&quot; (Your goal). Copy: &quot;You&#39;re on your way to turning saved spots into trips you actually take. Never be stuck for somewhere to go again.&quot; Continue.</li>
+<li><strong>Premium feature mockup</strong> (#39): &quot;Turn recipes into ingredients and steps&quot;. Two overlapping phone mockups showing &quot;Saved TV Shows&quot; and &quot;Saved Books&quot; grids. Below: a checkmark and <strong>&quot;No Payment Due Now&quot;</strong>. Continue.</li>
+<li><strong>Reminder promise</strong> (#40): calendar + mascot. &quot;You&#39;ll get a reminder 1 day before your trial ends.&quot; Again &quot;No Payment Due Now&quot;. Continue.</li>
+</ol>
+<p><strong>Pattern</strong>: Trial anxiety removal in three beats before the price is shown.
+<strong>Why it works</strong>: &quot;No Payment Due Now&quot; appears on three consecutive screens before the paywall and once on it. The reminder promise directly counters the number one reason people refuse trials.</p>
+<h3>4.19 Paywall (#41 to #43, 3:07 to 3:15)</h3>
+<p>Title &quot;How the trial works&quot;. Back arrow and X to close (soft paywall). Vertical timeline with three icons:</p>
+<ul>
+<li><strong>Today</strong> (green unlock): &quot;Unlock access to all the app&#39;s features like unlimited saves &amp; bulk importing saves from other apps.&quot;</li>
+<li><strong>In 2 Days, Reminder</strong> (red bell): &quot;We&#39;ll send you a reminder that your trial is ending soon.&quot;</li>
+<li><strong>In 3 Days, Billing Starts</strong> (yellow crown): &quot;You&#39;ll be charged on June 14, 2026 unless you cancel anytime before.&quot;</li>
+</ul>
+<p>Then &quot;No Payment Due Now&quot;, the black button <strong>&quot;Start My 3-Day Free Trial&quot;</strong>, and the footer &quot;3 days free, then $29.99 per year&quot;. No monthly option is offered. No discount, no timer.</p>
+<p>Tapping the button opens the StoreKit sheet (#42): &quot;Yearly Hoarder, Albo: Save &amp; Organise, 3-day free trial, $29.99 per year, No commitment. Cancel anytime in Settings&quot;, then the system &quot;You&#39;re all set. Your purchase was successful.&quot; (#43).</p>
+<p><strong>Pattern</strong>: Trial-timeline paywall (Blinkist-style), single SKU, soft close.
+<strong>Why it works</strong>: A single annual plan with a computed billing date is the highest-ARPU configuration for a trial-based app. The timeline restates the reminder promise for the third time.
+<strong>Build</strong>: StoreKit 2. One <code>Product</code> with an introductory offer of 3 days free. Compute the billing date as <code>Date() + 3 days</code> and format with <code>Date.FormatStyle</code>. Wire the X to skip; the user continues with the free tier (credits-limited).</p>
+<h3>4.20 Post-subscription welcome (#44, 3:20)</h3>
+<p>A bottom sheet with a grab handle, presented over the sign-in screen&#39;s orbiting icons: the mascot in a crown and red ermine robe holding a scepter, confetti, <strong>&quot;Welcome to the Digital Hoarder&#39;s Club!&quot;</strong>, &quot;You&#39;ve unlocked unlimited bulk imports and premium features. Time to save everything!&quot;, black &quot;Get Started&quot;.</p>
+<p><strong>Pattern</strong>: Post-purchase celebration and identity naming.
+<strong>Build</strong>: Present only on a successful transaction. The crowned mascot is reused as the &quot;King&quot; alternate app icon (#199) and in the Pro/Max plan cards (#198).</p>
+<h3>4.21 Sign in (#45 to #46, 3:27 to 3:29)</h3>
+<p>The orbiting-icon animation returns. Two buttons: &quot;Continue with Apple&quot;, &quot;Continue with Google&quot;. Google triggers the ASWebAuthenticationSession consent &quot;Albo Wants to Use accounts.google.com to Sign In&quot;.</p>
+<p><strong>Pattern</strong>: Sign-up after payment. The user pays before creating an account, so the purchase is tied to the Apple ID and the account is created after.
+<strong>Build</strong>: <code>SignInWithAppleButton</code> from AuthenticationServices; Google via <code>ASWebAuthenticationSession</code> or the Google Sign-In SDK. On success, link the StoreKit transaction to the new user server-side.</p>
+<hr>
+<h2>5. First-run activation (3:48 to 4:36)</h2>
+<h3>5.1 Empty Library with a modal (#47)</h3>
+<p>The Library home behind: header &quot;Library&quot;, a chip row (Recipes, Places, Films, Books, Products, Workouts), a &quot;Recently saved&quot; section reading &quot;You have no saves. The content you share to albo will appear here.&quot; and a &quot;Get Started&quot; pill with a badge. Over it, a modal: illustration of social icons and a vintage TV, <strong>&quot;Let&#39;s send in your first thing!&quot;</strong>, &quot;Try saving from your favorite social media app, we&#39;ll show you how.&quot;, black &quot;Show me how&quot;, &quot;Maybe later&quot;.</p>
+<h3>5.2 Platform picker (#48)</h3>
+<p>&quot;Which platform would you like to send things from?&quot; List: TikTok, Instagram, Safari, Facebook, YouTube, LinkedIn, Pinterest, Threads.</p>
+<h3>5.3 Per-platform instructions (#49)</h3>
+<p>&quot;How to share from Safari&quot;: black &quot;View video instruction &amp; setup&quot; and a text link &quot;I prefer text instructions&quot;.</p>
+<h3>5.4 Live guided save (#50 to #54)</h3>
+<p>The user is sent to Safari with a floating Albo overlay coaching each step: a dark speech bubble &quot;Press More&quot; pointing at the &quot;...&quot; button (#50, #51), then in the share sheet a mockup bubble &quot;Tap Me!!!&quot; pointing at &quot;Edit Actions&quot; and later at &quot;Add to Albo&quot; in the actions list (#52, #53). The share extension UI (#54) is minimal: header with logo, &quot;Saved!&quot;, search and plus icons, an &quot;Add note&quot; field and a &quot;Done!&quot; button.</p>
+<h3>5.5 Detection and celebration (#55, #56)</h3>
+<p>Back in the app, a modal: large check, <strong>&quot;Great job! We detected that you successfully sent an import. You&#39;re all set up!&quot;</strong>, blue Continue. The Library now shows the web link card &quot;10 of the Best Things to do...&quot; under Recently saved, and an empty Collections section with &quot;+ New&quot; and &quot;Start creating collections to organize your saves&quot;.</p>
+<p><strong>Pattern</strong>: Guided first action with automatic detection.
+<strong>Why it works</strong>: The share-extension path is the whole product; a user who completes it once retains. The app detects the extension&#39;s write (App Group) and celebrates without the user tapping anything.
+<strong>Build</strong>: The share extension writes into a shared App Group container or a shared Core Data / SwiftData store. The main app observes a <code>firstImportDetected</code> flag on <code>scenePhase == .active</code>. The Safari overlay is a picture-in-picture-style tutorial; on iOS you cannot draw over Safari, so Albo ships this as an in-app video (&quot;View video instruction&quot;) and the &quot;Press More&quot; bubble is the video&#39;s content. Rebuild it as a short looping video or Lottie asset.</p>
+<hr>
+<h2>6. The Add sheet and import modalities</h2>
+<h3>6.1 &quot;Add anything&quot; hub (#60)</h3>
+<p>Opened from the center tab. Title &quot;Add anything&quot; with subline &quot;Search up anything you want to save or you have done!&quot; Six large cards with 3D icons:</p>
+<table>
+<thead>
+<tr>
+<th>Card</th>
+<th>Subline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Paste any URL</td>
+<td>Articles, blogs, TikTok, Instagram &amp; more</td>
+</tr>
+<tr>
+<td>Notes</td>
+<td>Make a note of anything and we&#39;ll analyse it</td>
+</tr>
+<tr>
+<td>Screenshots</td>
+<td>Add from your camera roll</td>
+</tr>
+<tr>
+<td>Bulk Import</td>
+<td>Add everything from TikTok &amp; Insta in one click</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>Rate something you watched, read, or visited</td>
+</tr>
+<tr>
+<td>List</td>
+<td>Build a curated ranked list of items</td>
+</tr>
+</tbody></table>
+<p>Then &quot;OR MANUALLY SEARCH THESE&quot;: a chip row of categories each with a search glyph (Recipes, Places, Films, Books, Products, Workouts).</p>
+<p><strong>Build</strong>: A <code>.sheet</code> with <code>presentationDetents([.large])</code> containing a <code>LazyVGrid</code> of two columns.</p>
+<h3>6.2 Import via Link (#61 to #66)</h3>
+<p>A modal with a four-segment progress indicator and a paste field pinned at the bottom (&quot;Paste your link here&quot; + &quot;Paste&quot; button). The carousel above teaches: &quot;Click on Share, find the share menu&quot; (TikTok mockup) → &quot;Click on More, tap Send to Albo&quot; → &quot;Click on Albo, Detecting Spots.&quot; → &quot;Organise into collections, You&#39;re all set&quot; → &quot;Find your saves again at any time!&quot; with a map mockup (&quot;Entalula Island&quot;). Tapping Paste triggers the iOS pasteboard permission &quot;Albo would like to paste from Notes&quot; (#65). With a URL in the field, the button becomes &quot;Import&quot; (#66).</p>
+<p><strong>Build</strong>: <code>UIPasteboard.general.string</code> triggers the system paste prompt; use <code>PasteButton</code> in SwiftUI to avoid it. The carousel is a <code>TabView(.page)</code> and is purely educational.</p>
+<h3>6.3 Notes (#67 to #69)</h3>
+<p>A markdown editor: title &quot;Cookie recipes&quot;, body &quot;- ## <strong>Triple Chocolate Cookies</strong><em>italic</em>&quot;, a toolbar above the keyboard (B, I, H, list, link), Save top-right. After save, a &quot;Saved&quot; state shows <strong>&quot;Things Albo found&quot;</strong>: a card &quot;Triple Chocolate Cookies, 15 mins, American, Dessert, 1 save&quot; plus a &quot;Reanalyze&quot; checkbox. Tapping the card opens the full recipe (#69).</p>
+<p><strong>Pattern</strong>: Free text in, structured objects out.
+<strong>Build</strong>: <code>TextEditor</code> with a custom <code>inputAccessoryView</code> or a SwiftUI toolbar <code>.keyboard</code> placement. Send the text to the extraction endpoint on save; render results as <code>SaveCard</code>s.</p>
+<h3>6.4 Screenshots (#96 to #98)</h3>
+<p>&quot;Import via Screenshot&quot;: a dashed drop zone &quot;Tap to select from camera roll&quot;, an orange TIPS card (&quot;You can import anything from: Conversations about plans, Google Maps lists, TikTok screenshots etc&quot;), &quot;Choose Photos&quot;. The limited-photos picker (#97) shows &quot;2 Photos, Locations Included&quot;. The staging view (#98) shows &quot;Imports 2/9&quot; thumbnails with remove buttons, &quot;+ Add More Pictures&quot;, and a black &quot;Import&quot;. The cap is nine per batch.</p>
+<p><strong>Build</strong>: <code>PhotosPicker(selection:maxSelectionCount: 9, matching: .screenshots)</code>. Upload as multipart; show per-image progress.</p>
+<h3>6.5 Bulk Import via the browser extension (#100 to #103)</h3>
+<p>A short branching questionnaire: &quot;Do you have your laptop with you? You would need your laptop to do this&quot; (Yes! / No), then &quot;Do you have Chrome or Edge installed on your laptop?&quot; (Yes! / No, but I can install it / No), then instructions &quot;How to bulk import with Albo Browse&quot;: 1. Sign into albo.inc on your laptop, 2. Open the Bulk Import section in the web app, 3. Install the Albo Browse extension on Chrome or Edge when prompted, 4. Select your platforms and watch your saves come in. A black button with a Chrome icon &quot;Get link to Albo web&quot; opens the share sheet with the albo.inc link titled &quot;Save Everything&quot;.</p>
+<p><strong>Pattern</strong>: Cross-device handoff with a pre-flight questionnaire.
+<strong>Why it works</strong>: The questionnaire stops users who cannot complete the task from starting it. This is the Max tier&#39;s headline feature.</p>
+<h3>6.6 Review (#104 to #107)</h3>
+<p>&quot;What do you want to review? Pick a category to find what you watched, read, or visited.&quot; A 12-card grid (see 2.2). Choosing Book opens a search sheet; &quot;project hail mary&quot; returns &quot;Project Hail Mary, Science fiction, 4.5, 496 pages, 763 saves&quot; plus lesser matches (#105). Selecting one opens the review form (chapter 10).</p>
+<h3>6.7 List (#108 to #112)</h3>
+<p>&quot;Make a list of... Pick what your list is about. You can add items next.&quot; Six types: Recipe, Place, Film, Book, Workout, TV Show. The editor (#109) has Cancel, a live timer pill (00:01, then 00:33, 01:11) and Share at the top; &quot;Add photos&quot; dashed box; &quot;Give your list a title&quot;; &quot;Add a description (optional)&quot;; an &quot;Items&quot; card with a count and &quot;Add a workout&quot;; and a &quot;Ranked list&quot; toggle: &quot;Number items by rank, great for top 10 lists.&quot; Adding an item opens a search (&quot;Pull-up&quot;: results show tags Bodyweight, Strength, Upper Body, Back and save counts with avatars; &quot;lateral raise&quot; similar). The finished list &quot;Home workout&quot; shows items &quot;1. Lateral Raise, 2. Pull-Up&quot; with remove and drag handles.</p>
+<p><strong>Build</strong>: <code>List</code> with <code>.onMove</code> for reordering and <code>EditButton</code>-free custom drag handles; the timer pill is a <code>TimelineView(.periodic(from:by: 1))</code>.</p>
+<h3>6.8 Manual search</h3>
+<p>The category chips at the bottom of the Add sheet open the same typed search used in Review and List. &quot;carbonara&quot; (#120) returns three Carbonara recipes with times (10, 30 min), cuisines (Italian, Italian-American, Roman), save counts and a megaphone &quot;Wanna&quot; glyph per row.</p>
+<hr>
+<h2>7. Library (home tab)</h2>
+<p>The Library (#56, #99) is a vertical scroll:</p>
+<ol>
+<li>Header &quot;Library&quot; with bell and share icons.</li>
+<li>Horizontal category chip row with 3D icons.</li>
+<li>&quot;Recently saved&quot;: a horizontal carousel of mixed-type cards (image, markdown note, web link), each with a small type glyph. A &quot;Get Started&quot; pill with a red badge sits at the row&#39;s start until the checklist is complete.</li>
+<li>&quot;Collections&quot;: &quot;+ New&quot; trailing; cards show cover, name, Public/Private, owner avatar.</li>
+<li>Tab bar and the Ask Albo floating button.</li>
+</ol>
+<p>Tapping a category chip opens its smart view (chapter 9). The search bar &quot;Search saves...&quot; appears in the onboarding mockup (#6) but not in the recorded home; treat search as a header action.</p>
+<hr>
+<h2>8. Item detail anatomy</h2>
+<h3>8.1 Recipe (#69, #85, #86, #87, #121, #157)</h3>
+<p>Top to bottom:</p>
+<ol>
+<li>Nav: back, share, kebab.</li>
+<li>Hero image (when present), overlaid source caption (&quot;i tuoi piatti da fuorisede&quot; on the Carbonara).</li>
+<li>Title, meta chips (15 mins · American · Dessert), &quot;1 save&quot; with avatars, category tag &quot;Recipes&quot;, &quot;+ Collections&quot; button.</li>
+<li><strong>Status row</strong>: after a review, a badge card (&quot;Hidden Gem&quot; with a diamond and a refresh icon) and a review card (&quot;Reviewed Triple Chocolate Cookies, a hidden gem&quot;, 5 stars, thumbnail, &quot;i love the texture!&quot;).</li>
+<li><strong>Action row</strong>: &quot;Made it?&quot; slider button with a forward arrow, and &quot;Wanna&quot; with a megaphone.</li>
+<li>Yield (&quot;Makes 12 cookies&quot; / &quot;Serves 4-6&quot;).</li>
+<li><strong>Ingredients</strong>: copy icon, multiplier (minus, 1x, plus), &quot;Convert&quot; (units) which becomes &quot;Original&quot; after converting, then rows with emoji, name, quantity, and a checkbox that strikes the row through.</li>
+<li><strong>Instructions</strong>: numbered steps, each with a small illustrative icon (egg, wheat, chocolate, timer).</li>
+<li>&quot;Mentioned in&quot;: the source note or link card.</li>
+<li>&quot;Add a note...&quot; field, then a &quot;Private note&quot; card with timestamp.</li>
+<li>&quot;Comments &amp; Reviews&quot;: count, input with send, comments with like / reply / share.</li>
+<li>Floating Ask Albo button.</li>
+</ol>
+<h3>8.2 Place (#137, #140)</h3>
+<p>Hero photo, title &quot;New York City Bar&quot;, category &quot;Association / Organization&quot;, rating 4.2, &quot;4 saves&quot;, &quot;Collections&quot;. Action row: &quot;Visited?&quot; slider and &quot;Wanna&quot;. A four-button row: View on map, Call, Website, More. Hours &quot;Opens Friday at 9 AM to 5 PM&quot;. Photo carousel. Description with &quot;Read&quot; link. Map snippet with neighborhood label (&quot;LENOX HILL&quot;). From the map, a compact sheet (#140) shows flag, Directions / Website / More, &quot;No opening times found&quot;, photos, &quot;1167 saves&quot; and a like count.</p>
+<h3>8.3 Event (#167)</h3>
+<p>Hero with gradient, title, organizer, date &quot;13 Jul 2026&quot;, category &quot;Community&quot;, venue, &quot;1 save&quot;, Collections, <strong>&quot;Add to calendar&quot;</strong>, &quot;Wanna&quot;, description, &quot;Starts on Jul 13, 2026 at 10:00 AM&quot;, address, map snippet. Add to calendar prompts EventKit access (#168) then opens a fully pre-filled native &quot;New Event&quot; form (#169) with title, location, start/end, travel time, repeat, calendar, alerts.</p>
+<p><strong>Build</strong>: <code>EKEventEditViewController</code> via <code>UIViewControllerRepresentable</code>, pre-populated from the event save.</p>
+<h3>8.4 The overflow sheet (#91, #114, #141)</h3>
+<p>Identical on every item type. Grab handle; header row with thumbnail, title, meta and a megaphone button; two large square buttons <strong>Share</strong> and <strong>Reminder</strong>; list rows: Add to collection, Change cover image, Add review / Mark as done, Report bad extract; red row &quot;Remove from All My Saves&quot;.</p>
+<p><strong>Build</strong>: One <code>ItemActionsSheet(item:)</code> with <code>presentationDetents([.medium, .large])</code>.</p>
+<h3>8.5 Share</h3>
+<p>Share uses the system sheet with an albo.inc URL (#90). The same sheet is where users discover &quot;Add to Albo&quot; is present.</p>
+<hr>
+<h2>9. Organizing</h2>
+<h3>9.1 Collections</h3>
+<ul>
+<li><strong>Add to collection sheet</strong> (#70, #115, #122): &quot;All My Saves&quot; (checked, non-removable), &quot;Add to a collection&quot;, &quot;New collection&quot; button, then existing collections with a plus.</li>
+<li><strong>New Collection</strong> (#71 to #77): Step 1: cover square with a refresh icon (tap opens &quot;Choose cover image&quot;: Choose from Photos / Search the web), name field with &quot;7/50&quot; counter, description &quot;What makes this collection special?&quot; with &quot;0/200&quot;. Next. Step 2: privacy dropdown &quot;Public, Anyone can see&quot;. Done. Step 3: <strong>&quot;Invite Friends&quot;</strong> with &quot;Create &amp; Share Invite&quot; (black) and &quot;Not Now&quot;. Creating shows a toast &quot;Invite link created and ready to share&quot; and a system share sheet with a join.albo.inc link.</li>
+<li><strong>Delete confirmation</strong> (#119): red trash icon, &quot;Remove 1 item&quot;, &quot;Are you sure you want to remove this item? They will also be removed from any collections.&quot;, Cancel / red Remove.</li>
+</ul>
+<p><strong>Pattern</strong>: Collaboration-first collections. Inviting friends is the last step of creation, not buried in a menu.</p>
+<h3>9.2 Category smart views (#113, #116, #117, #124 to #126)</h3>
+<p>&quot;Saved Recipes&quot; with subline &quot;All the recipes found in your library&quot;. Tabs: All / Want to try / Made. Cards: thumbnail, title, meta, the private note as a chip (&quot;Lessen sugar&quot;), kebab. Header actions: grid/list toggle and &quot;Select&quot;. Bottom-right two floating buttons: a dice (the Decider) and a plus.</p>
+<ul>
+<li><strong>Select mode</strong> (#117, #118): header becomes &quot;1 selected&quot; with kebab and close; rows get checkmarks; a floating bar with four circular buttons (add to collection, add to list, mark done, trash).</li>
+<li><strong>Empty state under Made</strong> (#116): chef-hat mascot, &quot;You haven&#39;t completed any Recipes yet&quot;, &quot;Recipes will start to appear here as you share more things to Albo.&quot;</li>
+<li><strong>Decider empty state</strong> (#127): red Dutch oven, &quot;Nothing to decide yet&quot;, &quot;Save some recipes first so the Decider has something to pick from.&quot;, pill &quot;Find Recipes&quot;. The Decider is a random picker from the Want to try set.</li>
+</ul>
+<p><strong>Build</strong>: A generic <code>CategoryView&lt;Category&gt;</code> driven by an enum; <code>EditMode</code> for selection; a <code>.confirmationDialog</code> for delete.</p>
+<hr>
+<h2>10. Reviewing and journaling</h2>
+<h3>10.1 &quot;How was it?&quot; (#80 to #84, #106, #107, #123)</h3>
+<p>Two-stage form:</p>
+<ol>
+<li><strong>Sentiment</strong>: megaphone icon, &quot;How was it?&quot;, seven chips in a flow layout: Loved it (heart), Hidden gem (diamond), It&#39;s okay (smile), Meh (neutral), Overhyped (exploding head), Not for me (shrug), Avoid (no-entry). Submit is disabled until one is chosen.</li>
+<li><strong>Details</strong>: the chosen chips collapse into a horizontal row; &quot;Title&quot; field with placeholder &quot;What did you love about it?&quot;; five stars; date row &quot;Completed Jun 10&quot; (opens a calendar picker &quot;Select date&quot; with Cancel / OK) and a &quot;Don&#39;t remember&quot; button; dashed &quot;Add photos&quot; (Choose from Gallery / Take a Photo; uploaded photos show with a remove badge); &quot;Tag people you did this with&quot; (opens a friend search sheet with an empty state &quot;Add friends to tag them in your reviews&quot;); &quot;Friends only&quot; checkbox; black Submit.</li>
+</ol>
+<h3>10.2 After submit</h3>
+<p>A top toast &quot;Marked as complete&quot; and a modal <strong>&quot;1 week streak&quot;</strong> surrounded by fire emoji: &quot;Keep marking saves as done to extend your streak.&quot; Continue (#78, #79). The item gains a badge and a review card (#85). The review appears on the profile Journal as &quot;Cooked Triple Chocolate Cookies, a hidden gem, 10 Jun&quot; (#186), in the Calendar on its date (#172), and, unless friends-only, on the community feed as a card with stars and the title text (#162).</p>
+<p><strong>Pattern</strong>: One action, five surfaces. A single review feeds the item, the journal, the calendar, the feed and the streak.
+<strong>Build</strong>: <code>Review</code> is a first-class model. Emit a domain event on create; each surface subscribes.</p>
+<h3>10.3 Journal on the profile (#185 to #190)</h3>
+<p>Per category tab, the profile shows: a &quot;Recommendations&quot; card (&quot;Recipes rated 4 stars or above&quot;), a &quot;Wants to Try&quot; / &quot;Wants to Go&quot; list, and &quot;Journal&quot; with a sort menu (Timeline / Rating). Entries read like sentences: &quot;Cooked Carbonara, loved it&quot;, &quot;Visited London, not for me&quot;, &quot;Read Project Hail Mary, loved it&quot;. Lists appear under &quot;Lists&quot; on the Workouts tab.</p>
+<h3>10.4 Calendar (#172)</h3>
+<p>Vertical month grid (M to S). Days with reviews show the item thumbnail (a dish on Jun 10, the Project Hail Mary cover on Jun 11). Future months render faded.</p>
+<hr>
+<h2>11. Reminders and notifications</h2>
+<h3>11.1 Set a Reminder (#92, #142)</h3>
+<p>Sheet: &quot;Remind me in the&quot; selector defaulting to &quot;Morning (9:00 AM)&quot;; groups This week / Next week / In 2 weeks / In 3 weeks, each a horizontal row of day cards (&quot;Fri 12 Jun&quot;); a &quot;Custom date &amp; time&quot; button. Sundays are omitted in some rows (Sun 21 and Sun 28 are missing), which looks like a bug; do not copy it.</p>
+<p>The default time comes from Preferences (#203): Morning 9:00 AM, Afternoon 12:00 PM, Evening 6:00 PM, Before bed 10:00 PM.</p>
+<p><strong>Build</strong>: <code>UNCalendarNotificationTrigger</code>. Store the reminder on the save; render the Notifications list (#131) from delivered notifications plus server-side history: &quot;Reminder: Triple Chocolate Cookies&quot; with the item description and &quot;6 minutes ago&quot;. Tapping opens the item (#132).</p>
+<h3>11.2 Location notifications (#193, #194)</h3>
+<p>A dedicated settings page: toggle &quot;Enable Notifications, Get notified near saved places&quot;; a &quot;How it Works&quot; list: Background Notifications (&quot;even when the app isn&#39;t open&quot;), Battery Efficient (&quot;only checks when you move significantly&quot;), Privacy Focused (<strong>&quot;Only monitors the 20 closest saved places. No continuous tracking or data sent to servers.&quot;</strong>); a Permissions row showing &quot;When In Use (Upgrade to Always for background)&quot; and a black &quot;Upgrade to Always&quot; button. Enabling shows a toast &quot;Location notifications enabled!&quot;</p>
+<p><strong>Build</strong>: <code>CLLocationManager</code> region monitoring is capped at 20 regions per app, which is exactly why the copy says 20. Use significant-change monitoring to re-pick the 20 nearest saved places whenever the user moves.</p>
+<h3>11.3 Notification preferences (#192)</h3>
+<p>Enable Notifications (master), Location Notifications (chevron), Reminders &amp; To-dos, Friends &amp; Social, Marketing, each with a one-line description.</p>
+<hr>
+<h2>12. Ask Albo (AI)</h2>
+<p>Two entry points, one component:</p>
+<ul>
+<li><strong>Global</strong> (#57 to #59, #128, #129): from the Library FAB. Header with logo and &quot;Ask Albo&quot;, a large mascot circle, &quot;Ask Albo about anything you&#39;ve saved&quot;, input &quot;Ask anything...&quot; with a circular up-arrow send. Empty-library answer: &quot;It looks like your library is currently empty, so I don&#39;t have any saved items to recommend as the best thing to do. If you&#39;d like to start building your list, feel free to share some links, recipes, or places...&quot; Each answer has copy and regenerate icons; the header has a refresh that asks &quot;Clear chat? This will delete the messages in this conversation.&quot; Cancel / Clear.</li>
+<li><strong>Per item</strong> (#93 to #95): &quot;Ask Albo about Triple Chocolate Cookies&quot;. The recorded answer to &quot;How much sugar is needed?&quot; was &quot;I&#39;m sorry, but the recipe details I have available don&#39;t list the specific ingredients&quot;, even though the ingredients were on screen. Answers carry copy, regenerate, thumbs up and thumbs down.</li>
+</ul>
+<p><strong>Build</strong>: A <code>ChatSheet(scope: .library | .item(id))</code> with a streaming transcript. Send the item&#39;s structured fields as context so the per-item chat can answer quantity questions. AI chat is a Pro feature (#198), so gate it behind entitlement.</p>
+<hr>
+<h2>13. Map</h2>
+<ul>
+<li><strong>Entry</strong> (#133): a custom warm-up modal over a blurred dark globe: hat-wearing mascot with a map, &quot;Enable Location for Better Experience&quot;, three bullets (Show places near you, Calculate distances to saved locations, Provide personalized recommendations), a shield note &quot;Your location data stays private and is never shared&quot;, blue Continue.</li>
+<li><strong>Globe</strong> (#134, #144): a 3D globe on a starry dark background with country labels, saved places as icons (a museum glyph in New York, a flag in the UK) with uppercase labels like &quot;WANT TO GO&quot;. Bottom: a filter pill &quot;Show all&quot; with a chevron, a search bar &quot;Search places...&quot;, and two floating buttons (a building icon that opens a places list, a crosshair to recenter).</li>
+<li><strong>Filter menu</strong> (#138): Search in collection..., Want to go, Only my saves, Show all.</li>
+<li><strong>Zoomed map</strong> (#135, #139, #143): standard map tiles with a blue user marker; a London pin with a UK flag and &quot;WANT TO GO&quot; caption; a bookmark-style pin for &quot;Only my saves&quot;.</li>
+<li><strong>Places list</strong> (#136): a sheet listing places matching &quot;New York City&quot; with thumbnail, name, category, rating, &quot;31 saves&quot; with avatars and a megaphone.</li>
+<li><strong>Place sheet</strong> (#140, #141) and its overflow are the same components as chapter 8.</li>
+</ul>
+<p><strong>Build</strong>: MapKit with <code>Map</code> in SwiftUI (iOS 17), <code>MapStyle.imagery</code> or a custom dark style for the globe, <code>Annotation</code> views for pins with flag emoji and caption. Filters are a <code>Menu</code>.</p>
+<hr>
+<h2>14. Community and social</h2>
+<h3>14.1 Feed (#145, #161 to #166)</h3>
+<p>Segmented header: Following / Community / Nearby / Events, search icon right. A &quot;Get Started&quot; banner card &quot;Save content from anywhere to get started&quot; sits above the grid until the checklist completes. The grid is two-column masonry: image, stars, title or review text, author avatar, and a reaction button. Long-press opens a reaction bar: heart, laughing, surprised, sad, fire, thumbs up, plus. Following empty state: &quot;No posts yet. Posts will appear here as people share.&quot;</p>
+<p><strong>Events</strong> is a chronological list grouped by date header (&quot;13 July / Monday&quot;): thumbnail, title, time and venue, and a flyer preview. Recorded events were Manila-based (IVE fan support at PICKUP COFFEE, Wave to Earth at SM Mall of Asia Arena, BTS at Philippine Sports Stadium), so Events is location-aware.</p>
+<h3>14.2 Post detail (#156)</h3>
+<p>Author header (&quot;Kimmy&quot;, Follow, share), hero photo, &quot;1m 34s&quot; video length badge, a &quot;Recipes&quot; section with the linked save card (&quot;Crispy Smashed Potato Salad, 45 mins, 1165 saved&quot;), and a comment composer (&quot;Say something...&quot;, GIF, count, bookmark).</p>
+<h3>14.3 Public profile (#158 to #160)</h3>
+<p>Name, handle, avatar, &quot;1 common save&quot; badge, Followers / Following / Saves, a Following button, and category tabs with counts (Collections, Recipes (1), Places (0), Films (0), Books, Events, Articles, Tutorials, Games). The share icon opens a profile card modal (photo, name, &quot;United States&quot;, &quot;0 Collections&quot;, &quot;7 Saves&quot;, &quot;New to Albo on Albo&quot;, Copy Link / Share).</p>
+<h3>14.4 Add Friends (#180 to #182)</h3>
+<p>Search users, a &quot;Find your friends on Albo! Tap to sync your contacts now!&quot; card, &quot;Meet the Albo team!&quot; with Isaac (37 friends on Albo), Karolina @ Albo (14), Jakee (11), each with Follow. A QR icon top-right opens the camera (permission copy: &quot;Albo needs camera access to take profile pictures and scan QR codes&quot;) with &quot;Cancel&quot; and &quot;My QR&quot; buttons.</p>
+<h3>14.5 Chat (#130)</h3>
+<p>Empty state: notepad illustration, &quot;Find Friends&quot; button. Direct messaging exists but was not exercised.</p>
+<hr>
+<h2>15. Gamification, growth and settings</h2>
+<h3>15.1 Get Started checklist (#146 to #149)</h3>
+<p>A sheet over the community feed: lightning icon, &quot;Get Started&quot;, &quot;Progress 2/7&quot;, &quot;Get started with Albo to unlock 520 extra imports.&quot; A hero task card rotates through incomplete tasks with a large illustration and a green &quot;Claim! +N&quot; or blue &quot;Start now&quot; button. Tasks and rewards observed:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Copy</th>
+<th>Reward</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Try making a list</td>
+<td></td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Import a screenshot</td>
+<td>Share things you see in videos, or irl.</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Import 5 things</td>
+<td>Kickstart your collection. (0/5)</td>
+<td>+4 shown, +10 listed</td>
+</tr>
+<tr>
+<td>Pin the Albo shortcut</td>
+<td>Import things to Albo even faster.</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Invite friends</td>
+<td>Earn 100 credits for every friend who joins</td>
+<td>+500</td>
+</tr>
+<tr>
+<td>Try bulk importing</td>
+<td>Add a whole collection of saves at once.</td>
+<td>+2</td>
+</tr>
+<tr>
+<td>Try reviewing something</td>
+<td>Rate and review one of your saves.</td>
+<td>+2</td>
+</tr>
+</tbody></table>
+<h3>15.2 Pin the Albo shortcut (#150 to #155)</h3>
+<p>A tutorial sheet: &quot;How to pin the Albo shortcut&quot;, a phone mockup of the iOS share sheet (with real-looking apps: AirDrop, WhatsApp, Instagram, Claude, &quot;Find products on Amazon&quot;), captions &quot;Albo doesn&#39;t show in your share sheet by default...&quot;, &quot;You have to pin it&quot;, &quot;Now you can save to Albo in a single tap&quot;, a progress bar, and &quot;Let&#39;s do it&quot;. The final step (#155) is a real share sheet opened on the albo.inc/how-to/pin-to-share URL showing &quot;Edit Actions&quot; so the user can favorite &quot;Add to Albo&quot;.</p>
+<p><strong>Build</strong>: Open <code>UIActivityViewController</code> on a help URL; the user pins the extension there. Ship the mockup steps as a looping video.</p>
+<h3>15.3 Streaks, stamps, leaderboard</h3>
+<ul>
+<li><strong>Streak</strong> modal after marking done (chapter 10).</li>
+<li><strong>Stamps</strong> (#183, #184): a grid of badges; &quot;Digital Hoarder&quot; is locked with a progress bar &quot;Import 10 things, 2 / 10&quot; and subtitle &quot;Build up your stash in Albo!&quot;</li>
+<li><strong>Leaderboard</strong> (#196, #197): segmented &quot;Hoarders&quot; (by saves; #1 Claire with 22,437 saves; the user pinned at top as &quot;#117455, You, 0 saves&quot;) and &quot;Yappers&quot; (by reviews; #1 Malak, 186 done; user &quot;#62&quot;). Rank, avatar, name, handle, count.</li>
+</ul>
+<h3>15.4 Settings tree (#191 to #206)</h3>
+<p><strong>General</strong>: Notifications (chapter 11), Account Settings (Make Account Private toggle with a confirm dialog &quot;When your account is private, only people you approve can see your profile, collections, and imports&quot;), Leaderboards, Manage Subscription (Pro / Max cards, &quot;Change my plan&quot;, red &quot;Cancel my subscription&quot;), Appearance (Theme Light / Dark / System; App Icon grid: Default, Browse, King, Reads, Cooks, News, with the system alert &quot;You have changed the icon for Albo&quot;), Language (System default, English, Español, 中文 简体, 日本語, 한국어, Deutsch, Français, Bahasa Indonesia, and a &quot;Want another language?&quot; button), Preferences (Default Map: Apple Maps / Google Maps; Default Reminder Time; Places: Enabled, Show in profile).</p>
+<p><strong>Resources</strong>: Ambassador Program, Step by Step Guides, Set up Albo shortcut, Albo Web, Redeem Referral Code, QR Code Scanner.</p>
+<p><strong>Footer</strong>: Give us a rating, Our website, FAQs, Request Features, Email us any feedback, Report a bug, Delete Account (sheet: &quot;After you confirm, your account will be deleted within the next 14 days&quot;, a &quot;Reason for leaving&quot; dropdown, optional details 0/500, Confirm Deletion disabled until a reason is chosen), Terms of Service, Privacy Policy, red &quot;Sign Out&quot; with a confirm, User ID with copy, &quot;Version 1.13.4 (657P), Release&quot;, the team credit, and four social icons (Instagram, Threads, TikTok, X).</p>
+<h3>15.5 Permission map</h3>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>When</th>
+<th>Warm-up</th>
+<th>Screen</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tracking (ATT)</td>
+<td>First frame</td>
+<td>None</td>
+<td>#1</td>
+</tr>
+<tr>
+<td>Photos (limited)</td>
+<td>Profile picture, screenshots, review photos</td>
+<td>None, system picker</td>
+<td>#11, #97</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>Onboarding after demos</td>
+<td>Custom screen with Skip</td>
+<td>#35, #36</td>
+</tr>
+<tr>
+<td>Pasteboard</td>
+<td>Import via Link</td>
+<td>None</td>
+<td>#65</td>
+</tr>
+<tr>
+<td>Location (When In Use)</td>
+<td>First map open</td>
+<td>Custom modal with three benefits and a privacy note</td>
+<td>#133</td>
+</tr>
+<tr>
+<td>Location (Always)</td>
+<td>Location notifications settings</td>
+<td>Explanatory page with &quot;Upgrade to Always&quot;</td>
+<td>#193</td>
+</tr>
+<tr>
+<td>Calendar</td>
+<td>Add event to calendar</td>
+<td>None</td>
+<td>#168</td>
+</tr>
+<tr>
+<td>Camera</td>
+<td>Take a photo, QR scan</td>
+<td>None (usage string explains both)</td>
+<td>#181</td>
+</tr>
+<tr>
+<td>Contacts</td>
+<td>Add Friends sync</td>
+<td>Card &quot;Tap to sync your contacts now!&quot;</td>
+<td>#180</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>16. Swift build spec</h2>
+<h3>16.1 Architecture</h3>
+<ul>
+<li><strong>Platform</strong>: iOS 17 minimum (SwiftUI <code>Map</code>, <code>NavigationStack</code>, <code>PhotosPicker</code>, <code>PasteButton</code>, SwiftData all land cleanly). Swift 5.10+, strict concurrency on.</li>
+<li><strong>Pattern</strong>: MVVM with <code>@Observable</code> view models per screen and a small set of injected services. One <code>AppState</code> for session, entitlement and tab selection.</li>
+<li><strong>Persistence</strong>: SwiftData (or Core Data) in an <strong>App Group</strong> container so the share extension and the main app read the same store. Sync via the backend; treat local as cache.</li>
+<li><strong>Networking</strong>: <code>URLSession</code> + <code>async/await</code>; a typed <code>APIClient</code> with endpoints for auth, saves, extract, collections, reviews, reminders, social, chat, gamification.</li>
+<li><strong>Targets</strong>: <code>Albo</code> (app), <code>AlboShare</code> (share extension: &quot;Add to Albo&quot;), <code>AlboWidgets</code> (optional, not in recording), <code>AlboKit</code> (shared models, API client, design system as a Swift Package).</li>
+</ul>
+<h3>16.2 Frameworks</h3>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Framework</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sign in</td>
+<td>AuthenticationServices (Apple), Google Sign-In SDK or ASWebAuthenticationSession</td>
+</tr>
+<tr>
+<td>Subscriptions</td>
+<td>StoreKit 2 (<code>Product</code>, <code>Transaction</code>, <code>subscriptionStatus</code>)</td>
+</tr>
+<tr>
+<td>Rating prompt</td>
+<td>StoreKit <code>RequestReviewAction</code></td>
+</tr>
+<tr>
+<td>Tracking prompt</td>
+<td>AppTrackingTransparency</td>
+</tr>
+<tr>
+<td>Photos</td>
+<td>PhotosUI <code>PhotosPicker</code> (limited access mode)</td>
+</tr>
+<tr>
+<td>Camera / QR</td>
+<td>AVFoundation, <code>DataScannerViewController</code> (VisionKit) for QR</td>
+</tr>
+<tr>
+<td>Map / globe</td>
+<td>MapKit (<code>Map</code>, <code>Annotation</code>, <code>MapStyle</code>)</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>CoreLocation (region monitoring, significant-change)</td>
+</tr>
+<tr>
+<td>Reminders</td>
+<td>UserNotifications (<code>UNCalendarNotificationTrigger</code>)</td>
+</tr>
+<tr>
+<td>Calendar</td>
+<td>EventKit + EventKitUI (<code>EKEventEditViewController</code>)</td>
+</tr>
+<tr>
+<td>Contacts sync</td>
+<td>Contacts (<code>CNContactStore</code>)</td>
+</tr>
+<tr>
+<td>Share extension</td>
+<td>Social / UIKit <code>SLComposeServiceViewController</code> or a SwiftUI-hosted <code>NSExtensionPrincipalClass</code></td>
+</tr>
+<tr>
+<td>Alternate icons</td>
+<td><code>UIApplication.setAlternateIconName</code> (Info.plist <code>CFBundleIcons</code>)</td>
+</tr>
+<tr>
+<td>Markdown notes</td>
+<td>AttributedString markdown + custom keyboard toolbar</td>
+</tr>
+<tr>
+<td>Confetti / motion</td>
+<td>SwiftUI <code>TimelineView</code>, <code>Canvas</code>, or a small particle view</td>
+</tr>
+<tr>
+<td>Localization</td>
+<td>String Catalogs (9 languages listed on #202)</td>
+</tr>
+</tbody></table>
+<h3>16.3 Data model (Swift)</h3>
+<pre><code class="language-swift">enum SaveCategory: String, Codable, CaseIterable {
+    case recipe, place, film, book, product, workout, software
+    case tvShow, event, article, tutorial, game, note
+}
+
+enum SaveStatus: String, Codable { case saved, wantTo, done }
+
+@Model final class Save {
+    @Attribute(.unique) var id: UUID
+    var category: SaveCategory
+    var title: String
+    var subtitle: String?            // &quot;Soba noodle shop&quot;, &quot;Association / Organization&quot;
+    var coverURL: URL?
+    var sourceURL: URL?              // instagram.com/..., chewoutloud.com/...
+    var sourcePlatform: String?      // tiktok, instagram, safari, screenshot, note
+    var status: SaveStatus
+    var saveCount: Int               // &quot;1165 saves&quot;
+    var createdAt: Date
+    var privateNote: String?
+    var collections: [Collection]
+    var reviews: [Review]
+    var reminder: Reminder?
+    var recipe: RecipeDetails?       // ingredients, steps, yield, time, cuisine, course
+    var place: PlaceDetails?         // coordinate, rating, priceLevel, hours, phone, website, photos
+    var event: EventDetails?         // start, end, venue, organizer, address
+    var media: MediaDetails?         // year, genre, pages, runtime, author
+}
+
+struct Ingredient: Codable, Identifiable {
+    var id: UUID
+    var emoji: String
+    var name: String
+    var quantity: Double?
+    var unit: String?
+    var checked: Bool
+}
+
+struct RecipeDetails: Codable {
+    var timeLabel: String            // &quot;15 mins&quot;, &quot;Multi-day project&quot;
+    var cuisine: String?             // &quot;American&quot;
+    var course: String?              // &quot;Dessert&quot;
+    var yieldLabel: String?          // &quot;Makes 12 cookies&quot;
+    var ingredients: [Ingredient]
+    var steps: [String]
+    var baseMultiplier: Int = 1
+}
+
+@Model final class Collection {
+    @Attribute(.unique) var id: UUID
+    var name: String                 // max 50
+    var details: String?             // max 200
+    var coverURL: URL?
+    var isPublic: Bool
+    var owner: UserSummary
+    var inviteURL: URL?              // join.albo.inc/...
+    var saves: [Save]
+}
+
+@Model final class CuratedList {
+    var id: UUID
+    var category: SaveCategory
+    var title: String
+    var details: String?
+    var photos: [URL]
+    var isRanked: Bool
+    var items: [Save]                // ordered
+}
+
+enum Sentiment: String, Codable, CaseIterable {
+    case lovedIt, hiddenGem, itsOkay, meh, overhyped, notForMe, avoid
+    var emoji: String { ... }        // heart, diamond, smile, neutral, exploding head, shrug, no entry
+}
+
+@Model final class Review {
+    var id: UUID
+    var save: Save
+    var sentiment: Sentiment
+    var title: String?
+    var stars: Int?                  // 1...5
+    var completedOn: Date?           // nil == &quot;Don&#39;t remember&quot;
+    var photos: [URL]
+    var taggedFriends: [UserSummary]
+    var friendsOnly: Bool
+}
+
+struct Reminder: Codable {
+    var fireAt: Date
+    var slot: ReminderSlot           // morning 9, afternoon 12, evening 18, beforeBed 22, custom
+    var notificationID: String
+}
+
+struct GamificationState: Codable {
+    var credits: Int
+    var streakWeeks: Int
+    var checklist: [ChecklistTask]   // 7 tasks with reward and progress
+    var stamps: [Stamp]              // &quot;Digital Hoarder&quot;: 2/10
+    var hoarderRank: Int?
+    var yapperRank: Int?
+}
+
+enum Entitlement: String, Codable { case free, pro, max }
+</code></pre>
+<h3>16.4 Navigation</h3>
+<pre><code class="language-swift">enum Tab { case library, map, add, community, profile }
+
+// Root
+TabView(selection: $app.tab) {
+    LibraryView()   .tag(Tab.library)
+    MapView()       .tag(Tab.map)
+    Color.clear     .tag(Tab.add)      // intercept selection, present AddSheet
+    CommunityView() .tag(Tab.community)
+    ProfileView()   .tag(Tab.profile)
+}
+.sheet(isPresented: $app.showAdd) { AddAnythingSheet() }
+.overlay(alignment: .bottomTrailing) { AskAlboButton() }
+</code></pre>
+<p>Each tab owns a <code>NavigationStack</code> with a typed <code>Route</code> enum: <code>.save(id)</code>, <code>.collection(id)</code>, <code>.category(SaveCategory)</code>, <code>.profile(userID)</code>, <code>.settings</code>, <code>.settingsChild(SettingsRoute)</code>, <code>.calendar</code>, <code>.notifications</code>, <code>.stamps</code>, <code>.leaderboard</code>.</p>
+<p>Sheets, not pushes, for: Add anything, Import via Link, Import via Screenshot, Review form, New Collection, Add to collection, Item actions, Set a Reminder, Ask Albo, Get Started checklist, Pin shortcut tutorial, Manage Subscription, Delete Account.</p>
+<p>Onboarding is a separate <code>NavigationStack</code> rooted in <code>OnboardingCoordinator</code> with a <code>[OnboardingStep]</code> array so steps can be reordered from a remote config.</p>
+<h3>16.5 Design system package (<code>AlboKit/DesignSystem</code>)</h3>
+<p>Tokens:</p>
+<pre><code class="language-swift">enum AlboColor {
+    static let ink        = Color(&quot;Ink&quot;)         // near-black text, primary button
+    static let ground     = Color(&quot;Ground&quot;)      // white / near-black
+    static let surface    = Color(&quot;Surface&quot;)     // light grey / dark grey cards
+    static let accentBlue = Color(&quot;AccentBlue&quot;)  // tutorial callouts, selection
+    static let brand      = Color(&quot;Brand&quot;)       // orange app icon, TIPS card
+    static let reward     = Color(&quot;Reward&quot;)      // green claim buttons
+    static let rating     = Color(&quot;Rating&quot;)      // yellow 4.9 card
+    static let danger     = Color(&quot;Danger&quot;)      // red destructive
+}
+
+enum AlboRadius { static let card: CGFloat = 20; static let pill: CGFloat = 999; static let chip: CGFloat = 14 }
+</code></pre>
+<p>Components (one file each; names map to section 3.6):</p>
+<p><code>ProgressHeader</code>, <code>PrimaryButton</code>, <code>SecondaryButton</code>, <code>SelectableOptionCard</code>, <code>StatCard</code>, <code>TestimonialCard</code>, <code>FeatureCard</code>, <code>TapHereCallout</code>, <code>TutorialPlayer</code>, <code>ItemActionsSheet</code>, <code>SentimentChip</code>, <code>StarRating</code>, <code>IngredientRow</code>, <code>ServingMultiplier</code>, <code>CategoryChipRow</code>, <code>SaveCard</code>, <code>MasonryGrid</code>, <code>ReactionBar</code>, <code>ReminderDateGrid</code>, <code>ChecklistTaskCard</code>, <code>SettingsRow</code>, <code>Toast</code>, <code>EmptyState</code>, <code>Mascot(variant:)</code>, <code>Confetti</code>, <code>OrbitingIcons</code>.</p>
+<h3>16.6 Screen-to-view map</h3>
+<table>
+<thead>
+<tr>
+<th>Screens</th>
+<th>SwiftUI view</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#1</td>
+<td><code>ATTGate</code></td>
+<td>Request before root appears</td>
+</tr>
+<tr>
+<td>#2</td>
+<td>Launch screen</td>
+<td>Static</td>
+</tr>
+<tr>
+<td>#3, #45</td>
+<td><code>WelcomeView</code>, <code>SignInView</code></td>
+<td>Share <code>OrbitingIcons</code></td>
+</tr>
+<tr>
+<td>#4, #32</td>
+<td><code>SocialProofView</code>, <code>TeamReviewsView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#5, #19, #21</td>
+<td><code>QuizStepView(question:options:multi:)</code></td>
+<td>Generic</td>
+</tr>
+<tr>
+<td>#6, #20</td>
+<td><code>ReinforcementView</code></td>
+<td>Answer-driven copy</td>
+</tr>
+<tr>
+<td>#7 to #13</td>
+<td><code>UsernameView</code>, <code>NameView</code>, <code>AvatarView</code></td>
+<td>PhotosPicker + crop</td>
+</tr>
+<tr>
+<td>#14</td>
+<td><code>DiscoverySourceView</code></td>
+<td>Single-select</td>
+</tr>
+<tr>
+<td>#15 to #18</td>
+<td><code>FeatureCarouselView</code></td>
+<td><code>TabView(.page)</code></td>
+</tr>
+<tr>
+<td>#22 to #31</td>
+<td><code>TutorialPlayer(script:)</code> + <code>ImportResultView</code></td>
+<td>Reuse real result cards</td>
+</tr>
+<tr>
+<td>#33 to #36</td>
+<td><code>NotificationsWarmupView</code></td>
+<td>Rating prompt first</td>
+</tr>
+<tr>
+<td>#37</td>
+<td><code>BuildingPlanView</code></td>
+<td>Timer-driven</td>
+</tr>
+<tr>
+<td>#38 to #40</td>
+<td><code>ValueGraphView</code>, <code>PremiumMockupView</code>, <code>TrialReminderView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#41 to #43</td>
+<td><code>PaywallView</code></td>
+<td>StoreKit 2</td>
+</tr>
+<tr>
+<td>#44</td>
+<td><code>WelcomeClubView</code></td>
+<td>On purchase only</td>
+</tr>
+<tr>
+<td>#47 to #56</td>
+<td><code>FirstImportCoach</code></td>
+<td>App Group detection</td>
+</tr>
+<tr>
+<td>#56, #99</td>
+<td><code>LibraryView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#57 to #59, #93 to #95, #128, #129</td>
+<td><code>AskAlboSheet(scope:)</code></td>
+<td>Streaming</td>
+</tr>
+<tr>
+<td>#60</td>
+<td><code>AddAnythingSheet</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#61 to #66</td>
+<td><code>ImportLinkSheet</code></td>
+<td><code>PasteButton</code></td>
+</tr>
+<tr>
+<td>#67, #68</td>
+<td><code>NoteEditorView</code></td>
+<td>Markdown toolbar</td>
+</tr>
+<tr>
+<td>#69, #85 to #92, #121, #132, #157</td>
+<td><code>SaveDetailView</code> + <code>RecipeSection</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#70, #115, #122</td>
+<td><code>AddToCollectionSheet</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#71 to #77</td>
+<td><code>NewCollectionFlow</code></td>
+<td>3 steps</td>
+</tr>
+<tr>
+<td>#78, #79</td>
+<td><code>StreakModal</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#80 to #84, #106, #107, #123</td>
+<td><code>ReviewFormView</code></td>
+<td>Two stages</td>
+</tr>
+<tr>
+<td>#96 to #98</td>
+<td><code>ImportScreenshotSheet</code></td>
+<td>Max 9</td>
+</tr>
+<tr>
+<td>#100 to #103</td>
+<td><code>BulkImportGuide</code></td>
+<td>Branching</td>
+</tr>
+<tr>
+<td>#104, #105, #110, #111, #120, #170</td>
+<td><code>CategorySearchSheet(category:)</code></td>
+<td>Shared</td>
+</tr>
+<tr>
+<td>#108, #109, #112</td>
+<td><code>ListEditorView</code></td>
+<td><code>onMove</code></td>
+</tr>
+<tr>
+<td>#113 to #119, #124 to #127</td>
+<td><code>CategoryView(category:)</code></td>
+<td>Tabs, select mode, Decider</td>
+</tr>
+<tr>
+<td>#131, #132</td>
+<td><code>NotificationsView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#133 to #144</td>
+<td><code>MapView</code>, <code>LocationWarmup</code>, <code>PlaceSheet</code>, <code>PlacesListSheet</code></td>
+<td>MapKit</td>
+</tr>
+<tr>
+<td>#145, #161 to #166</td>
+<td><code>CommunityFeedView</code></td>
+<td>4 segments, masonry</td>
+</tr>
+<tr>
+<td>#146 to #149</td>
+<td><code>GetStartedSheet</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#150 to #155</td>
+<td><code>PinShortcutTutorial</code></td>
+<td>Ends in share sheet</td>
+</tr>
+<tr>
+<td>#156</td>
+<td><code>PostDetailView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#158 to #160, #171, #178, #179, #185 to #190</td>
+<td><code>ProfileView(user:)</code></td>
+<td>Own vs public</td>
+</tr>
+<tr>
+<td>#167 to #169</td>
+<td><code>EventDetailView</code> + <code>EKEventEditView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#172</td>
+<td><code>CalendarView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#173 to #175</td>
+<td><code>EditProfileView</code>, <code>AddLinksSheet</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#176, #177, #195</td>
+<td><code>AccountSettingsView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#180 to #182</td>
+<td><code>AddFriendsView</code>, <code>QRScannerView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#183, #184</td>
+<td><code>StampsView</code>, <code>StampDetailView</code></td>
+<td></td>
+</tr>
+<tr>
+<td>#191 to #206</td>
+<td><code>SettingsView</code> and children</td>
+<td></td>
+</tr>
+<tr>
+<td>#54</td>
+<td>Share extension UI</td>
+<td>Separate target</td>
+</tr>
+</tbody></table>
+<h3>16.7 Share extension contract</h3>
+<p>The extension receives a URL, text, or image. It writes a <code>PendingImport</code> record into the App Group store, posts a Darwin notification, shows &quot;Saved!&quot; with an optional note, and returns. The main app, on becoming active, drains pending imports through the extraction API and shows the &quot;Great job!&quot; modal on the very first one. Do not do network work in the extension beyond a fire-and-forget enqueue; extensions are memory-limited.</p>
+<h3>16.8 Backend surface the app assumes</h3>
+<p><code>POST /extract</code> (url | text | images) returning typed saves; <code>GET/POST /saves</code>; <code>/collections</code> with invite tokens; <code>/lists</code>; <code>/reviews</code>; <code>/reminders</code>; <code>/social</code> (follow, friends, feed, nearby, events); <code>/chat</code> (streaming, scoped to library or item); <code>/gamification</code> (credits, checklist, stamps, leaderboard); <code>/billing/link</code> to attach a StoreKit transaction to a user. Search endpoints per category backed by third-party catalogs (books show pages and year, places show rating and price level, workouts show muscle-group tags).</p>
+<hr>
+<h2>17. Build order</h2>
+<p>Ship in this order so each milestone is usable:</p>
+<ol>
+<li><strong>Foundation</strong>: <code>AlboKit</code> package (tokens, components, models), App Group, auth, StoreKit 2, tab shell, Library with mock data.</li>
+<li><strong>The core loop</strong>: share extension → extraction → <code>SaveDetailView</code> for recipe, place, article. First-import detection and celebration. This alone is the product.</li>
+<li><strong>Onboarding</strong>: all 25 steps with the paywall. Instrument every step.</li>
+<li><strong>Organize</strong>: collections, category views, select mode, add-to-collection.</li>
+<li><strong>Do</strong>: review form, streak, journal, calendar, reminders (local notifications).</li>
+<li><strong>Map</strong>: warm-up, globe, filters, place sheet, location notifications.</li>
+<li><strong>Grow</strong>: Get Started checklist, credits, stamps, leaderboard, pin-shortcut tutorial, invites, referral codes.</li>
+<li><strong>Social</strong>: feed, reactions, post detail, profiles, follow, add friends, chat.</li>
+<li><strong>AI</strong>: Ask Albo global and per item, entitlement-gated.</li>
+<li><strong>Polish</strong>: alternate icons, dark mode pass, nine languages, Appearance and Preferences, delete account flow.</li>
+</ol>
+<hr>
+<h2>Appendix: all 206 recorded screens</h2>
+<p>Timestamps are minutes:seconds into the 23m41s recording. Types are ScreensDesign&#39;s classification. Each link opens the screen on ScreensDesign.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Time</th>
+<th>Type</th>
+<th>Flow</th>
+<th>Visible text (sample)</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0:00</td>
+<td>permissions</td>
+<td>Onboarding &amp; Account Setup</td>
+<td>Ask App Not to Track · Allow</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302830">view</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>0:03</td>
+<td>other</td>
+<td>Animated Feature Introduction</td>
+<td>Albo · BY THE FEEL GOOD PROJECT</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302831">view</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>0:07</td>
+<td>onboarding</td>
+<td>Animated Feature Introduction</td>
+<td>EN · Albo · BY THE FEEL GOOD PROJECT</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302832">view</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>0:21</td>
+<td>onboarding</td>
+<td>Social Proof</td>
+<td>148k+ Happy users · 3.9M+ Saves made · 4.9</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302833">view</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>0:31</td>
+<td>onboarding</td>
+<td>Personalization Quiz: User Goals</td>
+<td>What brings you to Albo? · Because I want to... · Actually do the things I save</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302834">view</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>0:38</td>
+<td>onboarding</td>
+<td>Profile Creation</td>
+<td>You came to the right place · Let&#39;s go · Library</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302835">view</a></td>
+</tr>
+<tr>
+<td>7</td>
+<td>0:53</td>
+<td>onboarding</td>
+<td>Profile Creation</td>
+<td>Pick a username · juliascreens · Available</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302836">view</a></td>
+</tr>
+<tr>
+<td>8</td>
+<td>0:58</td>
+<td>onboarding</td>
+<td>Profile Creation</td>
+<td>What should I call you? · Julia · Continue</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302837">view</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>1:01</td>
+<td>onboarding</td>
+<td>Profile Creation</td>
+<td>Add a profile picture please · You can change this later. · Julia</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302838">view</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td>1:02</td>
+<td>onboarding</td>
+<td>Profile Creation</td>
+<td>Add a profile picture please · You can change this later. · Julia</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302839">view</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>1:05</td>
+<td>permissions</td>
+<td>Profile Creation</td>
+<td>Photos · Collections · Private Access to Photos</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302840">view</a></td>
+</tr>
+<tr>
+<td>12</td>
+<td>1:08</td>
+<td>editor</td>
+<td>Profile Creation</td>
+<td>Crop Image · Cancel · Done</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302841">view</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td>1:10</td>
+<td>onboarding</td>
+<td>Profile Creation</td>
+<td>Add a profile picture please · You can change this later. · Julia</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302842">view</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td>1:15</td>
+<td>onboarding</td>
+<td>Discovery Source Survey</td>
+<td>How did you end up here? · Friend or Family · TikTok</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302843">view</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td>1:18</td>
+<td>onboarding</td>
+<td>Feature Value Carousel</td>
+<td>Quentin Tarantino&#39;s · ONCE UPON A TIME IN HOLLYWOOD · Here I come. Here I come.</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302844">view</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td>1:21</td>
+<td>onboarding</td>
+<td>Feature Value Carousel</td>
+<td>Garlic 1 clove · Him: &#39;I&#39;ll be home in 5&#39; Me: · Prawns 200g</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302845">view</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td>1:23</td>
+<td>onboarding</td>
+<td>Feature Value Carousel</td>
+<td>VIBEY LONDON RESTAURANTS · for 2025 · Show me how!</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302846">view</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td>1:25</td>
+<td>onboarding</td>
+<td>Feature Value Carousel</td>
+<td>Show me how!</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302847">view</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td>1:33</td>
+<td>onboarding</td>
+<td>Personalization Quiz: Saving Habits</td>
+<td>Where do you save things at the moment? · Social Media · Websites</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302848">view</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td>1:36</td>
+<td>onboarding</td>
+<td>Onboarding &amp; Account Setup</td>
+<td>No problem! · Show me how</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302849">view</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td>1:43</td>
+<td>onboarding</td>
+<td>Personalization Quiz: Content Interests</td>
+<td>Pick anything that catches your eye. · Travel · Restaurants</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302850">view</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td>1:50</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · Tap here · JAPAN FOOD GUIDE</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302851">view</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td>1:53</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · Search · Fleur 玉潔</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302852">view</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td>1:54</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · AirDrop · Messeges</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302853">view</a></td>
+</tr>
+<tr>
+<td>25</td>
+<td>1:57</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · Importing... · watching everything at 2x speed</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302854">view</a></td>
+</tr>
+<tr>
+<td>26</td>
+<td>2:00</td>
+<td>other</td>
+<td>Core Feature Demos</td>
+<td>12 places found in Instagram video · Just like magic! · Japan Food Guide</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302855">view</a></td>
+</tr>
+<tr>
+<td>27</td>
+<td>2:12</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · Join our Free Recipe Club! · CHEW out loud</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302856">view</a></td>
+</tr>
+<tr>
+<td>28</td>
+<td>2:15</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · Easy Jamaican Jerk Chicken Recipe · Tap here</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302857">view</a></td>
+</tr>
+<tr>
+<td>29</td>
+<td>2:17</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · AirDrop · Messeges</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302858">view</a></td>
+</tr>
+<tr>
+<td>30</td>
+<td>2:20</td>
+<td>onboarding</td>
+<td>Core Feature Demos</td>
+<td>How to save to Albo · Importing... · watching everything at 2x speed</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302859">view</a></td>
+</tr>
+<tr>
+<td>31</td>
+<td>2:23</td>
+<td>other</td>
+<td>Core Feature Demos</td>
+<td>1 recipe found in web link · Just like magic! · Easy Jamaican Jerk Chicken</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302860">view</a></td>
+</tr>
+<tr>
+<td>32</td>
+<td>2:32</td>
+<td>onboarding</td>
+<td>Onboarding &amp; Account Setup</td>
+<td>Albo · Mialdonetti · Am</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302861">view</a></td>
+</tr>
+<tr>
+<td>33</td>
+<td>2:46</td>
+<td>onboarding</td>
+<td>Permissions Warm-up</td>
+<td>Skip · Don&#39;t let a good save go to waste · Enjoying Albo?</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302862">view</a></td>
+</tr>
+<tr>
+<td>34</td>
+<td>2:47</td>
+<td>onboarding</td>
+<td>Permissions Warm-up</td>
+<td>Skip · Don&#39;t let a good save go to waste · Thanks for your feedback.</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302863">view</a></td>
+</tr>
+<tr>
+<td>35</td>
+<td>2:49</td>
+<td>permissions</td>
+<td>Permissions Warm-up</td>
+<td>Skip · Don&#39;t let a good save go to waste · Enable notifications</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302864">view</a></td>
+</tr>
+<tr>
+<td>36</td>
+<td>2:50</td>
+<td>permissions</td>
+<td>Building Your Plan</td>
+<td>11:33 · Skip · Don&#39;t let a good save go to waste</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302865">view</a></td>
+</tr>
+<tr>
+<td>37</td>
+<td>2:55</td>
+<td>onboarding</td>
+<td>Building Your Plan</td>
+<td>ALBO&#39;S BOX OF UNUSED SAVES · Making Albo yours · Building your watchlist...</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302866">view</a></td>
+</tr>
+<tr>
+<td>38</td>
+<td>2:59</td>
+<td>onboarding</td>
+<td>Final Value Proposition</td>
+<td>Less scrolling, more doing · Booked &amp; Busy · Endless Doomscrolling</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302867">view</a></td>
+</tr>
+<tr>
+<td>39</td>
+<td>3:03</td>
+<td>onboarding</td>
+<td>Final Value Proposition</td>
+<td>Turn recipes into ingredients and steps · Saved TV Shows · Saved Books</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302868">view</a></td>
+</tr>
+<tr>
+<td>40</td>
+<td>3:04</td>
+<td>paywall</td>
+<td>Final Value Proposition</td>
+<td>You&#39;ll get a reminder · 1 day · before</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302869">view</a></td>
+</tr>
+<tr>
+<td>41</td>
+<td>3:07</td>
+<td>paywall</td>
+<td>Paywall</td>
+<td>How the trial works · Today · In 2 Days - Reminder</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302870">view</a></td>
+</tr>
+<tr>
+<td>42</td>
+<td>3:10</td>
+<td>checkout</td>
+<td>Paywall</td>
+<td>How the trial works · Today · Unlock access to all the app&#39;s features</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302871">view</a></td>
+</tr>
+<tr>
+<td>43</td>
+<td>3:15</td>
+<td>paywall</td>
+<td>Paywall</td>
+<td>How the trial works · Today · In 2 Days - Reminder</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302872">view</a></td>
+</tr>
+<tr>
+<td>44</td>
+<td>3:20</td>
+<td>other</td>
+<td>Post-Subscription Welcome</td>
+<td>Welcome to the Digital Hoarder&#39;s Club! · Get Started</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302873">view</a></td>
+</tr>
+<tr>
+<td>45</td>
+<td>3:27</td>
+<td>onboarding</td>
+<td>Connect Google Account</td>
+<td>Continue with Apple · Continue with Google</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302874">view</a></td>
+</tr>
+<tr>
+<td>46</td>
+<td>3:29</td>
+<td>permissions</td>
+<td>Connect Google Account</td>
+<td>Cancel · Continue · Continue with Apple</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302875">view</a></td>
+</tr>
+<tr>
+<td>47</td>
+<td>3:48</td>
+<td>empty_state</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302876">view</a></td>
+</tr>
+<tr>
+<td>48</td>
+<td>3:51</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302877">view</a></td>
+</tr>
+<tr>
+<td>49</td>
+<td>3:53</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302878">view</a></td>
+</tr>
+<tr>
+<td>50</td>
+<td>4:02</td>
+<td>content_feed</td>
+<td>Saving and Importing Content</td>
+<td>Emily Luxton Travels · MENU · England</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302879">view</a></td>
+</tr>
+<tr>
+<td>51</td>
+<td>4:04</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>11:34 · Emily Luxton Travels · MENU</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302880">view</a></td>
+</tr>
+<tr>
+<td>52</td>
+<td>4:15</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>MENU · THE BEST THINGS · ST ALBANS -</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302881">view</a></td>
+</tr>
+<tr>
+<td>53</td>
+<td>4:18</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Best Things to do in St... · Messages · Mail</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302882">view</a></td>
+</tr>
+<tr>
+<td>54</td>
+<td>4:29</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Saved! · Add note · Done!</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302883">view</a></td>
+</tr>
+<tr>
+<td>55</td>
+<td>4:33</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302884">view</a></td>
+</tr>
+<tr>
+<td>56</td>
+<td>4:36</td>
+<td>home</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302885">view</a></td>
+</tr>
+<tr>
+<td>57</td>
+<td>4:41</td>
+<td>chat</td>
+<td>Using AI Features</td>
+<td>Library · Ask Albo · Ask Albo about anything you&#39;ve saved</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302886">view</a></td>
+</tr>
+<tr>
+<td>58</td>
+<td>4:53</td>
+<td>chat</td>
+<td>Using AI Features</td>
+<td>Library · Ask Albo · Ask Albo about anything you&#39;ve saved</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302887">view</a></td>
+</tr>
+<tr>
+<td>59</td>
+<td>4:59</td>
+<td>chat</td>
+<td>Using AI Features</td>
+<td>Library · Ask Albo · Ask Albo about anything you&#39;ve saved</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302888">view</a></td>
+</tr>
+<tr>
+<td>60</td>
+<td>5:06</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Library · Add anything · Paste any URL</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302889">view</a></td>
+</tr>
+<tr>
+<td>61</td>
+<td>5:10</td>
+<td>form</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302890">view</a></td>
+</tr>
+<tr>
+<td>62</td>
+<td>5:15</td>
+<td>onboarding</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302891">view</a></td>
+</tr>
+<tr>
+<td>63</td>
+<td>5:19</td>
+<td>onboarding</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302892">view</a></td>
+</tr>
+<tr>
+<td>64</td>
+<td>5:24</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302893">view</a></td>
+</tr>
+<tr>
+<td>65</td>
+<td>5:37</td>
+<td>permissions</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302894">view</a></td>
+</tr>
+<tr>
+<td>66</td>
+<td>5:39</td>
+<td>onboarding</td>
+<td>Saving and Importing Content</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302895">view</a></td>
+</tr>
+<tr>
+<td>67</td>
+<td>6:20</td>
+<td>editor</td>
+<td>Saving and Importing Content</td>
+<td>Cookie recipes · Save</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302896">view</a></td>
+</tr>
+<tr>
+<td>68</td>
+<td>6:34</td>
+<td>editor</td>
+<td>Saving and Importing Content</td>
+<td>Saved · Cookie recipes · Things Albo found</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302897">view</a></td>
+</tr>
+<tr>
+<td>69</td>
+<td>6:36</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · 15 mins · American</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302898">view</a></td>
+</tr>
+<tr>
+<td>70</td>
+<td>6:41</td>
+<td>other</td>
+<td>Organizing and Reviewing Content</td>
+<td>Triple Chocolate Cookies · All My Saves · Add to a collection</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302899">view</a></td>
+</tr>
+<tr>
+<td>71</td>
+<td>6:48</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>New Collection · Next · Recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302900">view</a></td>
+</tr>
+<tr>
+<td>72</td>
+<td>6:51</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>New Collection · Next · Recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302901">view</a></td>
+</tr>
+<tr>
+<td>73</td>
+<td>6:59</td>
+<td>editor</td>
+<td>Organizing and Reviewing Content</td>
+<td>Crop Image · Cancel · Done</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302902">view</a></td>
+</tr>
+<tr>
+<td>74</td>
+<td>7:03</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>New Collection · Next · Recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302903">view</a></td>
+</tr>
+<tr>
+<td>75</td>
+<td>7:05</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>New Collection · Done · Public - Anyone can see</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302904">view</a></td>
+</tr>
+<tr>
+<td>76</td>
+<td>7:07</td>
+<td>other</td>
+<td>Organizing and Reviewing Content</td>
+<td>New Collection · Close · Invite Friends</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302905">view</a></td>
+</tr>
+<tr>
+<td>77</td>
+<td>7:12</td>
+<td>other</td>
+<td>Organizing and Reviewing Content</td>
+<td>New Collection · Close · Invite link created and ready to share</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302906">view</a></td>
+</tr>
+<tr>
+<td>78</td>
+<td>7:19</td>
+<td>other</td>
+<td>Organizing and Reviewing Content</td>
+<td>Marked as complete · 1 · week streak</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302907">view</a></td>
+</tr>
+<tr>
+<td>79</td>
+<td>7:21</td>
+<td>other</td>
+<td>Organizing and Reviewing Content</td>
+<td>1 · week streak · Continue</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302908">view</a></td>
+</tr>
+<tr>
+<td>80</td>
+<td>7:23</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>How was it? · Loved it · Hidden gem</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302909">view</a></td>
+</tr>
+<tr>
+<td>81</td>
+<td>7:39</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>How was it? · Title · i lo</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302910">view</a></td>
+</tr>
+<tr>
+<td>82</td>
+<td>7:43</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>How was it? · Loved it · Hidden gem</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302911">view</a></td>
+</tr>
+<tr>
+<td>83</td>
+<td>8:04</td>
+<td>form</td>
+<td>Organizing and Reviewing Content</td>
+<td>How was it? · Hidden gem · Loved it</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302912">view</a></td>
+</tr>
+<tr>
+<td>84</td>
+<td>8:07</td>
+<td>other</td>
+<td>Organizing and Reviewing Content</td>
+<td>Tag people you did this with · Search friends · Add friends to tag them in your reviews</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302913">view</a></td>
+</tr>
+<tr>
+<td>85</td>
+<td>8:15</td>
+<td>content_feed</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · 15 mins · American</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302914">view</a></td>
+</tr>
+<tr>
+<td>86</td>
+<td>8:29</td>
+<td>content_feed</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Ingredients · 3x</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302915">view</a></td>
+</tr>
+<tr>
+<td>87</td>
+<td>8:32</td>
+<td>content_feed</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Beat in the egg. · Gradually stir in the flour.</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302916">view</a></td>
+</tr>
+<tr>
+<td>88</td>
+<td>8:57</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Mentioned in · Cookie recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302917">view</a></td>
+</tr>
+<tr>
+<td>89</td>
+<td>9:00</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Mentioned in · Cookie recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302918">view</a></td>
+</tr>
+<tr>
+<td>90</td>
+<td>9:07</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Mentioned in · Cookie recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302919">view</a></td>
+</tr>
+<tr>
+<td>91</td>
+<td>9:12</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · 15 mins · American</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302920">view</a></td>
+</tr>
+<tr>
+<td>92</td>
+<td>9:15</td>
+<td>form</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Set a Reminder · Remind me in the</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302921">view</a></td>
+</tr>
+<tr>
+<td>93</td>
+<td>9:26</td>
+<td>chat</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Ask Albo · Ask Albo about Triple Chocolate Cookies</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302922">view</a></td>
+</tr>
+<tr>
+<td>94</td>
+<td>9:36</td>
+<td>chat</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Ask Albo · How much sugar is needed?</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302923">view</a></td>
+</tr>
+<tr>
+<td>95</td>
+<td>9:43</td>
+<td>chat</td>
+<td>Saving and Importing Content</td>
+<td>Triple Chocolate Cookies · Ask Albo · Ask Albo about Triple Chocolate Cookies</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302924">view</a></td>
+</tr>
+<tr>
+<td>96</td>
+<td>10:03</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Import via Screenshot · Tap to select from camera roll · TIPS</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302925">view</a></td>
+</tr>
+<tr>
+<td>97</td>
+<td>10:09</td>
+<td>permissions</td>
+<td>Saving and Importing Content</td>
+<td>Photos · Collections · Private Access to Photos</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302926">view</a></td>
+</tr>
+<tr>
+<td>98</td>
+<td>10:18</td>
+<td>other</td>
+<td>Saving and Importing Content</td>
+<td>Import via Screenshot · Imports · 2/9</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302927">view</a></td>
+</tr>
+<tr>
+<td>99</td>
+<td>10:26</td>
+<td>dashboard</td>
+<td>—</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302928">view</a></td>
+</tr>
+<tr>
+<td>100</td>
+<td>10:31</td>
+<td>onboarding</td>
+<td>—</td>
+<td>Do you have your laptop with you? · You would need your laptop to do this · Yes!</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302929">view</a></td>
+</tr>
+<tr>
+<td>101</td>
+<td>10:36</td>
+<td>onboarding</td>
+<td>—</td>
+<td>Yes! · No, but I can install it · No</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302930">view</a></td>
+</tr>
+<tr>
+<td>102</td>
+<td>10:43</td>
+<td>other</td>
+<td>—</td>
+<td>How to bulk import with Albo Browse · Get link to Albo web</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302931">view</a></td>
+</tr>
+<tr>
+<td>103</td>
+<td>10:47</td>
+<td>onboarding</td>
+<td>—</td>
+<td>How to bulk import with Albo Browse · Save Everything · albo.inc</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302932">view</a></td>
+</tr>
+<tr>
+<td>104</td>
+<td>10:54</td>
+<td>other</td>
+<td>—</td>
+<td>Library · What do you want to review? · Recipe</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302933">view</a></td>
+</tr>
+<tr>
+<td>105</td>
+<td>11:10</td>
+<td>search</td>
+<td>—</td>
+<td>Library · project hail mary · Project Hail Mary</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302934">view</a></td>
+</tr>
+<tr>
+<td>106</td>
+<td>11:11</td>
+<td>form</td>
+<td>—</td>
+<td>How was it? · Loved it · Hidden gem</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302936">view</a></td>
+</tr>
+<tr>
+<td>107</td>
+<td>11:15</td>
+<td>form</td>
+<td>—</td>
+<td>How was it? · Loved it · Hidden gem</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302938">view</a></td>
+</tr>
+<tr>
+<td>108</td>
+<td>11:21</td>
+<td>home</td>
+<td>—</td>
+<td>Library · Recipes · Places</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302939">view</a></td>
+</tr>
+<tr>
+<td>109</td>
+<td>11:25</td>
+<td>editor</td>
+<td>—</td>
+<td>Cancel · 00:01 · Share</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302941">view</a></td>
+</tr>
+<tr>
+<td>110</td>
+<td>11:53</td>
+<td>search</td>
+<td>—</td>
+<td>Cancel · 00:33 · Share</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302943">view</a></td>
+</tr>
+<tr>
+<td>111</td>
+<td>12:14</td>
+<td>search</td>
+<td>—</td>
+<td>Cancel · Share · lateral raise</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302945">view</a></td>
+</tr>
+<tr>
+<td>112</td>
+<td>12:31</td>
+<td>editor</td>
+<td>—</td>
+<td>Cancel · 01:11 · Share</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302946">view</a></td>
+</tr>
+<tr>
+<td>113</td>
+<td>12:47</td>
+<td>content_feed</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302948">view</a></td>
+</tr>
+<tr>
+<td>114</td>
+<td>12:49</td>
+<td>other</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302950">view</a></td>
+</tr>
+<tr>
+<td>115</td>
+<td>12:51</td>
+<td>other</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302952">view</a></td>
+</tr>
+<tr>
+<td>116</td>
+<td>12:59</td>
+<td>empty_state</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302953">view</a></td>
+</tr>
+<tr>
+<td>117</td>
+<td>13:05</td>
+<td>content_feed</td>
+<td>—</td>
+<td>1 selected · Saved Recipes · All the recipes found in your library</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302955">view</a></td>
+</tr>
+<tr>
+<td>118</td>
+<td>13:10</td>
+<td>other</td>
+<td>—</td>
+<td>1 selected · Saved Recipes · All the recipes found in your library</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302957">view</a></td>
+</tr>
+<tr>
+<td>119</td>
+<td>13:28</td>
+<td>other</td>
+<td>—</td>
+<td>1 selected · Saved Recipes · All the recipes found in your library</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302958">view</a></td>
+</tr>
+<tr>
+<td>120</td>
+<td>13:48</td>
+<td>search</td>
+<td>—</td>
+<td>Select · carbonara · Carbonara</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302960">view</a></td>
+</tr>
+<tr>
+<td>121</td>
+<td>13:53</td>
+<td>content_feed</td>
+<td>—</td>
+<td>i tuoi piatti da fuorisede · Carbonara · 30 minutes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302961">view</a></td>
+</tr>
+<tr>
+<td>122</td>
+<td>13:57</td>
+<td>other</td>
+<td>—</td>
+<td>Carbonara · All My Saves · Add to a collection</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302963">view</a></td>
+</tr>
+<tr>
+<td>123</td>
+<td>14:06</td>
+<td>form</td>
+<td>—</td>
+<td>How was it? · Loved it · Hidden gem</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302965">view</a></td>
+</tr>
+<tr>
+<td>124</td>
+<td>14:15</td>
+<td>content_feed</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302966">view</a></td>
+</tr>
+<tr>
+<td>125</td>
+<td>14:17</td>
+<td>content_feed</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302968">view</a></td>
+</tr>
+<tr>
+<td>126</td>
+<td>14:19</td>
+<td>content_feed</td>
+<td>—</td>
+<td>Saved Recipes · All the recipes found in your library · All</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302969">view</a></td>
+</tr>
+<tr>
+<td>127</td>
+<td>14:25</td>
+<td>empty_state</td>
+<td>—</td>
+<td>Nothing to decide yet · Find Recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302971">view</a></td>
+</tr>
+<tr>
+<td>128</td>
+<td>14:34</td>
+<td>chat</td>
+<td>Exploring and Managing Settings</td>
+<td>Library · Ask Albo · Ask Albo about anything you&#39;ve saved</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302973">view</a></td>
+</tr>
+<tr>
+<td>129</td>
+<td>14:36</td>
+<td>chat</td>
+<td>Exploring and Managing Settings</td>
+<td>Library · Ask Albo · Ask Albo about anything you&#39;ve saved</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302974">view</a></td>
+</tr>
+<tr>
+<td>130</td>
+<td>14:57</td>
+<td>empty_state</td>
+<td>Exploring and Managing Settings</td>
+<td>Chat · Find Friends</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302976">view</a></td>
+</tr>
+<tr>
+<td>131</td>
+<td>15:01</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Notifications · Reminder: Triple Chocolate Cookies · 6 minutes ago</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302978">view</a></td>
+</tr>
+<tr>
+<td>132</td>
+<td>15:04</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Triple Chocolate Cookies · 15 mins · American</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302980">view</a></td>
+</tr>
+<tr>
+<td>133</td>
+<td>15:12</td>
+<td>permissions</td>
+<td>Exploring and Managing Settings</td>
+<td>Enable Location for Better Experience · We use your location to: · Show places near you</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302982">view</a></td>
+</tr>
+<tr>
+<td>134</td>
+<td>15:13</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>Show all · Search places... · North America</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302984">view</a></td>
+</tr>
+<tr>
+<td>135</td>
+<td>15:20</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>Bagbaguin · Manatal · Show all</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302986">view</a></td>
+</tr>
+<tr>
+<td>136</td>
+<td>15:43</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>New York City · New York City Apartments · Apartment rental agency</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302988">view</a></td>
+</tr>
+<tr>
+<td>137</td>
+<td>15:51</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>New York City Bar · Association / Organization · 4.2</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302990">view</a></td>
+</tr>
+<tr>
+<td>138</td>
+<td>16:26</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>Bagbaguin · Manatal · Search in collection...</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302992">view</a></td>
+</tr>
+<tr>
+<td>139</td>
+<td>16:39</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>Greenland · Svalbard · Iceland</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302994">view</a></td>
+</tr>
+<tr>
+<td>140</td>
+<td>16:43</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>London · Want to go · Svalbard</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302996">view</a></td>
+</tr>
+<tr>
+<td>141</td>
+<td>16:45</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>London · Want to go · Share</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=302998">view</a></td>
+</tr>
+<tr>
+<td>142</td>
+<td>16:46</td>
+<td>form</td>
+<td>Exploring and Managing Settings</td>
+<td>Set a Reminder · Remind me in the · Morning (9:00 AM)</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303000">view</a></td>
+</tr>
+<tr>
+<td>143</td>
+<td>17:14</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>Only my saves · Search places · London</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303002">view</a></td>
+</tr>
+<tr>
+<td>144</td>
+<td>17:22</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>11:50 · North America · Greenland</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303004">view</a></td>
+</tr>
+<tr>
+<td>145</td>
+<td>17:34</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303006">view</a></td>
+</tr>
+<tr>
+<td>146</td>
+<td>17:37</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>Get Started · Progress · 2/7</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303008">view</a></td>
+</tr>
+<tr>
+<td>147</td>
+<td>17:39</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303010">view</a></td>
+</tr>
+<tr>
+<td>148</td>
+<td>17:44</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303012">view</a></td>
+</tr>
+<tr>
+<td>149</td>
+<td>17:55</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>Get Started · Progress · 2/7</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303014">view</a></td>
+</tr>
+<tr>
+<td>150</td>
+<td>18:07</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>How to pin the Albo shortcut · Reel from ryanresatka · instagram.com</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303016">view</a></td>
+</tr>
+<tr>
+<td>151</td>
+<td>18:10</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>11:51 · Following · Community</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303019">view</a></td>
+</tr>
+<tr>
+<td>152</td>
+<td>18:14</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>How to pin the Albo shortcut · Let&#39;s do it · Following</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303021">view</a></td>
+</tr>
+<tr>
+<td>153</td>
+<td>18:26</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303023">view</a></td>
+</tr>
+<tr>
+<td>154</td>
+<td>18:35</td>
+<td>onboarding</td>
+<td>Exploring and Managing Settings</td>
+<td>Events · Reel from ryanresatka · instagram.com</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303025">view</a></td>
+</tr>
+<tr>
+<td>155</td>
+<td>18:39</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303027">view</a></td>
+</tr>
+<tr>
+<td>156</td>
+<td>18:53</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Kimmy · Follow · Recipes</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303029">view</a></td>
+</tr>
+<tr>
+<td>157</td>
+<td>18:58</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Crispy Smashed Potato Salad · 45 mins · American</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303031">view</a></td>
+</tr>
+<tr>
+<td>158</td>
+<td>19:05</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Kimmy · kpdubz · 1 common save</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303033">view</a></td>
+</tr>
+<tr>
+<td>159</td>
+<td>19:08</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Kimmy · kpdubz · 1 common save</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303035">view</a></td>
+</tr>
+<tr>
+<td>160</td>
+<td>19:13</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Kimmy · kpdubz · 1 common save</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303036">view</a></td>
+</tr>
+<tr>
+<td>161</td>
+<td>19:23</td>
+<td>empty_state</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303038">view</a></td>
+</tr>
+<tr>
+<td>162</td>
+<td>19:28</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303040">view</a></td>
+</tr>
+<tr>
+<td>163</td>
+<td>19:43</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303042">view</a></td>
+</tr>
+<tr>
+<td>164</td>
+<td>19:45</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303044">view</a></td>
+</tr>
+<tr>
+<td>165</td>
+<td>19:47</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303046">view</a></td>
+</tr>
+<tr>
+<td>166</td>
+<td>19:52</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Following · Community · Nearby</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303048">view</a></td>
+</tr>
+<tr>
+<td>167</td>
+<td>19:56</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>IVE · WORLD TOUR · SHOW WHAT I AM</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303050">view</a></td>
+</tr>
+<tr>
+<td>168</td>
+<td>19:58</td>
+<td>permissions</td>
+<td>Exploring and Managing Settings</td>
+<td>IVE WORLD TOUR SHOW WHAT I AM · Don&#39;t Allow · Allow</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303053">view</a></td>
+</tr>
+<tr>
+<td>169</td>
+<td>20:02</td>
+<td>form</td>
+<td>Exploring and Managing Settings</td>
+<td>New Event · Complex, Coral Way, MAAX Parking Bld... · All-day</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303055">view</a></td>
+</tr>
+<tr>
+<td>170</td>
+<td>20:26</td>
+<td>search</td>
+<td>Exploring and Managing Settings</td>
+<td>project hail mary · Cancel · Project Hail Mary</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303058">view</a></td>
+</tr>
+<tr>
+<td>171</td>
+<td>20:35</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303060">view</a></td>
+</tr>
+<tr>
+<td>172</td>
+<td>20:40</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Calendar · June 2026 · M</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303063">view</a></td>
+</tr>
+<tr>
+<td>173</td>
+<td>20:52</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303065">view</a></td>
+</tr>
+<tr>
+<td>174</td>
+<td>20:59</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Edit Profile · Account Information · <a href="mailto:screensdesigntest@gmail.com">screensdesigntest@gmail.com</a></td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303067">view</a></td>
+</tr>
+<tr>
+<td>175</td>
+<td>21:01</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Edit Profile · Julia · Tell us about yourself...</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303069">view</a></td>
+</tr>
+<tr>
+<td>176</td>
+<td>21:10</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Account Settings · Make Account Private</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303071">view</a></td>
+</tr>
+<tr>
+<td>177</td>
+<td>21:12</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Account Settings · Make Account Private · Make Account Private?</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303073">view</a></td>
+</tr>
+<tr>
+<td>178</td>
+<td>21:25</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303075">view</a></td>
+</tr>
+<tr>
+<td>179</td>
+<td>21:29</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303077">view</a></td>
+</tr>
+<tr>
+<td>180</td>
+<td>21:35</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Add Friends · Search users... · Find your friends on Albo!</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303079">view</a></td>
+</tr>
+<tr>
+<td>181</td>
+<td>21:43</td>
+<td>permissions</td>
+<td>Exploring and Managing Settings</td>
+<td>11:55 · Albo would like to access the Camera. · Don&#39;t Allow</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303081">view</a></td>
+</tr>
+<tr>
+<td>182</td>
+<td>21:48</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Back</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303083">view</a></td>
+</tr>
+<tr>
+<td>183</td>
+<td>21:51</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Stamps · Locked · Digital Hoarder</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303085">view</a></td>
+</tr>
+<tr>
+<td>184</td>
+<td>21:53</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Digital Hoarder · Locked · Build up your stash in Albo!</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303087">view</a></td>
+</tr>
+<tr>
+<td>185</td>
+<td>22:06</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303089">view</a></td>
+</tr>
+<tr>
+<td>186</td>
+<td>22:08</td>
+<td>home</td>
+<td>Exploring and Managing Settings</td>
+<td>Wants to Try · Crispy Smashed Potato Salad · 45 mins</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303091">view</a></td>
+</tr>
+<tr>
+<td>187</td>
+<td>22:10</td>
+<td>content_feed</td>
+<td>Exploring and Managing Settings</td>
+<td>Wants to Try · Crispy Smashed Potato Salad · 45 mins</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303093">view</a></td>
+</tr>
+<tr>
+<td>188</td>
+<td>22:15</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303095">view</a></td>
+</tr>
+<tr>
+<td>189</td>
+<td>22:21</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · 1 wk</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303097">view</a></td>
+</tr>
+<tr>
+<td>190</td>
+<td>22:25</td>
+<td>profile</td>
+<td>Exploring and Managing Settings</td>
+<td>Julia · juliascreens · Add links</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303098">view</a></td>
+</tr>
+<tr>
+<td>191</td>
+<td>22:35</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Settings · General · Notifications</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303100">view</a></td>
+</tr>
+<tr>
+<td>192</td>
+<td>22:38</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Notification Preferences · Enable Notifications · Location Notifications</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303102">view</a></td>
+</tr>
+<tr>
+<td>193</td>
+<td>22:41</td>
+<td>permissions</td>
+<td>Exploring and Managing Settings</td>
+<td>Location Notifications · Notifications · Enable Notifications</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303104">view</a></td>
+</tr>
+<tr>
+<td>194</td>
+<td>22:48</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Location Notifications · Location notifications enabled! · Enable Notifications</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303106">view</a></td>
+</tr>
+<tr>
+<td>195</td>
+<td>22:53</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Account Settings · Make Account Private</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303108">view</a></td>
+</tr>
+<tr>
+<td>196</td>
+<td>22:57</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Leaderboard · Hoarders · Yappers</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303110">view</a></td>
+</tr>
+<tr>
+<td>197</td>
+<td>23:00</td>
+<td>other</td>
+<td>Exploring and Managing Settings</td>
+<td>Leaderboard · Hoarders · Yappers</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303112">view</a></td>
+</tr>
+<tr>
+<td>198</td>
+<td>23:04</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Settings · General · Notifications</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303115">view</a></td>
+</tr>
+<tr>
+<td>199</td>
+<td>23:06</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Appearance · Theme · Light</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303117">view</a></td>
+</tr>
+<tr>
+<td>200</td>
+<td>23:09</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Appearance · Theme · Light</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303119">view</a></td>
+</tr>
+<tr>
+<td>201</td>
+<td>23:11</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Appearance · Theme · Light</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303120">view</a></td>
+</tr>
+<tr>
+<td>202</td>
+<td>23:16</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Language · Change app language · System default</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303121">view</a></td>
+</tr>
+<tr>
+<td>203</td>
+<td>23:21</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Preferences · Default Map for Directions · Apple Maps</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303122">view</a></td>
+</tr>
+<tr>
+<td>204</td>
+<td>23:34</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Settings · Give us a rating · Our website</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303123">view</a></td>
+</tr>
+<tr>
+<td>205</td>
+<td>23:36</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Settings · Give us a rating · Our website</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303124">view</a></td>
+</tr>
+<tr>
+<td>206</td>
+<td>23:41</td>
+<td>settings</td>
+<td>Exploring and Managing Settings</td>
+<td>Settings · Give us a rating · Our website</td>
+<td><a href="https://screensdesign.com/apps/albo-save-organise/?vs=303125">view</a></td>
+</tr>
+</tbody></table>
+</article>
+</div>
+<div class="footer">Screen numbers link to the recorded frame on ScreensDesign. Metrics are ScreensDesign estimates. Written as a build reference for a SwiftUI rebuild; not affiliated with The Feel Good Project.</div>
+
+<script>
+(function () {
+  var doc = document.getElementById('doc');
+
+  // Slug headings and build TOC.
+  var used = {};
+  var toc = document.getElementById('tocList');
+  doc.querySelectorAll('h2, h3').forEach(function (h) {
+    var text = h.textContent.trim();
+    var slug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    if (used[slug]) { slug += '-' + (++used[slug]); } else { used[slug] = 1; }
+    h.id = slug;
+    if (h.tagName === 'H2' || /^\d+\.\d+/.test(text)) {
+      var li = document.createElement('li');
+      li.className = h.tagName === 'H3' ? 'h3' : 'h2';
+      var a = document.createElement('a');
+      a.href = '#' + slug;
+      a.textContent = text.replace(/\s*\([^)]*\)\s*$/, '');
+      li.appendChild(a);
+      toc.appendChild(li);
+    }
+  });
+
+  // Wrap tables for horizontal scroll; mark the appendix table.
+  doc.querySelectorAll('table').forEach(function (t) {
+    var w = document.createElement('div'); w.className = 'tbl';
+    t.parentNode.insertBefore(w, t); w.appendChild(t);
+  });
+  var tables = doc.querySelectorAll('table');
+  var last = tables[tables.length - 1];
+  if (last) {
+    last.id = 'appendix-table';
+    last.querySelectorAll('tbody tr').forEach(function (tr) {
+      var td = tr.children[2];
+      if (td) { var t = td.textContent.trim(); td.innerHTML = '<span class="type-pill ' + t + '">' + t.replace('_', ' ') + '</span>'; }
+    });
+  }
+
+  // Color swatches next to hex codes in table cells.
+  doc.querySelectorAll('td').forEach(function (td) {
+    if (!/#[0-9A-Fa-f]{6}\b/.test(td.textContent)) return;
+    td.innerHTML = td.innerHTML.replace(/#([0-9A-Fa-f]{6})\b/g, function (m, hex) {
+      return '<span class="swatch" style="background:#' + hex + '"></span>' + m;
+    });
+  });
+
+  // Callouts: paragraphs beginning with a bold label.
+  var labels = { 'Pattern': 'pattern', 'Why it works': 'why', 'Why it works (or does not)': 'why', 'Build': 'build', 'Font match.': 'fontmatch' };
+  doc.querySelectorAll('p').forEach(function (p) {
+    var b = p.firstElementChild;
+    if (!b || b.tagName !== 'STRONG' || b !== p.firstChild) return;
+    var key = b.textContent.trim().replace(/[.:]$/, '');
+    var cls = labels[key] || labels[key + '.'];
+    if (!cls) return;
+    var aside = document.createElement('aside');
+    aside.className = 'callout ' + cls;
+    var lab = document.createElement('span'); lab.className = 'label'; lab.textContent = key.replace(/\.$/, '');
+    b.remove();
+    // remove leading ": " text node
+    if (p.firstChild && p.firstChild.nodeType === 3) { p.firstChild.textContent = p.firstChild.textContent.replace(/^[:.]\s*/, ''); }
+    p.parentNode.insertBefore(aside, p);
+    aside.appendChild(lab); aside.appendChild(p);
+  });
+
+  // Screen references like #41 or #22 to #26 -> deep links via the appendix table.
+  var links = {};
+  if (last) {
+    last.querySelectorAll('tbody tr').forEach(function (tr) {
+      var n = tr.children[0].textContent.trim();
+      var a = tr.querySelector('a');
+      if (a) links[n] = a.href;
+    });
+  }
+  function linkRefs(node) {
+    if (node.nodeType === 3) {
+      var text = node.nodeValue;
+      if (!/#\d{1,3}/.test(text)) return;
+      var frag = document.createDocumentFragment();
+      var re = /#(\d{1,3})\b/g, lastIdx = 0, m;
+      while ((m = re.exec(text))) {
+        frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+        var href = links[m[1]];
+        if (href) {
+          var a = document.createElement('a'); a.className = 'ref'; a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '#' + m[1];
+          frag.appendChild(a);
+        } else {
+          frag.appendChild(document.createTextNode(m[0]));
+        }
+        lastIdx = m.index + m[0].length;
+      }
+      frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+      node.parentNode.replaceChild(frag, node);
+    } else if (node.nodeType === 1 && !/^(A|CODE|PRE|SCRIPT|STYLE)$/.test(node.tagName) && node.id !== 'appendix-table') {
+      Array.prototype.slice.call(node.childNodes).forEach(linkRefs);
+    }
+  }
+  Array.prototype.slice.call(doc.childNodes).forEach(function (n) { if (!(n.classList && n.classList.contains('tbl') && n.querySelector('#appendix-table'))) linkRefs(n); });
+
+  // Active TOC entry.
+  var headings = Array.prototype.slice.call(doc.querySelectorAll('h2, h3')).filter(function (h) { return toc.querySelector('a[href="#' + h.id + '"]'); });
+  var tocLinks = toc.querySelectorAll('a');
+  function setActive() {
+    var y = window.scrollY + 120, cur = headings[0];
+    for (var i = 0; i < headings.length; i++) { if (headings[i].offsetTop <= y) cur = headings[i]; }
+    tocLinks.forEach(function (a) { a.classList.toggle('active', cur && a.getAttribute('href') === '#' + cur.id); });
+  }
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+
+  var tg = document.getElementById('tocToggle'), tocEl = document.getElementById('toc');
+  tg.addEventListener('click', function () { var o = tocEl.classList.toggle('open'); tg.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+})();
+</script>
