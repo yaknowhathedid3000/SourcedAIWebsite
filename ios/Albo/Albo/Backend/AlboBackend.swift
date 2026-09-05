@@ -20,7 +20,7 @@ enum BackendConfig {
 }
 
 /// Row shapes that match the SQL schema exactly (snake_case via the decoder).
-struct SaveRow: Codable, Identifiable {
+struct SaveRecord: Codable, Identifiable {
     var id: UUID
     var ownerId: UUID
     var category: SaveCategory
@@ -91,7 +91,7 @@ struct ReviewRow: Codable, Identifiable {
     }
 }
 
-struct CollectionRow: Codable, Identifiable {
+struct CollectionRecord: Codable, Identifiable {
     var id: UUID
     var ownerId: UUID
     var name: String
@@ -102,7 +102,7 @@ struct CollectionRow: Codable, Identifiable {
     var inviteToken: String?
 }
 
-struct ExtractResponse: Decodable { var saves: [SaveRow] }
+struct ExtractResponse: Decodable { var saves: [SaveRecord] }
 struct AskResponse: Decodable { var answer: String }
 
 enum BackendError: LocalizedError {
@@ -195,27 +195,27 @@ final class AlboBackend {
 
     // MARK: Saves
 
-    func fetchSaves() async throws -> [SaveRow] {
+    func fetchSaves() async throws -> [SaveRecord] {
         let uid = try await requireUser()
         return try await db().from("saves").select().eq("owner_id", value: uid.uuidString).order("created_at", ascending: false).execute().value
     }
 
     func upsert(_ save: Save) async throws {
         let uid = try await requireUser()
-        _ = try await db().from("saves").upsert(SaveRow(from: save, ownerId: uid)).execute()
+        _ = try await db().from("saves").upsert(SaveRecord(from: save, ownerId: uid)).execute()
     }
 
     func delete(saveID: UUID) async throws {
         _ = try await db().from("saves").delete().eq("id", value: saveID.uuidString).execute()
     }
 
-    func search(_ query: String) async throws -> [SaveRow] {
+    func search(_ query: String) async throws -> [SaveRecord] {
         try await db().rpc("search_saves", params: ["p_query": query]).execute().value
     }
 
     // MARK: Collections
 
-    func fetchCollections() async throws -> [CollectionRow] {
+    func fetchCollections() async throws -> [CollectionRecord] {
         try await db().from("collections").select().order("created_at", ascending: false).execute().value
     }
 
@@ -324,19 +324,19 @@ final class AlboBackend {
     }
 
     /// Magic import (Albo #25). Throws `.outOfCredits` on 402.
-    func extract(url: URL) async throws -> [SaveRow] {
+    func extract(url: URL) async throws -> [SaveRecord] {
         try await invokeExtract(ExtractRequest(kind: "url", url: url.absoluteString))
     }
 
-    func extract(noteID: UUID, title: String, body: String) async throws -> [SaveRow] {
+    func extract(noteID: UUID, title: String, body: String) async throws -> [SaveRecord] {
         try await invokeExtract(ExtractRequest(kind: "note", title: title, body: body, noteId: noteID.uuidString))
     }
 
-    func extract(screenshotPaths: [String]) async throws -> [SaveRow] {
+    func extract(screenshotPaths: [String]) async throws -> [SaveRecord] {
         try await invokeExtract(ExtractRequest(kind: "screenshots", paths: screenshotPaths))
     }
 
-    private func invokeExtract(_ request: ExtractRequest) async throws -> [SaveRow] {
+    private func invokeExtract(_ request: ExtractRequest) async throws -> [SaveRecord] {
         do {
             let response: ExtractResponse = try await db().functions.invoke("extract", options: FunctionInvokeOptions(body: request), decoder: decoder)
             return response.saves
