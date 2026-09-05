@@ -16,7 +16,11 @@ struct ProfileView: View {
     @State private var showLinks = false
 
     enum Tab: Hashable { case collections, category(SaveCategory) }
-    enum JournalSort: String, CaseIterable, Identifiable { case timeline, rating; var id: String { rawValue }; var title: String { rawValue.capitalized } }
+    enum JournalSort: String, CaseIterable, Identifiable {
+        case timeline, rating
+        var id: String { rawValue }
+        var title: String { rawValue.capitalized }
+    }
 
     private var isMe: Bool { user == nil }
     private var summary: UserSummary { user ?? app.me }

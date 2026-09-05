@@ -13,6 +13,7 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
+                Group {
                 sectionLabel("General")
                 NavigationLink { NotificationPrefsView() } label: { SettingsRow(systemImage: "bell", title: "Notifications") }
                 NavigationLink { AccountSettingsView() } label: { SettingsRow(systemImage: "person", title: "Account Settings") }
@@ -21,7 +22,9 @@ struct SettingsView: View {
                 NavigationLink { AppearanceView() } label: { SettingsRow(systemImage: "paintpalette", title: "Appearance") }
                 NavigationLink { LanguageView() } label: { SettingsRow(systemImage: "character.book.closed", title: "Language") }
                 NavigationLink { PreferencesView() } label: { SettingsRow(systemImage: "slider.horizontal.3", title: "Preferences") }
+                }
 
+                Group {
                 sectionLabel("Resources").padding(.top, 20)
                 NavigationLink { AmbassadorView() } label: { SettingsRow(systemImage: "paperplane.fill", title: "Ambassador Program", tint: AlboColor.ink) }
                 Button { openURL(URL(string: "https://albo.inc/guides")!) } label: { SettingsRow(systemImage: "square.and.arrow.down", title: "Step by Step Guides", showsChevron: false) }
@@ -29,6 +32,7 @@ struct SettingsView: View {
                 Button { openURL(URL(string: "https://albo.inc")!) } label: { SettingsRow(systemImage: "globe", title: "Albo Web", showsChevron: false) }
                 Button { showReferral = true } label: { SettingsRow(systemImage: "ticket", title: "Redeem Referral Code") }
                 Button { app.showToast("QR scanning needs the camera on a device") } label: { SettingsRow(systemImage: "qrcode", title: "QR Code Scanner") }
+                }
 
                 Group {
                     Button { requestReview() } label: { SettingsRow(systemImage: "star", title: "Give us a rating") }
@@ -257,7 +261,7 @@ struct AccountSettingsView: View {
 struct AppearanceView: View {
     @Environment(AppState.self) private var app
     @State private var iconAlert: String? = nil
-    private let icons: [(String, MascotVariant, String?)] = [("Default", .plain, nil), ("Browse", .explorer, "Browse"), ("King", .king, "King"), ("Reads", .reader, "Reads"), ("Cooks", .chef, "Cooks"), ("News", .news, "News")]
+    private let icons: [(String, MascotVariant, String?)] = [("Default", .plain, nil), ("Browse", .explorer, "AppIcon-Browse"), ("King", .king, "AppIcon-King"), ("Reads", .reader, "AppIcon-Reads"), ("Cooks", .chef, "AppIcon-Cooks"), ("News", .news, "AppIcon-News")]
     @State private var selectedIcon = "Default"
 
     var body: some View {
@@ -442,11 +446,13 @@ struct DeleteAccountSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Capsule().fill(AlboColor.hairline).frame(width: 40, height: 5).frame(maxWidth: .infinity).padding(.top, 8)
-            Text("Delete Account").font(.alboSans(30, weight: .bold)).foregroundStyle(AlboColor.ink).padding(.top, 10)
-            Text("We're sorry to see you go. Please let us know why you're leaving.").font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary)
-            Text("After you confirm, your account will be deleted within the next 14 days.").font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary)
-            Text("Reason for leaving").font(.alboSans(17, weight: .medium)).foregroundStyle(AlboColor.ink).padding(.top, 6)
+            Group {
+                Capsule().fill(AlboColor.hairline).frame(width: 40, height: 5).frame(maxWidth: .infinity).padding(.top, 8)
+                Text("Delete Account").font(.alboSans(30, weight: .bold)).foregroundStyle(AlboColor.ink).padding(.top, 10)
+                Text("We're sorry to see you go. Please let us know why you're leaving.").font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary)
+                Text("After you confirm, your account will be deleted within the next 14 days.").font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary)
+                Text("Reason for leaving").font(.alboSans(17, weight: .medium)).foregroundStyle(AlboColor.ink).padding(.top, 6)
+            }
             Menu {
                 ForEach(reasons, id: \.self) { r in Button(r) { reason = r } }
             } label: {

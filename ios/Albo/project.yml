@@ -62,3 +62,13 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UIUserInterfaceStyle: Automatic
         CODE_SIGN_STYLE: Automatic
+schemes:
+  Albo:
+    build:
+      targets:
+        Albo: all
+    run:
+      config: Debug
+      storeKitConfiguration: Albo/Resources/Albo.storekit
+    archive:
+      config: Release

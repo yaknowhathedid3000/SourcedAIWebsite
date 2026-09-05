@@ -55,6 +55,8 @@ struct PaywallView: View {
                         if ok {
                             app.entitlement = .pro
                             showSuccess = true
+                        } else {
+                            app.showToast("Purchase didn't go through")
                         }
                     }
                 }
@@ -65,6 +67,7 @@ struct PaywallView: View {
             .padding(.bottom, 16)
         }
         .background(AlboColor.ground.ignoresSafeArea())
+        .task { await PurchaseService.loadProducts() }
         .alert("You're all set.", isPresented: $showSuccess) {
             Button("OK") { (onPurchased ?? onDismiss)() }
         } message: {
