@@ -45,7 +45,7 @@ export default async function SharedPlanPage({ params }: { params: Promise<{ tok
       <section className="flex flex-col gap-3">
         {saves.map((s) => (
           <div key={s.id} className="card flex items-center gap-3 p-3">
-            <Link href={`/saves/${s.id}`} className="flex min-w-0 flex-1 items-center gap-3">
+            <Link href={`/c/${token}/${s.id}`} className="flex min-w-0 flex-1 items-center gap-3">
               <SaveCover save={s} className="h-[72px] w-[72px] shrink-0 rounded-2xl [&_.cover-emoji]:text-[30px]" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-muted">{CATEGORY[s.category].emoji} {CATEGORY[s.category].title}</p>

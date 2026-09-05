@@ -29,9 +29,9 @@ export async function joinCollection(token: string): Promise<{ ok: boolean; id?:
 }
 
 /** Create a save from a pasted link or a typed note. Uses the extract edge function when configured. */
-export async function createSave(input: { url?: string; title?: string; category?: SaveCategory; note?: string }): Promise<{ ok: boolean; id?: string; error?: string }> {
+export async function createSave(input: { url?: string; title?: string; category?: SaveCategory; note?: string }): Promise<{ ok: boolean; id?: string; demo?: boolean; error?: string }> {
   const sb = await serverClient();
-  if (!sb) return { ok: true, id: "00000000-0000-0000-0000-000000000001" };
+  if (!sb) return { ok: true, demo: true };
   const { data: user } = await sb.auth.getUser();
   if (!user.user) return { ok: false, error: "Sign in first" };
 

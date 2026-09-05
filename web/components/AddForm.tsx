@@ -14,12 +14,14 @@ export function AddForm() {
   const [category, setCategory] = useState<SaveCategory>("recipe");
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
+  const [demoDone, setDemoDone] = useState(false);
 
   const submit = () => {
     setError(null);
     start(async () => {
       const res = mode === "link" ? await createSave({ url: url.trim(), category }) : await createSave({ note: note.trim(), title: note.trim().split("\n")[0].slice(0, 80), category: "note" });
       if (!res.ok) { setError(res.error ?? "Couldn't save that"); return; }
+      if (res.demo) { setDemoDone(true); return; }
       router.push(res.id ? `/saves/${res.id}` : "/library");
     });
   };
@@ -79,6 +81,12 @@ export function AddForm() {
       )}
 
       {error && <p className="text-[14px] font-medium text-danger">{error}</p>}
+      {demoDone && (
+        <div className="rounded-2xl bg-[#EAF8EE] px-4 py-3 text-[14px] leading-5 text-rewardDeep">
+          <p className="font-semibold">Looks good.</p>
+          <p className="balance">This is the demo, so nothing was stored. Connect a Supabase project and this same form files it into your library.</p>
+        </div>
+      )}
       <button type="button" disabled={!valid || pending} onClick={submit} className="btn-primary">
         {pending ? "Saving…" : "Save to Albo"}
       </button>

@@ -16,7 +16,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
   const { collection: c, saves } = data;
   const h = await headers();
   const origin = `${h.get("x-forwarded-proto") ?? "https"}://${h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000"}`;
-  const shareUrl = c.invite_token ? `${origin}/c/${c.invite_token}` : null;
+  const shareUrl = c.is_public && c.invite_token ? `${origin}/c/${c.invite_token}` : null;
 
   return (
     <div className="flex flex-col gap-6">
@@ -38,7 +38,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
           </div>
         </div>
       ) : (
-        <p className="text-[14px] text-muted">Turn on sharing in the app to get an invite link.</p>
+        <p className="rounded-2xl bg-surface p-4 text-[14px] leading-5 text-ink2">This collection is private. Turn on sharing in the Albo app and a link for the group chat appears here.</p>
       )}
       {c.details && <p className="text-[16px] leading-7 text-ink2">{c.details}</p>}
       <section className="flex flex-col">
