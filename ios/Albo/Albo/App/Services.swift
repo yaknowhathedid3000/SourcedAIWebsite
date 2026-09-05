@@ -1,12 +1,56 @@
 import Foundation
+import StoreKit
 import UserNotifications
 
 // MARK: - Import (Albo #25 "Importing... watching everything at 2x speed")
 
-/// Turns a URL, note or screenshot batch into saves. Local placeholder until the
-/// extract endpoint exists; keeps the same async shape so the UI does not change.
+/// Turns a URL, note or screenshot batch into saves.
+/// When the Supabase backend is configured this calls the `extract` edge function (Claude does the
+/// reading); otherwise it falls back to local heuristics so the app still demos offline.
 enum ImportService {
-    static func extract(from url: URL) async -> Save {
+    static var usesBackend: Bool {
+        #if canImport(Supabase)
+        return AlboBackend.shared.isConfigured
+        #else
+        return false
+        #endif
+    }
+
+    static func extract(from url: URL) async throws -> Save {
+        #if canImport(Supabase)
+        if AlboBackend.shared.isConfigured {
+            let records = try await AlboBackend.shared.extract(url: url)
+            guard let first = records.first else { throw BackendError.server("Albo couldn't read anything at that link.") }
+            return first.save
+        }
+        #endif
+        return await localExtract(from: url)
+    }
+
+    static func analyze(note title: String, body: String, noteID: UUID?) async throws -> [Save] {
+        #if canImport(Supabase)
+        if AlboBackend.shared.isConfigured {
+            return try await AlboBackend.shared.extract(noteID: noteID ?? UUID(), title: title, body: body).map(\.save)
+        }
+        #endif
+        return await localAnalyze(note: title, body: body)
+    }
+
+    /// Uploads each screenshot to the private imports bucket, then asks the backend to read them.
+    static func extract(screenshots images: [Data]) async throws -> [Save] {
+        #if canImport(Supabase)
+        if AlboBackend.shared.isConfigured {
+            var paths: [String] = []
+            for data in images { paths.append(try await AlboBackend.shared.uploadImport(data)) }
+            return try await AlboBackend.shared.extract(screenshotPaths: paths).map(\.save)
+        }
+        #endif
+        return await localScreenshots(count: images.count)
+    }
+
+    // MARK: Local fallback (demo mode)
+
+    private static func localExtract(from url: URL) async -> Save {
         try? await Task.sleep(for: .seconds(1.6))
         let host = url.host ?? "web"
         let platform: SourcePlatform
@@ -26,7 +70,7 @@ enum ImportService {
         return Save(category: .article, title: Self.title(from: url, fallback: host), subtitle: host, coverEmoji: "🌐", coverTint: 0xDCE9FF, sourceURL: url, sourcePlatform: platform)
     }
 
-    static func analyze(note title: String, body: String) async -> [Save] {
+    private static func localAnalyze(note title: String, body: String) async -> [Save] {
         try? await Task.sleep(for: .seconds(1.2))
         // Pull "## Heading" lines out of the markdown as things Albo found.
         let headings = body.split(separator: "\n").compactMap { line -> String? in
@@ -41,7 +85,7 @@ enum ImportService {
         }
     }
 
-    static func extract(screenshots count: Int) async -> [Save] {
+    private static func localScreenshots(count: Int) async -> [Save] {
         try? await Task.sleep(for: .seconds(1.8))
         return (0..<count).map { i in
             Save(category: .image, title: "Untitled", coverEmoji: "🖼️", coverTint: 0xE0E0E0, sourcePlatform: .screenshot, saveCount: 1, createdAt: Date().addingTimeInterval(Double(-i)))
@@ -57,9 +101,19 @@ enum ImportService {
 
 // MARK: - Ask Albo (Albo #57 to #59, #93 to #95)
 
-/// Local answerer over the user's library. Swap for a streaming chat endpoint.
+/// Ask Albo. With the backend configured this is the `ask-albo` edge function (Claude over the
+/// user's library, with chat history); offline it answers from the local library.
 enum AskAlboService {
-    static func answer(_ question: String, saves: [Save], scope: Save?) async -> String {
+    static func answer(_ question: String, saves: [Save], scope: Save?, history: [ChatMessage] = []) async throws -> String {
+        #if canImport(Supabase)
+        if AlboBackend.shared.isConfigured {
+            return try await AlboBackend.shared.ask(question, saveID: scope?.id, history: history)
+        }
+        #endif
+        return await localAnswer(question, saves: saves, scope: scope)
+    }
+
+    private static func localAnswer(_ question: String, saves: [Save], scope: Save?) async -> String {
         try? await Task.sleep(for: .seconds(0.9))
         let q = question.lowercased()
 
@@ -111,18 +165,54 @@ enum AskAlboService {
 
 // MARK: - Purchases (Albo #41 to #43)
 
-/// Stand-in for StoreKit 2. `purchase` resolves after a short delay.
+/// StoreKit 2. Product IDs match `Resources/Albo.storekit` (local testing) and App Store Connect.
+/// Prices shown in the paywall come from the store once products load; the literal is the fallback.
 enum PurchaseService {
-    static let yearlyPrice = "$29.99"
+    static let yearlyProductID = "com.sourcedai.albo.pro.yearly"
     static let trialDays = 3
+    static var yearlyPrice = "$29.99"
 
     static var billingDate: Date {
         Calendar.current.date(byAdding: .day, value: trialDays, to: Date()) ?? Date()
     }
 
+    /// Loads the yearly product and refreshes the displayed price. Safe to call repeatedly.
+    static func loadProducts() async {
+        guard let product = try? await Product.products(for: [yearlyProductID]).first else { return }
+        yearlyPrice = product.displayPrice
+    }
+
+    /// Runs the purchase sheet. Returns true when the transaction is verified and finished.
     static func purchaseYearly() async -> Bool {
-        try? await Task.sleep(for: .seconds(1.2))
-        return true
+        do {
+            guard let product = try await Product.products(for: [yearlyProductID]).first else { return false }
+            let result = try await product.purchase()
+            switch result {
+            case .success(let verification):
+                guard case .verified(let transaction) = verification else { return false }
+                await transaction.finish()
+                return true
+            case .pending, .userCancelled:
+                return false
+            @unknown default:
+                return false
+            }
+        } catch {
+            return false
+        }
+    }
+
+    /// True when the App Store reports an active yearly entitlement.
+    static func hasActiveSubscription() async -> Bool {
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let t) = result, t.productID == yearlyProductID, t.revocationDate == nil { return true }
+        }
+        return false
+    }
+
+    static func restore() async -> Bool {
+        try? await AppStore.sync()
+        return await hasActiveSubscription()
     }
 }
 

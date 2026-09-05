@@ -42,7 +42,7 @@ enum SampleData {
     }
 
     // MARK: Saves (Albo #69, #85, #113, #121, #137, #140, #157, #167, #110, #111, #56, #68)
-    static var saves: [Save] {
+    static let saves: [Save] = {
         let s1 = Save(id: cookiesID, category: .recipe, title: "Triple Chocolate Cookies", coverEmoji: nil,
              sourcePlatform: .note, status: .saved, saveCount: 1, createdAt: date(2026, 6, 10, 9),
              privateNote: "Lessen sugar",
@@ -160,28 +160,28 @@ enum SampleData {
                                  emoji: "🥪", photoEmoji: ["🥪", "🥤"], about: nil),
              savedBy: [gabrielle])
         return [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15]
-    }
+    }()
 
     // MARK: Collections and lists (Albo #99, #112, #171)
-    static var collections: [SaveCollection] {
+    static let collections: [SaveCollection] = {
         [SaveCollection(id: recipesCollectionID, name: "Recipes", details: nil, coverEmoji: "🥦", coverTint: 0xF3B27A, isPublic: true, owner: me, saveIDs: [cookiesID, carbonaraID])]
-    }
+    }()
 
-    static var lists: [CuratedList] {
+    static let lists: [CuratedList] = {
         [CuratedList(id: homeWorkoutListID, category: .workout, title: "Home workout", isRanked: true, saveIDs: [lateralRaiseID, pullUpID], owner: me, coverEmoji: "🏠")]
-    }
+    }()
 
     // MARK: Reviews (Albo #85, #186, #188, #189)
-    static var reviews: [Review] {
+    static let reviews: [Review] = {
         [
             Review(saveID: cookiesID, sentiment: .hiddenGem, title: "i love the texture!", stars: 5, completedOn: date(2026, 6, 10), photoCount: 1, createdAt: date(2026, 6, 10, 18)),
             Review(saveID: carbonaraID, sentiment: .lovedIt, title: nil, stars: 5, completedOn: date(2026, 6, 11), createdAt: date(2026, 6, 11, 20)),
             Review(saveID: hailMaryID, sentiment: .lovedIt, title: nil, stars: 5, completedOn: date(2026, 6, 11), createdAt: date(2026, 6, 11, 21)),
         ]
-    }
+    }()
 
     // MARK: Gamification (Albo #146 to #149, #184)
-    static var checklist: [ChecklistTask] {
+    static let checklist: [ChecklistTask] = {
         [
             ChecklistTask(id: "list", title: "Try making a list", subtitle: "Rank your favourites.", emoji: "📼", reward: 2, progress: 1, isClaimed: false),
             ChecklistTask(id: "screenshot", title: "Import a screenshot", subtitle: "Share things you see in videos, or irl.", emoji: "📷", reward: 2, progress: 1, isClaimed: false),
@@ -191,14 +191,14 @@ enum SampleData {
             ChecklistTask(id: "bulk", title: "Try bulk importing", subtitle: "Add a whole collection of saves at once.", emoji: "📦", reward: 2),
             ChecklistTask(id: "review", title: "Try reviewing something", subtitle: "Rate and review one of your saves.", emoji: "⭐️", reward: 2, progress: 1, isClaimed: true),
         ]
-    }
+    }()
 
-    static var stamps: [Stamp] {
+    static let stamps: [Stamp] = {
         [Stamp(id: "hoarder", title: "Digital Hoarder", subtitle: "Build up your stash in Albo!", goalLabel: "Import 10 things", target: 10, progress: 2)]
-    }
+    }()
 
     // MARK: Leaderboards (Albo #196, #197)
-    static var hoarders: [LeaderboardEntry] {
+    static let hoarders: [LeaderboardEntry] = {
         let rows: [(String, String, MascotVariant, Int)] = [
             ("Claire", "cmzerbib", .reader, 22437), ("LL", "LLLOOPS", .reader, 19809), ("Jennifer Huynh", "Phobunny", .reader, 19218),
             ("Nora Mina-Lorenzetti", "noraminalo", .traveler, 16601), ("Sammy", "Samwalkedintoabarr__", .chef, 16531), ("Veed", "veed", .reader, 16119),
@@ -206,19 +206,19 @@ enum SampleData {
             ("Margaret Gardner", "margaret", .filmFan, 13669), ("Omar", "omard", .explorer, 13198),
         ]
         return rows.enumerated().map { i, r in LeaderboardEntry(rank: i + 1, user: UserSummary(name: r.0, handle: r.1, mascot: r.2), count: r.3) }
-    }
+    }()
 
-    static var yappers: [LeaderboardEntry] {
+    static let yappers: [LeaderboardEntry] = {
         let rows: [(String, String, MascotVariant, Int)] = [
             ("Malak", "malak", .news, 186), ("Christy", "christy", .chef, 116), ("zehra", "zehra", .reader, 104), ("Joana", "joana", .traveler, 99),
             ("Akihala", "akihala", .filmFan, 99), ("Madeline", "madeline", .reader, 94), ("Thư Nguyễn", "thu", .chef, 90), ("Senanga", "senanga", .explorer, 82),
             ("Hajar Yassein", "hajar", .news, 81), ("pattgue", "pattgue", .reader, 75), ("Isaac", "isaac", .rocket, 73),
         ]
         return rows.enumerated().map { i, r in LeaderboardEntry(rank: i + 1, user: UserSummary(name: r.0, handle: r.1, mascot: r.2), count: r.3) }
-    }
+    }()
 
     // MARK: Community feed (Albo #145, #163, #166)
-    static var feed: [FeedPost] {
+    static let feed: [FeedPost] = {
         [
             FeedPost(author: kimmy, kind: .list, title: "Recipes", coverEmoji: "🍲", coverTint: 0xF3E2C6, stars: nil, saveID: potatoSaladID, aspect: 1.05),
             FeedPost(author: me, kind: .review, title: "i love the texture!", coverEmoji: "🥦", coverTint: 0xF3B27A, stars: 5, saveID: cookiesID, aspect: 0.9),
@@ -228,19 +228,19 @@ enum SampleData {
             FeedPost(author: allie, kind: .review, title: "i just was not a fan of using vanilla for the syrup", coverEmoji: "🍵", coverTint: 0xD5E8D4, stars: 2, isNearby: true, aspect: 1.2),
             FeedPost(author: gabrielle, kind: .place, title: "717 DELI", coverEmoji: "🥪", coverTint: 0xF9E4B7, stars: 4, saveID: deliID, isNearby: true, aspect: 0.85),
         ]
-    }
+    }()
 
-    static var events: [Save] { saves.filter { $0.category == .event } + [
+    static let events: [Save] = { saves.filter { $0.category == .event } + [
         Save(category: .event, title: "IVE - Show What I Am Fan Support (B)", coverEmoji: "🎤", coverTint: 0x2B2D42, sourcePlatform: .instagram, status: .saved, saveCount: 3,
              event: EventDetails(start: date(2026, 7, 13, 22), venue: "Chagee NU Mall of Asia", kind: "Community", latitude: 14.5353, longitude: 120.9822)),
         Save(category: .event, title: "Wave to Earth - The () pieces tour", coverEmoji: "🌊", coverTint: 0x8ECAE6, sourcePlatform: .instagram, status: .saved, saveCount: 41,
              event: EventDetails(start: date(2026, 11, 15, 19), venue: "SM Mall of Asia Arena", kind: "Concert", latitude: 14.5324, longitude: 120.9830)),
         Save(category: .event, title: "BTS - World Tour 'Arirang' (Bulacan)", coverEmoji: "💜", coverTint: 0x5E548E, sourcePlatform: .tiktok, status: .saved, saveCount: 990,
              event: EventDetails(start: date(2027, 3, 13, 18), venue: "Philippine Sports Stadium", kind: "Concert", latitude: 14.8386, longitude: 120.8210)),
-    ] }
+    ] }()
 
     // MARK: Search catalog for "manual search" (Albo #105, #110, #120)
-    static var catalog: [Save] {
+    static let catalog: [Save] = {
         saves + [
             Save(category: .book, title: "Project Hail Mary / Artemis / The Martian", subtitle: "Andy Weir", coverEmoji: "📚", coverTint: 0x457B9D, saveCount: 12, media: MediaDetails(year: 2022, author: "Andy Weir")),
             Save(category: .book, title: "Project Hail Mary: A Novel", coverEmoji: "📕", coverTint: 0xE63946, saveCount: 3, media: MediaDetails(year: 2021)),
@@ -251,7 +251,7 @@ enum SampleData {
             Save(category: .place, title: "New York City Hall", coverEmoji: "🏛️", coverTint: 0xE9ECEF, saveCount: 22, place: PlaceDetails(latitude: 40.7128, longitude: -74.0060, category: "City Hall", rating: 4.3, city: "New York", countryFlag: "🇺🇸")),
             Save(category: .place, title: "New York City Ballet", coverEmoji: "🩰", coverTint: 0xFFE5EC, saveCount: 3, place: PlaceDetails(latitude: 40.7725, longitude: -73.9835, category: "Ballet theater", rating: 4.8, city: "New York", countryFlag: "🇺🇸")),
         ]
-    }
+    }()
 
     // MARK: Testimonials (Albo #4, #32)
     struct Testimonial: Identifiable { let id = UUID(); let handle: String; let flag: String; let text: String; let mascot: MascotVariant }

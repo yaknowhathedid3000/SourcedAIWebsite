@@ -119,9 +119,15 @@ struct AskAlboSheet: View {
     private func ask(_ q: String) {
         thinking = true
         Task {
-            let answer = await AskAlboService.answer(q, saves: app.saves, scope: scope)
+            let history = messages.filter { $0.role == .user || $0.role == .assistant }
+            do {
+                let answer = try await AskAlboService.answer(q, saves: app.saves, scope: scope, history: history)
+                messages.append(ChatMessage(role: .assistant, text: answer))
+            } catch {
+                messages.append(ChatMessage(role: .assistant, text: error.localizedDescription))
+                if case BackendError.proRequired = error { app.showPaywall = true }
+            }
             thinking = false
-            messages.append(ChatMessage(role: .assistant, text: answer))
         }
     }
 }

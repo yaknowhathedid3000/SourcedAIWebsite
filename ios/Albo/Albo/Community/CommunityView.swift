@@ -281,12 +281,18 @@ struct EventsList: View {
         return out
     }
 
+    private func dayHeading(_ day: Date) -> Text {
+        let main: Text = Text(day, format: .dateTime.day().month(.wide)).fontWeight(.bold).foregroundStyle(AlboColor.ink)
+        let slash: Text = Text(" / ").foregroundStyle(AlboColor.muted)
+        let weekday: Text = Text(day, format: .dateTime.weekday(.wide)).foregroundStyle(AlboColor.muted)
+        return (main + slash + weekday).font(.alboSans(20))
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 26) {
             ForEach(grouped, id: \.0) { day, items in
                 VStack(alignment: .leading, spacing: 18) {
-                    (Text(day, format: .dateTime.day().month(.wide)).fontWeight(.bold).foregroundStyle(AlboColor.ink) + Text(" / ").foregroundStyle(AlboColor.muted) + Text(day, format: .dateTime.weekday(.wide)).foregroundStyle(AlboColor.muted))
-                        .font(.alboSans(20))
+                    dayHeading(day)
                     ForEach(items) { e in
                         NavigationLink(value: LibraryRoute.save(e.id)) {
                             HStack(spacing: 14) {

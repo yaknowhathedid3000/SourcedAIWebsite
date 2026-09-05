@@ -180,11 +180,16 @@ struct ImportLinkSheet: View {
         guard let url = URL(string: text) else { app.showToast("That doesn't look like a link"); return }
         importing = true
         Task {
-            let save = await ImportService.extract(from: url)
-            app.add(save)
+            do {
+                let save = try await ImportService.extract(from: url)
+                app.add(save)
+                app.showToast("Saved \(save.title)")
+                app.showAddSheet = false
+            } catch {
+                app.showToast(error.localizedDescription)
+                if case BackendError.outOfCredits = error { app.showPaywall = true }
+            }
             importing = false
-            app.showToast("Saved \(save.title)")
-            app.showAddSheet = false
         }
     }
 }
@@ -266,12 +271,22 @@ struct ImportScreenshotSheet: View {
     private func runImport() {
         importing = true
         Task {
-            let saves = await ImportService.extract(screenshots: items.count)
-            for s in saves { app.add(s) }
-            app.advance(task: "screenshot")
+            do {
+                var images: [Data] = []
+                for item in items {
+                    guard let data = try await item.loadTransferable(type: Data.self) else { continue }
+                    images.append(data)
+                }
+                let saves = try await ImportService.extract(screenshots: images)
+                for s in saves { app.add(s) }
+                app.advance(task: "screenshot")
+                app.showToast("Imported \(saves.count) screenshot\(saves.count == 1 ? "" : "s")")
+                app.showAddSheet = false
+            } catch {
+                app.showToast(error.localizedDescription)
+                if case BackendError.outOfCredits = error { app.showPaywall = true }
+            }
             importing = false
-            app.showToast("Imported \(saves.count) screenshot\(saves.count == 1 ? "" : "s")")
-            app.showAddSheet = false
         }
     }
 }
@@ -375,12 +390,16 @@ struct NoteEditorView: View {
         let id = noteID ?? existing?.id
         analyzing = true
         Task {
-            var results = await ImportService.analyze(note: title, body: body_)
-            for i in results.indices { results[i].mentionedInNoteID = id }
-            // Replace previous findings for this note.
-            if let id { for old in app.saves where old.mentionedInNoteID == id { app.remove(old.id) } }
-            for r in results { app.add(r) }
-            found = results
+            do {
+                var results = try await ImportService.analyze(note: title, body: body_, noteID: id)
+                for i in results.indices { results[i].mentionedInNoteID = id }
+                // Replace previous findings for this note.
+                if let id { for old in app.saves where old.mentionedInNoteID == id { app.remove(old.id) } }
+                for r in results { app.add(r) }
+                found = results
+            } catch {
+                app.showToast(error.localizedDescription)
+            }
             analyzing = false
             reanalyze = false
         }

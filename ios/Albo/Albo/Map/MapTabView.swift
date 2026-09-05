@@ -30,6 +30,7 @@ struct MapTabView: View {
     @State private var query = ""
     @State private var selected: Save? = nil
     @State private var showList = false
+    @State private var pendingSelection: Save? = nil
     @State private var showWarmup = false
     @State private var locationManager = CLLocationManager()
 
@@ -99,7 +100,9 @@ struct MapTabView: View {
             .padding(.horizontal, 16).padding(.bottom, 12)
         }
         .sheet(item: $selected) { s in PlaceSheet(saveID: s.id) }
-        .sheet(isPresented: $showList) { PlacesListSheet(query: query) { s in showList = false; selected = s } }
+        .sheet(isPresented: $showList, onDismiss: { if let p = pendingSelection { selected = p; pendingSelection = nil } }) {
+            PlacesListSheet(query: query) { s in pendingSelection = s; showList = false }
+        }
         .overlay { if showWarmup { LocationWarmup { showWarmup = false; app.hasSeenLocationWarmup = true; locationManager.requestWhenInUseAuthorization() } } }
         .onAppear { if !app.hasSeenLocationWarmup { showWarmup = true } }
     }

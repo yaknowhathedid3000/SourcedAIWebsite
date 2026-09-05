@@ -72,18 +72,14 @@ until the real assets exist, and both are single swap points:
 No compiler was available where this was written, so build it in Xcode once
 before shipping and treat any warning as a bug.
 
-## Deliberate stubs
+## What is real and what is local
 
-Everything renders and navigates with sample data. These pieces are
-local until the backend above is configured:
+With the backend configured, link, note and screenshot imports go through the
+`extract` edge function, Ask Albo goes through `ask-albo` with chat history,
+purchases go through StoreKit 2 (`com.sourcedai.albo.pro.yearly`, with
+`Resources/Albo.storekit` attached to the run scheme for the simulator), and
+the library syncs through `SyncEngine`. Without a backend the same calls fall
+back to local heuristics so every screen still demos.
 
-- **Extraction**: pasted links, notes and screenshots create a placeholder
-  save and mark it "importing". Wire `ImportService` to your extract endpoint.
-- **Ask Albo**: answers are generated locally from your saved items. Wire
-  `AskAlboService` to a streaming chat endpoint.
-- **Purchases**: the paywall flips the entitlement locally. Replace
-  `PurchaseService` with StoreKit 2 `Product.purchase()`.
-- **Social**: feed, profiles and leaderboards are sample data.
-- **3D category icons and mascot costumes**: emoji and a vector mascot stand in
-  for Albo's rendered assets. Drop PNGs into `Resources/Assets.xcassets` and
-  swap them in `CategoryIcon` and `MascotView`.
+Still sample data until the social endpoints are wired: the community feed,
+public profiles, leaderboards and stamps.
