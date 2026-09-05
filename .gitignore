@@ -1,0 +1,20 @@
+# Xcode
+ios/Albo/Albo.xcodeproj/
+ios/Albo/*.xcworkspace/
+ios/Albo/DerivedData/
+ios/Albo/Albo/Resources/Albo.local.xcconfig
+xcuserdata/
+*.xcuserstate
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+supabase/functions/.env
+.env
+.env.*
+
+# Node
+node_modules/
+
+# OS
+.DS_Store

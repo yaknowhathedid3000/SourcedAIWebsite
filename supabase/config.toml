@@ -1,0 +1,41 @@
+# Supabase CLI config for the Albo backend.
+# `supabase link --project-ref <ref>` writes the ref into your local state; this
+# file keeps function settings and auth providers under version control.
+
+project_id = "albo"
+
+[api]
+enabled = true
+schemas = ["public", "storage"]
+max_rows = 500
+
+[db]
+major_version = 17
+
+[auth]
+site_url = "https://albo.inc"
+additional_redirect_urls = ["albo://auth-callback"]
+enable_signup = true
+
+[auth.external.apple]
+enabled = true
+client_id = "env(APPLE_SERVICES_ID)"
+secret = "env(APPLE_CLIENT_SECRET)"
+
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
+skip_nonce_check = true
+
+[functions.extract]
+verify_jwt = true
+
+[functions.ask-albo]
+verify_jwt = true
+
+[functions.reminders-cron]
+verify_jwt = false
+
+[storage]
+file_size_limit = "25MiB"
