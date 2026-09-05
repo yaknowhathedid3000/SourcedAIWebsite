@@ -14,6 +14,7 @@ settings:
     ENABLE_USER_SCRIPT_SANDBOXING: YES
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
+    ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "AppIcon-Browse AppIcon-King AppIcon-Reads AppIcon-Cooks AppIcon-News"
 packages:
   Supabase:
     url: https://github.com/supabase/supabase-swift
@@ -55,13 +56,6 @@ targets:
         NSLocationAlwaysAndWhenInUseUsageDescription: "Albo uses your location in the background to remind you when you're near a saved place."
         NSCalendarsWriteOnlyAccessUsageDescription: "Albo needs calendar access to add events to your calendar."
         NSContactsUsageDescription: "Albo uses your contacts to help you find friends on Albo."
-        CFBundleIcons:
-          CFBundleAlternateIcons:
-            Browse: { CFBundleIconFiles: [AppIcon-Browse] }
-            King: { CFBundleIconFiles: [AppIcon-King] }
-            Reads: { CFBundleIconFiles: [AppIcon-Reads] }
-            Cooks: { CFBundleIconFiles: [AppIcon-Cooks] }
-            News: { CFBundleIconFiles: [AppIcon-News] }
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.sourcedai.albo
