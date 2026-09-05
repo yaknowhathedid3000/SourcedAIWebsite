@@ -39,10 +39,43 @@ usage-description keys from `project.yml` into the target's Info tab.
 | `Chat` | Ask Albo (global and per item) | #57 to #59, #93 to #95 |
 | `Paywall` | Trial timeline paywall and Digital Hoarder's Club welcome | #41 to #44 |
 
+## Backend
+
+`Backend/AlboBackend.swift` talks to the Supabase project in `../../supabase`
+(schema, RLS, RPCs and edge functions). It compiles only when the
+`supabase-swift` package resolves (`#if canImport(Supabase)`), so the app
+builds and runs on sample data without it.
+
+1. Create a Supabase project and run `supabase db push` from `supabase/`.
+2. Deploy the edge functions and set the `ANTHROPIC_API_KEY` secret (see
+   `supabase/README.md`).
+3. Put the project URL and publishable key in
+   `Albo/Resources/Albo.local.xcconfig` (git-ignored):
+   ```
+   SUPABASE_URL = https:/$()/<project-ref>.supabase.co
+   SUPABASE_ANON_KEY = <publishable key>
+   ```
+4. `SyncEngine` starts after onboarding, pulls the library, and pushes local
+   changes. Sign in with Apple, imports (`extract`) and Ask Albo (`ask-albo`)
+   go through the same client. The web app in `../../web` shares the database.
+
+## Parity notes
+
+The layout, copy, type ramp, colors and motion follow the 206 recorded
+screens in `docs/albo/screens.json` frame by frame. Two things are stand-ins
+until the real assets exist, and both are single swap points:
+
+- `SaveCover` and `CategoryIcon` use emoji on tinted grounds where Albo shows
+  photos and rendered 3D icons.
+- `MascotView` is a vector mascot with emoji costume hats.
+
+No compiler was available where this was written, so build it in Xcode once
+before shipping and treat any warning as a bug.
+
 ## Deliberate stubs
 
 Everything renders and navigates with sample data. These pieces are
-intentionally local until a backend exists:
+local until the backend above is configured:
 
 - **Extraction**: pasted links, notes and screenshots create a placeholder
   save and mark it "importing". Wire `ImportService` to your extract endpoint.

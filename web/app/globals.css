@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600&family=Instrument+Sans:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  background: #ffffff;
+  color: #1c1c1e;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply font-sans;
+}
+
+.serif {
+  @apply font-serif font-bold;
+}
+
+@layer components {
+/* Albo's primary pill with the hard offset shadow (teardown 3.3). */
+.btn-primary {
+  @apply inline-flex h-[58px] w-full items-center justify-center rounded-pill bg-ink px-6 text-[18px] font-semibold text-white shadow-hard transition active:translate-y-[3px] active:shadow-none disabled:bg-[#C8C8C8] disabled:shadow-none;
+}
+.btn-danger {
+  @apply btn-primary bg-danger shadow-hardDanger;
+}
+.btn-secondary {
+  @apply inline-flex h-[54px] w-full items-center justify-center rounded-pill bg-option px-6 text-[17px] font-semibold text-ink transition active:scale-[0.98];
+}
+.btn-outline {
+  @apply inline-flex h-12 items-center justify-center gap-2 rounded-pill border-[1.5px] border-hairline px-5 text-[16px] font-semibold text-ink transition active:scale-[0.98];
+}
+.chip {
+  @apply inline-flex h-9 items-center gap-1 rounded-pill bg-option px-3.5 text-[14px] font-medium text-ink;
+}
+.card {
+  @apply rounded-card bg-white shadow-card;
+}
+.hairline {
+  @apply h-px w-full bg-hairline;
+}
+.tab-serif {
+  @apply font-serif text-[20px] italic font-semibold text-muted;
+}
+.tab-serif-active {
+  @apply font-serif text-[20px] not-italic font-bold text-ink;
+}
+}
+
+/* No lonely last words in headlines. */
+.balance {
+  text-wrap: balance;
+}
+
+::-webkit-scrollbar { width: 0; height: 0; }
