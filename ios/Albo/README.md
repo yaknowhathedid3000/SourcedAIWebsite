@@ -38,6 +38,28 @@ usage-description keys from `project.yml` into the target's Info tab.
 | `Settings` | Settings tree, notifications, appearance, language, preferences, manage subscription, delete account | #191 to #206 |
 | `Chat` | Ask Albo (global and per item) | #57 to #59, #93 to #95 |
 | `Paywall` | Trial timeline paywall and Digital Hoarder's Club welcome | #41 to #44 |
+| `Shared` | The App Group inbox the share extension and the app both read | — |
+| `../AlboShare` | The "Add to Albo" share extension | share sheet, #54 |
+
+## Sharing into Albo
+
+`AlboShare` is a share extension, so "Add to Albo" appears in every other app's share sheet
+the way Albo's own does. It takes a link, some text, or up to ten images.
+
+The extension deliberately does almost nothing: it reads the attachments, lets you confirm
+the category it guessed, and writes an `InboxItem` into the App Group
+(`group.com.sourcedai.albo`). Extensions get a small memory budget and no access to the
+user's session, so the real work happens in the app — `ShareInboxImporter` drains the queue
+on launch and on every return to the foreground, runs each item through the same
+`ImportService` the Add sheet uses, and toasts what landed.
+
+Consequences worth knowing:
+
+- A shared link becomes a real save the next time you open Albo, not the instant you share it.
+- Out of credits, or not signed in, and the queue is held rather than dropped — it imports
+  once that is fixed. A dead link is dropped after one attempt so it cannot wedge the queue.
+- The App Group must be enabled on **both** target identifiers. Enable it on only one and
+  shares disappear silently. See `../../CONNECT.md`.
 
 ## Backend
 

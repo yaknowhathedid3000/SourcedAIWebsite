@@ -33,10 +33,14 @@ targets:
     dependencies:
       - package: Supabase
         product: Supabase
+      - target: AlboShare
+        embed: true
     entitlements:
       path: Albo/Resources/Albo.entitlements
       properties:
         com.apple.developer.applesignin: [Default]
+        com.apple.security.application-groups:
+          - group.com.sourcedai.albo
     info:
       path: Albo/Resources/Info.plist
       properties:
@@ -49,6 +53,9 @@ targets:
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         ITSAppUsesNonExemptEncryption: false
+        CFBundleURLTypes:
+          - CFBundleURLName: com.sourcedai.albo
+            CFBundleURLSchemes: [albo]
         NSUserTrackingUsageDescription: "This allows Albo to provide you with a more personalised experience and measure the effectiveness of our campaigns."
         NSPhotoLibraryUsageDescription: "Albo needs photo access to add profile pictures, review photos and screenshot imports."
         NSCameraUsageDescription: "Albo needs camera access to take profile pictures and scan QR codes."
@@ -62,11 +69,53 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UIUserInterfaceStyle: Automatic
         CODE_SIGN_STYLE: Automatic
+  AlboShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      # The extension is its own process, so it compiles the handful of dependency-free
+      # files it needs rather than linking the whole app.
+      - path: AlboShare
+        excludes:
+          - "Info.plist"
+          - "AlboShare.entitlements"
+      - path: Albo/Shared
+      - path: Albo/Models/Models.swift
+      - path: Albo/DesignSystem/AlboColor.swift
+      - path: Albo/DesignSystem/AlboType.swift
+      - path: Albo/DesignSystem/Buttons.swift
+      - path: Albo/DesignSystem/Haptics.swift
+    entitlements:
+      path: AlboShare/AlboShare.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.sourcedai.albo
+    info:
+      path: AlboShare/Info.plist
+      properties:
+        CFBundleDisplayName: Albo
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsWebPageWithMaxCount: 1
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsImageWithMaxCount: 10
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sourcedai.albo.share
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_VERSION: "5.10"
+
 schemes:
   Albo:
     build:
       targets:
         Albo: all
+        AlboShare: all
     run:
       config: Debug
       storeKitConfiguration: Albo/Resources/Albo.storekit
