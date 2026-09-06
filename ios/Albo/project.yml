@@ -121,3 +121,10 @@ schemes:
       storeKitConfiguration: Albo/Resources/Albo.storekit
     archive:
       config: Release
+  AlboShare:
+    # Run this scheme and pick a host app (Safari) to debug the share sheet.
+    build:
+      targets:
+        AlboShare: all
+    run:
+      config: Debug
