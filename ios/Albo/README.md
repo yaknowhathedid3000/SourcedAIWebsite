@@ -7,19 +7,15 @@ frame on ScreensDesign next to the code.
 
 ## Open it
 
-Requires Xcode 15.4 or newer and iOS 17.
+Double-click `Albo.xcodeproj`. Requires Xcode 15.4 or newer and iOS 17; nothing else to
+install. Wait for the Supabase package to resolve on first open before building.
 
-```
-brew install xcodegen
-cd ios/Albo
-xcodegen generate
-open Albo.xcodeproj
-```
+Two targets: `Albo` (the app) and `AlboShare` (the "Add to Albo" share extension). Set your
+signing team on both — see `../../DEPLOY.md` for the full path to a device and TestFlight.
 
-If you would rather not use XcodeGen: create a new iOS App project named
-`Albo` in Xcode (SwiftUI, Swift), delete the generated `ContentView.swift`
-and `AlboApp.swift`, drag the `Albo` folder into the project, and paste the
-usage-description keys from `project.yml` into the target's Info tab.
+`project.yml` describes the same project in XcodeGen's format and is kept for reference;
+`tools/generate_xcodeproj.py` is what actually wrote `Albo.xcodeproj` and can rebuild it if
+it is ever mangled. Day to day, add files through Xcode.
 
 ## What is here
 

@@ -1,62 +1,59 @@
 # Deploying Albo from Xcode
 
 Requires macOS with Xcode 15.4+ and an Apple Developer account ($99/yr) for anything
-beyond the simulator.
+beyond the simulator. No other tooling — the Xcode project is committed.
 
 For credentials and backend setup, see `CONNECT.md`. You can do everything through step 5
 here with no credentials at all — the app runs on local heuristics and sample data.
 
 ---
 
-## 1. Generate the project
+## 1. Open it
 
-There is no `.xcodeproj` in the repo; it is generated from `project.yml` so the two targets
-and their capabilities stay in sync.
+Double-click **`ios/Albo/Albo.xcodeproj`**. That is the whole step — the project file is in
+the repo, so there is no toolchain to install first.
 
-```bash
-brew install xcodegen
-cd ios/Albo
-xcodegen generate
-open Albo.xcodeproj
-```
-
-On first open Xcode resolves the Supabase package from GitHub. Wait for the progress bar in
+Xcode resolves the Supabase package from GitHub on first open. Wait for the progress bar in
 the toolbar to finish before building, or the first build fails on a missing module.
 
-**Re-run `xcodegen generate` after any pull that touches `project.yml`.** It rewrites the
-project, which is why signing lives in an xcconfig rather than in Xcode's UI (step 2).
+Adding files later works normally: File → Add Files, or just drag them in. Xcode owns the
+project file from here.
+
+<details>
+<summary>Regenerating the project from scratch</summary>
+
+`tools/generate_xcodeproj.py` wrote it and can rewrite it if it ever gets mangled:
+
+```
+python3 tools/generate_xcodeproj.py
+```
+
+That rebuilds the project, both schemes, and the Info.plist and entitlements files from the
+source tree. It overwrites the project file, so anything you added through Xcode's UI in the
+meantime is lost — the script is a repair tool, not part of the normal loop.
+</details>
 
 ## 2. Signing — both targets
 
-Get your Team ID from developer.apple.com → Membership. Then:
+Xcode will show a red signing error until you pick a team. Do it in the UI:
 
-```bash
-cat > Albo/Resources/Albo.local.xcconfig <<'EOF'
-DEVELOPMENT_TEAM = YOUR10CHARID
-EOF
-```
+1. Click **Albo** at the top of the file navigator (the blue project icon).
+2. In the target list, select **Albo** → **Signing & Capabilities** tab.
+3. Set **Team** to your account. Leave "Automatically manage signing" ticked.
+4. Select the **AlboShare** target in the same list and set the same team.
 
-That file is git-ignored and survives regeneration. Both targets pick it up.
+Both targets already declare their capabilities (Sign in with Apple and App Groups on the
+app, App Groups on the extension), so they appear in that tab with no setup.
 
-If `com.sourcedai.albo` is already taken on your account, change the prefix in three places
-and regenerate:
+If Xcode reports the bundle ID is taken, click the bundle identifier field and change the
+prefix on both targets — then change the App Group to match in three places, or shared links
+will silently vanish:
 
-- `project.yml` → `PRODUCT_BUNDLE_IDENTIFIER` on **both** targets
-- `project.yml` → the two `com.apple.security.application-groups` blocks
+- both targets' **App Groups** rows in Signing & Capabilities
 - `Albo/Shared/ShareInbox.swift` → `AlboAppGroup.identifier`
 
-The app group string must match in all three or the extension writes somewhere the app
-cannot read.
-
-Then in Xcode, check both targets under Signing & Capabilities (select the project in the
-navigator, then each target in the sidebar):
-
-- **Albo** — Sign in with Apple, App Groups (`group.com.sourcedai.albo`)
-- **AlboShare** — App Groups, the same identifier
-
-Automatic signing registers these for you if your account has permission. If the App Group
-row shows a red error, create it manually in the portal under Identifiers → App Groups and
-click the refresh arrow in Xcode.
+If the App Groups row shows a red error, click the refresh (circular arrow) button; Xcode
+registers the group for you if your account has permission.
 
 ## 3. Run in the simulator
 
@@ -94,7 +91,8 @@ Two things that confuse everyone:
 
 ## 6. Add the backend (optional until TestFlight)
 
-Append your Supabase values to the same local xcconfig:
+Create `ios/Albo/Albo/Resources/Albo.local.xcconfig` (git-ignored, and already
+`#include?`'d by the checked-in xcconfig) with:
 
 ```
 SUPABASE_URL = https:/$()/YOUR-REF.supabase.co
@@ -111,8 +109,8 @@ First create the app record in App Store Connect with bundle ID `com.sourcedai.a
 
 Then:
 
-1. Bump the build number in `project.yml` (`CURRENT_PROJECT_VERSION`) and regenerate. Every
-   upload needs a build number higher than the last for that version string.
+1. Bump the build number: project → Albo target → General → **Build**. Every upload needs a
+   build number higher than the last one for that version string. Do it on both targets.
 2. Destination menu → **Any iOS Device (arm64)**. Archive is greyed out on a simulator.
 3. Product → Archive.
 4. In the Organizer that opens: Distribute App → App Store Connect → Upload → Next through
@@ -138,10 +136,10 @@ demo account for review. If subscriptions are live, review will not pass until
 | Symptom | Cause |
 |---|---|
 | `No such module 'Supabase'` | Package still resolving, or resolution failed. File → Packages → Resolve Package Versions. |
-| Signing settings vanished | You edited them in Xcode's UI and re-ran `xcodegen generate`. Put them in `Albo.local.xcconfig` instead. |
+| Signing settings vanished | You re-ran `tools/generate_xcodeproj.py`, which overwrites the project. Set the team again in Xcode. |
 | `Failed to register bundle identifier` | Taken by another account. Change the prefix per step 2. |
 | Share extension missing from the share sheet | Extension did not install. Delete the app, rebuild. Check AlboShare actually built. |
 | Shared links never appear in the app | App Group mismatch or not enabled on both targets. Compare the string in all three places from step 2. |
 | Paywall shows no price | StoreKit config not attached (use the `Albo` scheme), or on a real build the product does not exist in App Store Connect yet. |
 | Archive greyed out | Destination is a simulator. Switch to Any iOS Device (arm64). |
-| `Invalid Bundle. Missing Info.plist value CFBundleIconName` | Regenerate — the asset catalog appicon settings come from `project.yml`. |
+| `Invalid Bundle. Missing Info.plist value CFBundleIconName` | The app icon asset is missing from the build. Check Assets.xcassets is in the Albo target's Copy Bundle Resources phase. |

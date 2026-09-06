@@ -1,0 +1,704 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3E0C7738CF6D78D2E39A4FDF /* AddAnythingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F53F884DDA35E97EF94EA /* AddAnythingSheet.swift */; };
+		94B9C64BFDC45ABDD6E36057 /* ShareInboxImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0422ADDF0772910F8A37F517 /* ShareInboxImporter.swift */; };
+		5E543A97680A39AA22B2BAF9 /* AlboApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA7FD973F3333770A9AC0A /* AlboApp.swift */; };
+		B9AFEC8C86587A59AB723837 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2ACE6B454802553EF5A711 /* AppState.swift */; };
+		4ECA355817E7C4B2F3613657 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCC1A29F27A67415E359840 /* RootView.swift */; };
+		5F1D96B40F456643098765AC /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA90F72BCDF36258B64310B /* Services.swift */; };
+		E8FC2D7D553F440D522115EE /* AlboBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA9D98AAEEBBFBED7B281DB /* AlboBackend.swift */; };
+		0C4ED5EF63D9F411056748F4 /* AskAlboSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C20F87C7A1D3E62A9E7262 /* AskAlboSheet.swift */; };
+		8151CACB54569BA1213BD188 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC81C8B9F092403C66C2D8 /* CommunityView.swift */; };
+		55096CE2182A0A15FEF6B55F /* AlboColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EA2927D011332F4C5E3BE0 /* AlboColor.swift */; };
+		A6CAEDA2E1F72E73F5352BC5 /* AlboType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD4AF7847AD8D3979F7C40 /* AlboType.swift */; };
+		753D06709B5229ACD9C06FC5 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA001714A4DA8D64EB9CFF6 /* Buttons.swift */; };
+		D114C9C1E54F91E7452312F6 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906A167BFC11A85E6E895695 /* Components.swift */; };
+		AEB26D20E56EB3CE210979AD /* Copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AA4042B793B648D86A21A6 /* Copy.swift */; };
+		F9C76D7B1AADEAF53C5ABCB9 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00473884E0E51638308148A1 /* Haptics.swift */; };
+		B14FD26202D3A7900BC589CE /* Mascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74313ED8DE2AE94308FD142 /* Mascot.swift */; };
+		977DA7DAB927CBB735C2BCC1 /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172EFE2754E0013476B858C2 /* Motion.swift */; };
+		B9D4EEF86CC965E4753B0A34 /* ItemSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B061D82ACA61D7BE59D3183 /* ItemSheets.swift */; };
+		D8779B13EA86160BFE64FFB6 /* ReviewFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED005030A3417C6846B3F9 /* ReviewFormView.swift */; };
+		711D8BC8D04D37EA47583AEC /* SaveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963E8AD08EE70D350546F6 /* SaveDetailView.swift */; };
+		3A909A72110539232547E32C /* StreakModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2E1E2A69AC36E09E841397 /* StreakModal.swift */; };
+		8FDAAFEC3EC2A1EE3010D733 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B3E0DF6CCDE2612E536320 /* CategoryView.swift */; };
+		F8137246EC8BFEFA590BF7C0 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4974DD0203D842860842EA /* LibraryView.swift */; };
+		D3E2BFEAD0ADCA098AA2A21B /* MapTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042935D3263B4C64F0ED8D8 /* MapTabView.swift */; };
+		5E7813A890EDCB19715D416F /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BCAF06F18E431ECF866420 /* Models.swift */; };
+		481F3997D76963D8761A9EBB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1905386A6BECCC5C20DC18E9 /* SampleData.swift */; };
+		6B04061F2293E14FD30EF675 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822547C5B8805B86E90A8A9D /* OnboardingFlow.swift */; };
+		5BEB257138BC3672E3DD12C6 /* OnboardingSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309CAE10B889F63AD145206 /* OnboardingSteps.swift */; };
+		182744437C00517E8F64E1E4 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BAB1203754D4DE2DD724FD /* PaywallView.swift */; };
+		1D21EE345C106382408BA38D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320E29A8BABD4F392795B92A /* ProfileView.swift */; };
+		D7478434669B5865D6FD1004 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD3687882DAFA759E12CE0F /* SettingsView.swift */; };
+		D7449D75601264B3ED360172 /* ShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915A076F43673984B5FB16AE /* ShareInbox.swift */; };
+		45EE987F3A3008DC0CC934FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B29280ED40A108C4E03532DA /* Assets.xcassets */; };
+		8F9569770D5A613C8793F584 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994998C004EC9E7869EA8C4 /* ShareSheetView.swift */; };
+		6474531C643A27DE1EE0C0B0 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994CD5CC33BC7D8131D68817 /* ShareViewController.swift */; };
+		E14D9849B14604D53D5D4C51 /* ShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915A076F43673984B5FB16AE /* ShareInbox.swift */; };
+		EE0A66D4B29193FC345D4725 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2BCAF06F18E431ECF866420 /* Models.swift */; };
+		1D3BC6C4012E929436EFF7D7 /* AlboColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94EA2927D011332F4C5E3BE0 /* AlboColor.swift */; };
+		346F8A8B3044B5491754BB7C /* AlboType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFD4AF7847AD8D3979F7C40 /* AlboType.swift */; };
+		2B95C0EAEF13CAB4E76F2A8B /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA001714A4DA8D64EB9CFF6 /* Buttons.swift */; };
+		E2C7892622E720C15265F067 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00473884E0E51638308148A1 /* Haptics.swift */; };
+		CD004B0D598FA4DF41C0D12D /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D6239CE3C972AAC163BF270F /* Supabase */; };
+		580F88DF762FE72BC56A3A11 /* AlboShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3FB6D56ADA98C5E5A65E60D1 /* AlboShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		894C358DCB588C7E4326D899 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31C97C15F6B9B0A2A4B3320F;
+			remoteInfo = AlboShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2FBDE94810A8DBC050BFE67F /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				580F88DF762FE72BC56A3A11 /* AlboShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		EA3F53F884DDA35E97EF94EA /* AddAnythingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnythingSheet.swift; sourceTree = "<group>"; };
+		0422ADDF0772910F8A37F517 /* ShareInboxImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInboxImporter.swift; sourceTree = "<group>"; };
+		ADAA7FD973F3333770A9AC0A /* AlboApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlboApp.swift; sourceTree = "<group>"; };
+		7F2ACE6B454802553EF5A711 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		9CCC1A29F27A67415E359840 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		8EA90F72BCDF36258B64310B /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		CDA9D98AAEEBBFBED7B281DB /* AlboBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlboBackend.swift; sourceTree = "<group>"; };
+		26C20F87C7A1D3E62A9E7262 /* AskAlboSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskAlboSheet.swift; sourceTree = "<group>"; };
+		BCCC81C8B9F092403C66C2D8 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		94EA2927D011332F4C5E3BE0 /* AlboColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlboColor.swift; sourceTree = "<group>"; };
+		2BFD4AF7847AD8D3979F7C40 /* AlboType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlboType.swift; sourceTree = "<group>"; };
+		6AA001714A4DA8D64EB9CFF6 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		906A167BFC11A85E6E895695 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		F6AA4042B793B648D86A21A6 /* Copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copy.swift; sourceTree = "<group>"; };
+		00473884E0E51638308148A1 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		C74313ED8DE2AE94308FD142 /* Mascot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mascot.swift; sourceTree = "<group>"; };
+		172EFE2754E0013476B858C2 /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
+		6B061D82ACA61D7BE59D3183 /* ItemSheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSheets.swift; sourceTree = "<group>"; };
+		A8ED005030A3417C6846B3F9 /* ReviewFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFormView.swift; sourceTree = "<group>"; };
+		22963E8AD08EE70D350546F6 /* SaveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDetailView.swift; sourceTree = "<group>"; };
+		1E2E1E2A69AC36E09E841397 /* StreakModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakModal.swift; sourceTree = "<group>"; };
+		53B3E0DF6CCDE2612E536320 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		4F4974DD0203D842860842EA /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		A042935D3263B4C64F0ED8D8 /* MapTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabView.swift; sourceTree = "<group>"; };
+		F2BCAF06F18E431ECF866420 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		1905386A6BECCC5C20DC18E9 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		822547C5B8805B86E90A8A9D /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		0309CAE10B889F63AD145206 /* OnboardingSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSteps.swift; sourceTree = "<group>"; };
+		D6BAB1203754D4DE2DD724FD /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		320E29A8BABD4F392795B92A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F0249F65521038E459E67A67 /* Albo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Albo.entitlements; sourceTree = "<group>"; };
+		18E1044C542683A8A0BE318E /* Albo.storekit */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Albo.storekit; sourceTree = "<group>"; };
+		6C658B41A96FE432FF44F16A /* Albo.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Albo.xcconfig; sourceTree = "<group>"; };
+		B29280ED40A108C4E03532DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5F48545EF1B4EA443636F241 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FD3687882DAFA759E12CE0F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		915A076F43673984B5FB16AE /* ShareInbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInbox.swift; sourceTree = "<group>"; };
+		BE1F0E31DE6408916DC2138E /* AlboShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlboShare.entitlements; sourceTree = "<group>"; };
+		EC3ED62A44EC095AFA771DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B994998C004EC9E7869EA8C4 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		994CD5CC33BC7D8131D68817 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		D5CB2D122FDC65727DC4B6AA /* Albo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Albo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FB6D56ADA98C5E5A65E60D1 /* AlboShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlboShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		54E596CEE3846F7B45533B2B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD004B0D598FA4DF41C0D12D /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		601921F374D5DA605F0F02D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC8C41C6880A374C895E2335 = {
+			isa = PBXGroup;
+			children = (
+				42E6931C4F6039E72A3CB36E /* Albo */,
+				3612ABB0CFADB377623DF1B0 /* AlboShare */,
+				C863DA5204F95EC573510473 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		42E6931C4F6039E72A3CB36E /* Albo */ = {
+			isa = PBXGroup;
+			children = (
+				7F97EC3B5FB30E6101CCC5DD /* Add */,
+				E3E30A0D3D3C122266325647 /* App */,
+				68118C8D0A06C785CA86FB34 /* Backend */,
+				0CC9314B91FD55563833CEE0 /* Chat */,
+				E576C149EE016E2E4361A4F0 /* Community */,
+				5543463D0F6E55D73C8173BB /* DesignSystem */,
+				2670B712DB2CAE8A4B95AE6A /* Detail */,
+				3AF2622F20019E46CC2A357E /* Library */,
+				C2F0478354D6A5CFB3F1F5FF /* Map */,
+				4D9623B9FCC8D624D0A6F988 /* Models */,
+				40A5B4A6083DB42E82185956 /* Onboarding */,
+				66F7021B217D4B74EAE8DB77 /* Paywall */,
+				A7369E6511EB6A31CD6F3A9C /* Profile */,
+				B268642A7D2BF2BC2F342E25 /* Resources */,
+				5BB424E5BFCA019E2FD9B71F /* Settings */,
+				E302BE907E17AE104032D4DB /* Shared */,
+			);
+			path = Albo;
+			sourceTree = "<group>";
+		};
+		7F97EC3B5FB30E6101CCC5DD /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				EA3F53F884DDA35E97EF94EA /* AddAnythingSheet.swift */,
+				0422ADDF0772910F8A37F517 /* ShareInboxImporter.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		E3E30A0D3D3C122266325647 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA7FD973F3333770A9AC0A /* AlboApp.swift */,
+				7F2ACE6B454802553EF5A711 /* AppState.swift */,
+				9CCC1A29F27A67415E359840 /* RootView.swift */,
+				8EA90F72BCDF36258B64310B /* Services.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		68118C8D0A06C785CA86FB34 /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				CDA9D98AAEEBBFBED7B281DB /* AlboBackend.swift */,
+			);
+			path = Backend;
+			sourceTree = "<group>";
+		};
+		0CC9314B91FD55563833CEE0 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				26C20F87C7A1D3E62A9E7262 /* AskAlboSheet.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		E576C149EE016E2E4361A4F0 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				BCCC81C8B9F092403C66C2D8 /* CommunityView.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
+		5543463D0F6E55D73C8173BB /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				94EA2927D011332F4C5E3BE0 /* AlboColor.swift */,
+				2BFD4AF7847AD8D3979F7C40 /* AlboType.swift */,
+				6AA001714A4DA8D64EB9CFF6 /* Buttons.swift */,
+				906A167BFC11A85E6E895695 /* Components.swift */,
+				F6AA4042B793B648D86A21A6 /* Copy.swift */,
+				00473884E0E51638308148A1 /* Haptics.swift */,
+				C74313ED8DE2AE94308FD142 /* Mascot.swift */,
+				172EFE2754E0013476B858C2 /* Motion.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		2670B712DB2CAE8A4B95AE6A /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				6B061D82ACA61D7BE59D3183 /* ItemSheets.swift */,
+				A8ED005030A3417C6846B3F9 /* ReviewFormView.swift */,
+				22963E8AD08EE70D350546F6 /* SaveDetailView.swift */,
+				1E2E1E2A69AC36E09E841397 /* StreakModal.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		3AF2622F20019E46CC2A357E /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				53B3E0DF6CCDE2612E536320 /* CategoryView.swift */,
+				4F4974DD0203D842860842EA /* LibraryView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		C2F0478354D6A5CFB3F1F5FF /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				A042935D3263B4C64F0ED8D8 /* MapTabView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		4D9623B9FCC8D624D0A6F988 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F2BCAF06F18E431ECF866420 /* Models.swift */,
+				1905386A6BECCC5C20DC18E9 /* SampleData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		40A5B4A6083DB42E82185956 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				822547C5B8805B86E90A8A9D /* OnboardingFlow.swift */,
+				0309CAE10B889F63AD145206 /* OnboardingSteps.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		66F7021B217D4B74EAE8DB77 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				D6BAB1203754D4DE2DD724FD /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
+		A7369E6511EB6A31CD6F3A9C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				320E29A8BABD4F392795B92A /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		B268642A7D2BF2BC2F342E25 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F0249F65521038E459E67A67 /* Albo.entitlements */,
+				18E1044C542683A8A0BE318E /* Albo.storekit */,
+				6C658B41A96FE432FF44F16A /* Albo.xcconfig */,
+				B29280ED40A108C4E03532DA /* Assets.xcassets */,
+				5F48545EF1B4EA443636F241 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5BB424E5BFCA019E2FD9B71F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7FD3687882DAFA759E12CE0F /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		E302BE907E17AE104032D4DB /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				915A076F43673984B5FB16AE /* ShareInbox.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		3612ABB0CFADB377623DF1B0 /* AlboShare */ = {
+			isa = PBXGroup;
+			children = (
+				BE1F0E31DE6408916DC2138E /* AlboShare.entitlements */,
+				EC3ED62A44EC095AFA771DEF /* Info.plist */,
+				B994998C004EC9E7869EA8C4 /* ShareSheetView.swift */,
+				994CD5CC33BC7D8131D68817 /* ShareViewController.swift */,
+			);
+			path = AlboShare;
+			sourceTree = "<group>";
+		};
+		C863DA5204F95EC573510473 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D5CB2D122FDC65727DC4B6AA /* Albo.app */,
+				3FB6D56ADA98C5E5A65E60D1 /* AlboShare.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E37E22EAFBC32C66B8A5F2AD /* Albo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42F12762B0B99E8640F16617 /* Build configuration list for PBXNativeTarget "Albo" */;
+			buildPhases = (
+				A9B4FDC46DF4B03B7A3130E7 /* Sources */,
+				54E596CEE3846F7B45533B2B /* Frameworks */,
+				0DD0F1533DB7439009A91549 /* Resources */,
+				2FBDE94810A8DBC050BFE67F /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				621FF95ABA37A16D1D4BF960 /* PBXTargetDependency */,
+			);
+			name = Albo;
+			packageProductDependencies = (
+				D6239CE3C972AAC163BF270F /* Supabase */,
+			);
+			productName = Albo;
+			productReference = D5CB2D122FDC65727DC4B6AA /* Albo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		31C97C15F6B9B0A2A4B3320F /* AlboShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A20A3886E363B7D0FCD09BC /* Build configuration list for PBXNativeTarget "AlboShare" */;
+			buildPhases = (
+				BD7DA5D9E1B9900D91CDDF18 /* Sources */,
+				601921F374D5DA605F0F02D8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AlboShare;
+			productName = AlboShare;
+			productReference = 3FB6D56ADA98C5E5A65E60D1 /* AlboShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					E37E22EAFBC32C66B8A5F2AD = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					31C97C15F6B9B0A2A4B3320F = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = F14EE13A45B7EF7555B4624F /* Build configuration list for PBXProject "Albo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DC8C41C6880A374C895E2335;
+			packageReferences = (
+				8653D0181113AD48D0A5EB9E /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			productRefGroup = C863DA5204F95EC573510473 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E37E22EAFBC32C66B8A5F2AD /* Albo */,
+				31C97C15F6B9B0A2A4B3320F /* AlboShare */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0DD0F1533DB7439009A91549 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45EE987F3A3008DC0CC934FD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9B4FDC46DF4B03B7A3130E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E0C7738CF6D78D2E39A4FDF /* AddAnythingSheet.swift in Sources */,
+				94B9C64BFDC45ABDD6E36057 /* ShareInboxImporter.swift in Sources */,
+				5E543A97680A39AA22B2BAF9 /* AlboApp.swift in Sources */,
+				B9AFEC8C86587A59AB723837 /* AppState.swift in Sources */,
+				4ECA355817E7C4B2F3613657 /* RootView.swift in Sources */,
+				5F1D96B40F456643098765AC /* Services.swift in Sources */,
+				E8FC2D7D553F440D522115EE /* AlboBackend.swift in Sources */,
+				0C4ED5EF63D9F411056748F4 /* AskAlboSheet.swift in Sources */,
+				8151CACB54569BA1213BD188 /* CommunityView.swift in Sources */,
+				55096CE2182A0A15FEF6B55F /* AlboColor.swift in Sources */,
+				A6CAEDA2E1F72E73F5352BC5 /* AlboType.swift in Sources */,
+				753D06709B5229ACD9C06FC5 /* Buttons.swift in Sources */,
+				D114C9C1E54F91E7452312F6 /* Components.swift in Sources */,
+				AEB26D20E56EB3CE210979AD /* Copy.swift in Sources */,
+				F9C76D7B1AADEAF53C5ABCB9 /* Haptics.swift in Sources */,
+				B14FD26202D3A7900BC589CE /* Mascot.swift in Sources */,
+				977DA7DAB927CBB735C2BCC1 /* Motion.swift in Sources */,
+				B9D4EEF86CC965E4753B0A34 /* ItemSheets.swift in Sources */,
+				D8779B13EA86160BFE64FFB6 /* ReviewFormView.swift in Sources */,
+				711D8BC8D04D37EA47583AEC /* SaveDetailView.swift in Sources */,
+				3A909A72110539232547E32C /* StreakModal.swift in Sources */,
+				8FDAAFEC3EC2A1EE3010D733 /* CategoryView.swift in Sources */,
+				F8137246EC8BFEFA590BF7C0 /* LibraryView.swift in Sources */,
+				D3E2BFEAD0ADCA098AA2A21B /* MapTabView.swift in Sources */,
+				5E7813A890EDCB19715D416F /* Models.swift in Sources */,
+				481F3997D76963D8761A9EBB /* SampleData.swift in Sources */,
+				6B04061F2293E14FD30EF675 /* OnboardingFlow.swift in Sources */,
+				5BEB257138BC3672E3DD12C6 /* OnboardingSteps.swift in Sources */,
+				182744437C00517E8F64E1E4 /* PaywallView.swift in Sources */,
+				1D21EE345C106382408BA38D /* ProfileView.swift in Sources */,
+				D7478434669B5865D6FD1004 /* SettingsView.swift in Sources */,
+				D7449D75601264B3ED360172 /* ShareInbox.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD7DA5D9E1B9900D91CDDF18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F9569770D5A613C8793F584 /* ShareSheetView.swift in Sources */,
+				6474531C643A27DE1EE0C0B0 /* ShareViewController.swift in Sources */,
+				E14D9849B14604D53D5D4C51 /* ShareInbox.swift in Sources */,
+				EE0A66D4B29193FC345D4725 /* Models.swift in Sources */,
+				1D3BC6C4012E929436EFF7D7 /* AlboColor.swift in Sources */,
+				346F8A8B3044B5491754BB7C /* AlboType.swift in Sources */,
+				2B95C0EAEF13CAB4E76F2A8B /* Buttons.swift in Sources */,
+				E2C7892622E720C15265F067 /* Haptics.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		621FF95ABA37A16D1D4BF960 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 31C97C15F6B9B0A2A4B3320F /* AlboShare */;
+			targetProxy = 894C358DCB588C7E4326D899 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3B960BB153FBE21860043C5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C658B41A96FE432FF44F16A /* Albo.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		D9C682E60852527C93A1348E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C658B41A96FE432FF44F16A /* Albo.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A6C07A01AD4091641693BF8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Browse AppIcon-King AppIcon-Reads AppIcon-Cooks AppIcon-News";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Albo/Resources/Albo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Albo/Resources/Info.plist;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.albo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		57676176C03B1C8E510D916B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Browse AppIcon-King AppIcon-Reads AppIcon-Cooks AppIcon-News";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Albo/Resources/Albo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Albo/Resources/Info.plist;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.albo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		F6485D6FB8BA2C3A4DB15A88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AlboShare/AlboShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AlboShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.albo.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7C96DCCF9283405C59F3FF63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = AlboShare/AlboShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AlboShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.albo.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F14EE13A45B7EF7555B4624F /* Build configuration list for PBXProject "Albo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B960BB153FBE21860043C5E /* Debug */,
+				D9C682E60852527C93A1348E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42F12762B0B99E8640F16617 /* Build configuration list for PBXNativeTarget "Albo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6C07A01AD4091641693BF8F /* Debug */,
+				57676176C03B1C8E510D916B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9A20A3886E363B7D0FCD09BC /* Build configuration list for PBXNativeTarget "AlboShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6485D6FB8BA2C3A4DB15A88 /* Debug */,
+				7C96DCCF9283405C59F3FF63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8653D0181113AD48D0A5EB9E /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D6239CE3C972AAC163BF270F /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8653D0181113AD48D0A5EB9E /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+}
