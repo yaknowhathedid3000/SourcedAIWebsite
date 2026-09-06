@@ -206,7 +206,12 @@ struct SaveRow: View {
 
     var body: some View {
         HStack(spacing: 14) {
-            SaveCover(save: save, cornerRadius: 10).frame(width: 64, height: 84)
+            // Polaroid frame around the thumbnail (Albo #113).
+            SaveCover(save: save, cornerRadius: 6).frame(width: 52, height: 70)
+                .padding(4)
+                .background(AlboColor.card, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous).stroke(AlboColor.hairline, lineWidth: 1))
+                .shadow(color: .black.opacity(0.08), radius: 6, y: 3)
             VStack(alignment: .leading, spacing: 6) {
                 Text(save.title).font(.alboSans(18, weight: .bold)).foregroundStyle(AlboColor.ink).lineLimit(2).multilineTextAlignment(.leading)
                 HStack(spacing: 6) {

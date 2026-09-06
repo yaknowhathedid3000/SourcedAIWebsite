@@ -156,7 +156,7 @@ struct SaveDetailView: View {
             }
             HStack(alignment: .top, spacing: 12) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Reviewed \(save.title), \(review.sentiment.journalSuffix)").font(.alboSans(15, weight: .semibold)).foregroundStyle(AlboColor.ink)
+                    Text("Reviewed \(save.title) - \(review.sentiment.journalSuffix)").font(.alboDisplayItalic(17, weight: .semibold)).foregroundStyle(AlboColor.ink)
                     HStack(spacing: 8) {
                         StaticStars(rating: review.stars ?? 0, color: AlboColor.ink, size: 14)
                         if let d = review.completedOn { Text(d, format: .dateTime.day().month()).font(.alboSans(13)).foregroundStyle(AlboColor.muted) }
@@ -245,7 +245,7 @@ struct SaveDetailView: View {
                 .padding(.horizontal, -20).padding(.leading, 20)
             }
             if let about = p.about {
-                (Text(about).foregroundStyle(AlboColor.inkSecondary) + Text(" Read").fontWeight(.bold).foregroundStyle(AlboColor.ink))
+                (Text(about).foregroundStyle(AlboColor.inkSecondary) + Text(" Read more").fontWeight(.bold).foregroundStyle(AlboColor.ink))
                     .font(.alboSans(17)).lineLimit(3)
             }
             MapSnippet(latitude: p.latitude, longitude: p.longitude, label: p.neighborhood, emoji: p.emoji) { showMap = true }
