@@ -5,6 +5,7 @@ enum LibraryRoute: Hashable {
     case category(SaveCategory)
     case collection(UUID)
     case notifications
+    case chat
 }
 
 /// Library home (Albo #56, #99): serif header, category chips, Recently saved, Collections, Ask Albo FAB.
@@ -36,6 +37,7 @@ struct LibraryView: View {
                 case .category(let c): CategoryView(category: c)
                 case .collection(let id): CollectionDetailView(collectionID: id)
                 case .notifications: NotificationsView()
+                case .chat: ChatView()
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
@@ -59,9 +61,10 @@ struct LibraryView: View {
             }
             .accessibilityLabel("Notifications")
             .padding(.trailing, 18)
-            ShareLink(item: URL(string: "https://albo.inc")!) {
+            Button { path.append(LibraryRoute.chat) } label: {
                 Image(systemName: "paperplane").font(.system(size: 24)).foregroundStyle(AlboColor.ink)
             }
+            .accessibilityLabel("Chat")
         }
         .padding(.horizontal, 20)
         .padding(.top, 8)
@@ -325,6 +328,7 @@ struct FirstImportCoach: View {
     @Environment(AppState.self) private var app
     @Environment(\.dismiss) private var dismiss
     @State private var platform: SourcePlatform? = nil
+    @State private var showGreatJob = false
 
     var body: some View {
         VStack(spacing: 18) {
@@ -365,11 +369,85 @@ struct FirstImportCoach: View {
         }
         .presentationDetents([.large])
         .presentationDragIndicator(.hidden)
+        .overlay {
+            if showGreatJob {
+                GreatJobCard { app.hasSeenFirstImportCoach = true; dismiss() }
+            }
+        }
     }
 
     private func finish() {
-        app.hasSeenFirstImportCoach = true
-        app.showToast("Great job! You're all set up!")
-        dismiss()
+        withAnimation(.spring(duration: 0.35)) { showGreatJob = true }
+    }
+}
+
+/// Direct messages live behind the send icon; empty until you have friends (Albo #130).
+struct ChatView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var showFriends = false
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Button { dismiss() } label: { Image(systemName: "chevron.left").font(.system(size: 22, weight: .semibold)).foregroundStyle(AlboColor.ink).frame(width: 44, height: 44) }
+                Spacer()
+                Text("Chat").font(.alboSans(20, weight: .bold)).foregroundStyle(AlboColor.ink)
+                Spacer()
+                Button { showFriends = true } label: { Image(systemName: "person.crop.circle.badge.magnifyingglass").font(.system(size: 22)).foregroundStyle(AlboColor.ink).frame(width: 44, height: 44) }
+            }
+            .padding(.horizontal, 8)
+            Spacer()
+            ZStack {
+                MascotView(variant: .plain).frame(width: 96, height: 96)
+                Text("📝").font(.system(size: 54)).offset(x: 26, y: 22)
+            }
+            Button { showFriends = true } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "person.crop.circle.badge.magnifyingglass").font(.system(size: 20, weight: .semibold))
+                    Text("Find Friends").font(.alboSans(20, weight: .semibold))
+                }
+                .foregroundStyle(.white).padding(.horizontal, 28).frame(height: 56)
+                .background(AlboColor.ink, in: Capsule())
+                .background(Capsule().fill(.black).offset(y: 5))
+            }
+            .buttonStyle(PressableButtonStyle())
+            .padding(.top, 34)
+            Spacer()
+            Spacer()
+        }
+        .background(AlboColor.ground.ignoresSafeArea())
+        .toolbar(.hidden, for: .navigationBar)
+        .sheet(isPresented: $showFriends) { AddFriendsView() }
+    }
+}
+
+/// "Great job!" confirmation after the first import (Albo #55).
+struct GreatJobCard: View {
+    let onContinue: () -> Void
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.45).ignoresSafeArea()
+            VStack(spacing: 14) {
+                ZStack {
+                    Circle().fill(AlboColor.optionFill).frame(width: 84, height: 84)
+                    Image(systemName: "checkmark.circle").font(.system(size: 40, weight: .medium)).foregroundStyle(AlboColor.ink)
+                }
+                .padding(.top, 8)
+                Text("Great job!").font(.alboSans(26, weight: .bold)).foregroundStyle(AlboColor.ink).padding(.top, 10)
+                Text("We detected that you successfully sent an import. You're all set up!".noOrphans)
+                    .font(.alboSans(17)).foregroundStyle(AlboColor.ink).multilineTextAlignment(.center)
+                Button(action: onContinue) {
+                    Text("Continue").font(.alboSans(19, weight: .medium)).foregroundStyle(.white)
+                        .frame(maxWidth: .infinity).frame(height: 50)
+                        .background(AlboColor.systemBlue, in: Capsule())
+                }
+                .buttonStyle(PressableButtonStyle())
+                .padding(.top, 8)
+            }
+            .padding(24)
+            .frame(width: 300)
+            .background(AlboColor.card, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+            .shadow(color: .black.opacity(0.18), radius: 24, y: 10)
+        }
+        .transition(.opacity)
     }
 }

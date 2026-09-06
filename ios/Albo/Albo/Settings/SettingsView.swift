@@ -56,7 +56,7 @@ struct SettingsView: View {
                         Button { UIPasteboard.general.string = userID; app.showToast("Copied") } label: { Image(systemName: "doc.on.doc").foregroundStyle(AlboColor.inkSecondary) }
                     }
                     Text("Version \(version) - Release").foregroundStyle(AlboColor.ink)
-                    Text("Made with ❤️ by Isaac, Karolina & Jake - from the feel good project").foregroundStyle(AlboColor.ink)
+                    Text("Made with ❤️ by the Sourced AI team").foregroundStyle(AlboColor.ink)
                 }
                 .font(.alboSans(16))
                 .padding(.top, 20)

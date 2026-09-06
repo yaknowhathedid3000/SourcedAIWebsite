@@ -23,12 +23,20 @@ struct AskAlboSheet: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                MascotView().frame(width: 28, height: 28)
-                Text("Ask Albo").font(.alboSans(20, weight: .bold)).foregroundStyle(AlboColor.ink)
+            HStack(spacing: 12) {
+                MascotView().frame(width: 22, height: 22)
+                    .frame(width: 40, height: 40)
+                    .background(Circle().stroke(AlboColor.hairline, lineWidth: 1))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Ask Albo").font(.alboSans(20, weight: .bold)).foregroundStyle(AlboColor.ink)
+                    if !messages.isEmpty {
+                        Text(scope.map { "Ask Albo about \($0.title)" } ?? "Ask Albo about anything you've saved")
+                            .font(.alboSans(14)).foregroundStyle(AlboColor.inkSecondary).lineLimit(1)
+                    }
+                }
                 Spacer()
                 if !messages.isEmpty {
-                    Button { confirmClear = true } label: { Image(systemName: "arrow.clockwise").font(.system(size: 18, weight: .semibold)).foregroundStyle(AlboColor.ink) }
+                    Button { confirmClear = true } label: { Image(systemName: "arrow.counterclockwise").font(.system(size: 20, weight: .semibold)).foregroundStyle(AlboColor.ink) }
                         .accessibilityLabel("Clear chat")
                 }
             }
@@ -39,9 +47,18 @@ struct AskAlboSheet: View {
                     VStack(spacing: 14) {
                         if messages.isEmpty {
                             VStack(spacing: 14) {
-                                ZStack {
-                                    Circle().fill(AlboColor.optionFill).frame(width: 120, height: 120)
-                                    if let scope { Text(scope.coverEmoji ?? scope.category.emoji).font(.system(size: 54)) } else { MascotView().frame(width: 62) }
+                                if let scope {
+                                    SaveCover(save: scope, cornerRadius: 6).frame(width: 150, height: 200)
+                                        .padding(6).padding(.bottom, 22)
+                                        .background(AlboColor.card, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                        .shadow(color: .black.opacity(0.14), radius: 14, y: 8)
+                                        .rotationEffect(.degrees(-4))
+                                        .padding(.vertical, 8)
+                                } else {
+                                    ZStack {
+                                        Circle().fill(AlboColor.optionFill).frame(width: 120, height: 120)
+                                        MascotView().frame(width: 62)
+                                    }
                                 }
                                 Text(scope.map { "Ask Albo about \($0.title)" } ?? "Ask Albo about anything you've saved")
                                     .font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary).multilineTextAlignment(.center)

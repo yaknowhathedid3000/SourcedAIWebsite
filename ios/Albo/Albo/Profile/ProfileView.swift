@@ -20,6 +20,7 @@ struct ProfileView: View {
         case timeline, rating
         var id: String { rawValue }
         var title: String { rawValue.capitalized }
+        var icon: String { self == .timeline ? "clock" : "star" }
     }
 
     private var isMe: Bool { user == nil }
@@ -254,9 +255,11 @@ struct ProfileView: View {
                         Text("Journal").font(.alboSans(24, weight: .bold)).foregroundStyle(AlboColor.ink)
                         Spacer()
                         Menu {
-                            ForEach(JournalSort.allCases) { s in Button(s.title) { sort = s } }
+                            ForEach(JournalSort.allCases) { s in
+                                Button { sort = s } label: { Label(s.title, systemImage: s.icon) }
+                            }
                         } label: {
-                            HStack(spacing: 8) { Image(systemName: "arrow.up.arrow.down"); Text(sort.title); Image(systemName: "chevron.down").font(.system(size: 12, weight: .semibold)) }
+                            HStack(spacing: 8) { Image(systemName: "line.3.horizontal.decrease"); Text(sort.title); Image(systemName: "chevron.down").font(.system(size: 12, weight: .semibold)) }
                                 .font(.alboSans(17, weight: .semibold)).foregroundStyle(AlboColor.ink).padding(.horizontal, 16).frame(height: 44).background(AlboColor.optionFill, in: Capsule())
                         }
                     }
@@ -538,19 +541,35 @@ struct StampsView: View {
 struct StampDetailView: View {
     let stamp: Stamp
     var body: some View {
-        VStack(spacing: 14) {
-            ZStack { Circle().fill(AlboColor.optionFill).frame(width: 160, height: 160); Text(stamp.isUnlocked ? "👑" : "?").font(.system(size: 64, weight: .medium)).foregroundStyle(AlboColor.muted) }.padding(.top, 40)
-            Text(stamp.title).font(.alboSans(26, weight: .bold)).foregroundStyle(AlboColor.ink)
-            HStack(spacing: 6) { Image(systemName: stamp.isUnlocked ? "lock.open" : "lock"); Text(stamp.isUnlocked ? "Unlocked" : "Locked") }.font(.alboSans(16)).foregroundStyle(AlboColor.inkSecondary)
-            Text(stamp.subtitle).font(.alboSans(16)).foregroundStyle(AlboColor.inkSecondary)
-            VStack(spacing: 8) {
-                HStack { Text(stamp.goalLabel).font(.alboSans(16)); Spacer(); Text("\(stamp.progress) / \(stamp.target)").font(.alboSans(16, weight: .semibold)).monospacedDigit() }.foregroundStyle(AlboColor.ink)
-                GeometryReader { geo in ZStack(alignment: .leading) { Capsule().fill(AlboColor.optionFill); Capsule().fill(AlboColor.ink).frame(width: geo.size.width * CGFloat(stamp.progress) / CGFloat(max(1, stamp.target))) } }.frame(height: 8)
+        VStack(spacing: 16) {
+            ZStack {
+                Circle().fill(AlboColor.optionFill).frame(width: 220, height: 220)
+                Text(stamp.isUnlocked ? "👑" : "?").font(.system(size: 90, weight: .medium)).foregroundStyle(AlboColor.muted)
             }
-            .padding(.horizontal, 32).padding(.top, 20)
+            .padding(.top, 60)
+            HStack(spacing: 10) {
+                Image(systemName: stamp.isUnlocked ? "lock.open" : "lock").font(.system(size: 24, weight: .medium))
+                Text(stamp.isUnlocked ? "Unlocked" : "Locked").font(.alboSans(28, weight: .bold))
+            }
+            .foregroundStyle(AlboColor.ink)
+            .padding(.top, 18)
+            Text(orphanSafe: stamp.subtitle).font(.alboSans(18)).foregroundStyle(AlboColor.inkSecondary).multilineTextAlignment(.center)
+            VStack(spacing: 12) {
+                Text(stamp.goalLabel).font(.alboSans(18)).foregroundStyle(AlboColor.inkSecondary)
+                ZStack(alignment: .leading) {
+                    Capsule().fill(AlboColor.optionFill)
+                    Capsule().fill(AlboColor.ink).frame(width: 220 * CGFloat(stamp.progress) / CGFloat(max(1, stamp.target)))
+                }
+                .frame(width: 220, height: 8)
+                Text("\(stamp.progress) / \(stamp.target)").font(.alboSans(18)).foregroundStyle(AlboColor.ink).monospacedDigit()
+            }
+            .padding(.top, 16)
             Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 32)
         .background(AlboColor.ground)
+        .navigationTitle(stamp.title)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

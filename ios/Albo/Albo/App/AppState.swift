@@ -170,6 +170,12 @@ final class AppState {
         update(s)
     }
 
+    func deleteComment(_ commentID: UUID, from saveID: UUID) {
+        guard var s = save(saveID) else { return }
+        s.comments.removeAll { $0.id == commentID }
+        update(s)
+    }
+
     func addComment(_ text: String, to id: UUID) {
         guard var s = save(id), !text.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         s.comments.append(Comment(author: me, text: text))

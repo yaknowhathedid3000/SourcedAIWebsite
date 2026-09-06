@@ -172,9 +172,16 @@ struct WelcomeStep: View {
     let onStart: () -> Void
     let onSignIn: () -> Void
 
+    private static var buildLabel: String {
+        let v = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
+        let b = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "1"
+        return "\(v) (\(b))"
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             HStack {
+                Text(Self.buildLabel).font(.alboSans(11)).foregroundStyle(AlboColor.hairline)
                 Spacer()
                 HStack(spacing: 6) { Text("🇺🇸"); Text("EN") }
                     .font(.alboSans(17, weight: .medium))
@@ -542,6 +549,23 @@ struct DiscoveryStep: View {
 
 // MARK: - #15 to #18 Feature carousel
 
+/// Floating "🍤 Prawns · 200g" pill used by the recipe carousel card.
+struct IngredientTag: View {
+    let emoji: String
+    let name: String
+    let amount: String
+    var body: some View {
+        HStack(spacing: 6) {
+            Text(emoji).font(.system(size: 15))
+            Text(name).font(.alboSans(15, weight: .bold)).foregroundStyle(AlboColor.ink)
+            Text("· \(amount)").font(.alboSans(15)).foregroundStyle(AlboColor.inkSecondary)
+        }
+        .padding(.horizontal, 14).frame(height: 40)
+        .background(AlboColor.card, in: Capsule())
+        .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
+    }
+}
+
 struct FeatureCarouselStep: View {
     let onContinue: () -> Void
     @State private var page = 0
@@ -566,6 +590,17 @@ struct FeatureCarouselStep: View {
                                 .fill(card.tint)
                                 .overlay(Text(card.emoji).font(.system(size: 120)))
                                 .frame(height: 420)
+                            if card.category == .recipe {
+                                VStack {
+                                    HStack { Spacer(); IngredientTag(emoji: "🧄", name: "Garlic", amount: "1 clove") }
+                                    Spacer()
+                                    HStack { IngredientTag(emoji: "🍤", name: "Prawns", amount: "200g").offset(x: -12); Spacer() }
+                                    Spacer()
+                                    HStack { Spacer(); IngredientTag(emoji: "🌿", name: "Parsley", amount: "A handful").offset(x: 8) }
+                                }
+                                .padding(.vertical, 40)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            }
                             if let chip = card.chip {
                                 HStack(spacing: 10) {
                                     Text(chip.0).font(.system(size: 26)).frame(width: 44, height: 44).background(AlboColor.optionFill, in: RoundedRectangle(cornerRadius: 10))
@@ -655,14 +690,55 @@ struct ReassuranceStep: View {
 
 // MARK: - #21 Interests
 
+/// Selectable interest row: mascot costume tile, bold title, blue tint + blue check when picked (Albo #21).
+struct InterestCard: View {
+    let interest: ContentInterest
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    private var costume: MascotVariant {
+        switch interest {
+        case .travel: return .traveler
+        case .restaurants: return .plain
+        case .recipes: return .chef
+        case .workouts: return .max
+        case .shopping: return .explorer
+        case .books: return .reader
+        case .articles: return .news
+        }
+    }
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: 16) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous).fill(AlboColor.card)
+                    MascotView(variant: costume).frame(width: 36, height: 36)
+                }
+                .frame(width: 56, height: 56)
+                Text(interest.title).font(.alboSans(20, weight: .semibold)).foregroundStyle(AlboColor.ink)
+                Spacer()
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill").font(.system(size: 22)).foregroundStyle(AlboColor.systemBlue)
+                }
+            }
+            .padding(.horizontal, 14)
+            .frame(height: 82)
+            .background(isSelected ? Color(hex: 0xE8F2FF) : AlboColor.surface, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).stroke(isSelected ? AlboColor.systemBlue : Color.clear, lineWidth: 1.5))
+        }
+        .buttonStyle(PressableButtonStyle())
+    }
+}
+
 struct InterestsStep: View {
     @Binding var selection: Set<ContentInterest>
     let onContinue: () -> Void
     var body: some View {
         OnboardingPage(headline: "What kind of videos, posts or links do you typically save?", subline: "Pick anything that catches your eye.", buttonTitle: "Continue", buttonEnabled: !selection.isEmpty, onContinue: onContinue) {
-            VStack(spacing: 10) {
+            VStack(spacing: 12) {
                 ForEach(ContentInterest.allCases) { c in
-                    OptionPill(emoji: c.emoji, title: c.title, isSelected: selection.contains(c)) {
+                    InterestCard(interest: c, isSelected: selection.contains(c)) {
                         if selection.contains(c) { selection.remove(c) } else { selection.insert(c) }
                     }
                 }

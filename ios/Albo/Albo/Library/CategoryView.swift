@@ -54,12 +54,7 @@ struct CategoryView: View {
         .overlay(alignment: .bottom) { if selecting { selectionBar } }
         .sheet(item: $menuSave) { s in ItemActionsSheet(saveID: s.id) }
         .sheet(item: $deciderPick) { s in DeciderResult(save: s) }
-        .alert("Nothing to decide yet", isPresented: $showDeciderEmpty) {
-            Button("Find \(category.pluralTitle)") { app.showAddSheet = true }
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("Save some \(category.pluralTitle.lowercased()) first so the Decider has something to pick from.")
-        }
+        .fullScreenCover(isPresented: $showDeciderEmpty) { DeciderEmptyView(category: category) }
         .alert("Remove \(selected.count) item\(selected.count == 1 ? "" : "s")", isPresented: $confirmDelete) {
             Button("Remove", role: .destructive) {
                 for id in selected { app.remove(id) }
@@ -179,11 +174,13 @@ struct CategoryView: View {
 
     private var selectionBar: some View {
         HStack(spacing: 22) {
-            FloatingButton(action: { addToCollectionIDs = Array(selected) }) { Image(systemName: "folder.badge.plus").font(.system(size: 22)).foregroundStyle(AlboColor.ink) }
-            FloatingButton(action: { for id in selected { if var s = app.save(id) { s.status = .wantTo; app.update(s) } }; app.showToast("Added to \(category.wantTab)") }) { Image(systemName: "megaphone").font(.system(size: 22)).foregroundStyle(AlboColor.ink) }
-            FloatingButton(action: { for id in selected { if var s = app.save(id) { s.status = .done; app.update(s) } }; app.showToast("Marked as complete") }) { Image(systemName: "checkmark").font(.system(size: 22, weight: .bold)).foregroundStyle(AlboColor.ink) }
-            FloatingButton(action: { confirmDelete = true }) { Image(systemName: "trash").font(.system(size: 22)).foregroundStyle(AlboColor.danger) }
+            FloatingButton(action: { addToCollectionIDs = Array(selected) }) { Image(systemName: "plus.circle").font(.system(size: 24, weight: .medium)).foregroundStyle(AlboColor.ink) }
+            FloatingButton(action: { for id in selected { if var s = app.save(id) { s.status = .wantTo; app.update(s) } }; app.showToast("Added to \(category.wantTab)") }) { Image(systemName: "plus").font(.system(size: 24, weight: .medium)).foregroundStyle(AlboColor.ink) }
+            FloatingButton(action: { for id in selected { if var s = app.save(id) { s.status = .done; app.update(s) } }; app.showToast("Marked as complete") }) { Image(systemName: "checkmark.circle").font(.system(size: 24, weight: .medium)).foregroundStyle(AlboColor.ink) }
+            Spacer()
+            FloatingButton(action: { confirmDelete = true }) { Image(systemName: "trash").font(.system(size: 24, weight: .medium)).foregroundStyle(AlboColor.ink) }
         }
+        .padding(.horizontal, 20)
         .padding(.bottom, 24)
         .disabled(selected.isEmpty)
         .opacity(selected.isEmpty ? 0.5 : 1)
@@ -234,6 +231,31 @@ struct SaveRow: View {
                 .accessibilityLabel("More")
             }
         }
+    }
+}
+
+/// Decider with nothing to pick from (Albo #127): category icon, serif title, disabled "Find Recipes".
+struct DeciderEmptyView: View {
+    @Environment(\.dismiss) private var dismiss
+    let category: SaveCategory
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Button { dismiss() } label: { Image(systemName: "chevron.left").font(.system(size: 22, weight: .semibold)).foregroundStyle(AlboColor.ink).frame(width: 44, height: 44) }
+                Spacer()
+            }
+            .padding(.horizontal, 8)
+            Spacer()
+            CategoryIcon(category: category, size: 76)
+            Text("Nothing to decide yet").font(.alboDisplay(30)).foregroundStyle(AlboColor.ink).padding(.top, 26)
+            Text("Save some \(category.pluralTitle.lowercased()) first so the Decider has something to pick from.".noOrphans)
+                .font(.alboSans(17)).foregroundStyle(AlboColor.ink).multilineTextAlignment(.center)
+                .padding(.horizontal, 44).padding(.top, 12)
+            Spacer()
+            PrimaryButton(title: "Find \(category.pluralTitle)", isEnabled: false) {}
+                .padding(.horizontal, 20).padding(.bottom, 16)
+        }
+        .background(AlboColor.ground.ignoresSafeArea())
     }
 }
 

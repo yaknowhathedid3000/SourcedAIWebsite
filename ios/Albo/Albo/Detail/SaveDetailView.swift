@@ -423,7 +423,11 @@ struct SaveDetailView: View {
                                 Text(c.text).font(.alboSans(17)).foregroundStyle(AlboColor.ink)
                             }
                             Spacer()
-                            Image(systemName: "ellipsis").rotationEffect(.degrees(90)).foregroundStyle(AlboColor.inkSecondary)
+                            Menu {
+                                Button(role: .destructive) { app.deleteComment(c.id, from: save.id) } label: { Label("Delete", systemImage: "trash") }
+                            } label: {
+                                Image(systemName: "ellipsis").rotationEffect(.degrees(90)).foregroundStyle(AlboColor.inkSecondary).frame(width: 32, height: 32)
+                            }
                         }
                         HStack(spacing: 28) {
                             Image(systemName: "heart"); Image(systemName: "bubble.right"); Image(systemName: "paperplane")

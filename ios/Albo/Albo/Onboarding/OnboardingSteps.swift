@@ -288,7 +288,7 @@ struct NotificationsStep: View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Don't let a good save go to waste").alboText(.onboardingHeadline)
-                Text("Albo will remind you about events and limited time offers.").font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary)
+                Text("Let Albo will remind you about events and limited time offers.").font(.alboSans(17)).foregroundStyle(AlboColor.inkSecondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 20)
@@ -594,9 +594,10 @@ struct SignInStep: View {
                     if case .success = result { app.showToast("Signed in with Apple") }
                     onSignedIn()
                 }
-                .signInWithAppleButtonStyle(.black)
-                .frame(height: 56)
+                .signInWithAppleButtonStyle(.white)
+                .frame(height: 58)
                 .clipShape(Capsule())
+                .background(Capsule().fill(AlboColor.optionFill).offset(y: 5))
 
                 Button {
                     app.showToast("Signed in with Google")
@@ -606,8 +607,9 @@ struct SignInStep: View {
                         Text("G").font(.system(size: 20, weight: .bold, design: .rounded)).foregroundStyle(AlboColor.systemBlue)
                         Text("Continue with Google").font(.alboSans(18, weight: .semibold)).foregroundStyle(AlboColor.ink)
                     }
-                    .frame(maxWidth: .infinity).frame(height: 56)
-                    .background(Capsule().stroke(AlboColor.hairline, lineWidth: 1.5))
+                    .frame(maxWidth: .infinity).frame(height: 58)
+                    .background(Capsule().fill(AlboColor.surface))
+                    .background(Capsule().fill(AlboColor.optionFill).offset(y: 5))
                 }
                 .buttonStyle(PressableButtonStyle())
             }
