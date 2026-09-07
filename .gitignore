@@ -1,8 +1,8 @@
 # Xcode
-# Albo.xcodeproj IS committed so the repo opens without a toolchain install.
+# Yogi.xcodeproj IS committed so the repo opens without a toolchain install.
 # Per-user state inside it is not.
-ios/Albo/DerivedData/
-ios/Albo/Albo/Resources/Albo.local.xcconfig
+ios/Yogi/DerivedData/
+ios/Yogi/Yogi/Resources/Yogi.local.xcconfig
 **/xcuserdata/
 *.xcuserstate
 .swiftpm/

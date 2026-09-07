@@ -63,7 +63,7 @@ export function AddForm() {
                 </button>
               ))}
             </div>
-            <p className="balance mt-2 text-[12px] text-muted">Albo re-detects the type from the link, this just sets the default.</p>
+            <p className="balance mt-2 text-[12px] text-muted">Yogi re-detects the type from the link, this just sets the default.</p>
           </div>
         </>
       ) : (
@@ -88,7 +88,7 @@ export function AddForm() {
         </div>
       )}
       <button type="button" disabled={!valid || pending} onClick={submit} className="btn-primary">
-        {pending ? "Saving…" : "Save to Albo"}
+        {pending ? "Saving…" : "Save to Yogi"}
       </button>
     </div>
   );

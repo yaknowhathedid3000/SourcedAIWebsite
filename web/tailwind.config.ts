@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-// Tokens mirror ios/Albo/Albo/DesignSystem/AlboColor.swift (teardown 3.2).
+// Tokens mirror ios/Yogi/Yogi/DesignSystem/YogiColor.swift (teardown 3.2).
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {

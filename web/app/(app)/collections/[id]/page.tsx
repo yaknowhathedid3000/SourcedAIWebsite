@@ -38,7 +38,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ id:
           </div>
         </div>
       ) : (
-        <p className="rounded-2xl bg-surface p-4 text-[14px] leading-5 text-ink2">This collection is private. Turn on sharing in the Albo app and a link for the group chat appears here.</p>
+        <p className="rounded-2xl bg-surface p-4 text-[14px] leading-5 text-ink2">This collection is private. Turn on sharing in the Yogi app and a link for the group chat appears here.</p>
       )}
       {c.details && <p className="text-[16px] leading-7 text-ink2">{c.details}</p>}
       <section className="flex flex-col">

@@ -1,0 +1,704 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6FC0E82E38027FC50A2F5815 /* AddAnythingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0CF95D19EA0924F2AA2E5D /* AddAnythingSheet.swift */; };
+		AAB813592AAD9CB18C24F3DF /* ShareInboxImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F747AF28061E13DDC22E6A /* ShareInboxImporter.swift */; };
+		0573FAD830AA49F3BA56B005 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC7EF5D87CBEA35745D1A22 /* AppState.swift */; };
+		3826C0A35B52D17E300CD090 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235189D18E6F54DAFB37D063 /* RootView.swift */; };
+		6C191845AF9B1A6AF6B31141 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466CF8FBC9E9142907C74936 /* Services.swift */; };
+		CE2B750D7535FC35B7B94B86 /* YogiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE3F58BD81FD88BCCF8AB97 /* YogiApp.swift */; };
+		5095081AA1D3C09CAF20C467 /* YogiBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3E7F2ECFF474F145152023 /* YogiBackend.swift */; };
+		4EF87D7E81B7C404EA8D2189 /* AskYogiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6212FA2C541197E4195971B8 /* AskYogiSheet.swift */; };
+		45CA64C0AAD2369BD93B5ACC /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F868EBF6FFA47C871CBF9E /* CommunityView.swift */; };
+		396BC1A77E99E327759F77AD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4C4D826B4D4495AEA8C27A /* Buttons.swift */; };
+		37B0C9E5E11709558A45FE11 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6990A99FCB811C8408799FA4 /* Components.swift */; };
+		31CF5B8FB284E7EE963288D8 /* Copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596A88506D0E84ED812978EB /* Copy.swift */; };
+		540AF066FC19BEF7E4332971 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44DDB63A8A3076223B9B295 /* Haptics.swift */; };
+		A535A59A44515552B782C603 /* Mascot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A4B2AEBE64BA159298B009 /* Mascot.swift */; };
+		ED0E261922144BD3E6D402FB /* Motion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9E5621D370BD9E1EDB60D0 /* Motion.swift */; };
+		1B83E44A5FF20145BF72F2BC /* YogiColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC20AA1C4A08E7508381C01 /* YogiColor.swift */; };
+		6B9FDC94DE79B9E53FCD77E7 /* YogiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86CF40B2820DCEDD8285ED /* YogiType.swift */; };
+		9924CBDA5FB40D05366BE777 /* ItemSheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E403C5781F1A6A579F64A6 /* ItemSheets.swift */; };
+		3FE175627240C9D3EB66467E /* ReviewFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7699B0980FD1C16CE1AA043 /* ReviewFormView.swift */; };
+		F6E0CA407E2823FF96498CDB /* SaveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1716CE736E365777D2AF5858 /* SaveDetailView.swift */; };
+		6C7E812B07DD71AF5A9B18F7 /* StreakModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67EFE58A2BDBBB4CA96A1 /* StreakModal.swift */; };
+		E4C59D98040C998772BDF1CE /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C615DF770E510D8DDF932F4 /* CategoryView.swift */; };
+		7B4E114DA032536557759564 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8152FA98C01A5B1397C134 /* LibraryView.swift */; };
+		1A52F116566A79C195CEC5BD /* MapTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F8C3667E2306CB49FB69D /* MapTabView.swift */; };
+		F20F2F86E60AF6FF0B6ABB67 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531C28ABA197B5773A487E4C /* Models.swift */; };
+		A1AC091B4180B64FD2EE3C96 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB1588AE90618A40D3BF131 /* SampleData.swift */; };
+		9575AD328FB7CA066D37EF7E /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CF01220DF0B5E1FC1254ED /* OnboardingFlow.swift */; };
+		2601A3EA9E7FA31B7BBFFEC2 /* OnboardingSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D3EEC42114096900097B73 /* OnboardingSteps.swift */; };
+		7B14AA6FD5192FB8A8130BCB /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9356C22B5391885501F2C6 /* PaywallView.swift */; };
+		9445BB3D5D60165638308F66 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC82C3AFBC96B4F51AE342 /* ProfileView.swift */; };
+		3806DCA339A84EEE2B8C18FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8BAF127C16F318154444D6 /* SettingsView.swift */; };
+		99129894952966ED02D413EB /* ShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8620E73023D95260CB11F495 /* ShareInbox.swift */; };
+		6FDB530ABE709329D3B0F140 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D377E3B2257EB11A830A1484 /* Assets.xcassets */; };
+		B6073A91D6EDF530A4F383D6 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF2ABAAB3F8257B877EDEB /* ShareSheetView.swift */; };
+		A6FC1CEAD86E0257D43D0011 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557FC1BDA509D4B649A7E5C5 /* ShareViewController.swift */; };
+		130C544E84D4CED1D28969DC /* ShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8620E73023D95260CB11F495 /* ShareInbox.swift */; };
+		1088BE4FFBDDAF802054E1AE /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531C28ABA197B5773A487E4C /* Models.swift */; };
+		67FDD8CDCEC962413C246574 /* YogiColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC20AA1C4A08E7508381C01 /* YogiColor.swift */; };
+		36DAD3C90DCE62404F7BA4B7 /* YogiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF86CF40B2820DCEDD8285ED /* YogiType.swift */; };
+		E02FEA2F8F9EDB33D9E4ECD3 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4C4D826B4D4495AEA8C27A /* Buttons.swift */; };
+		4D2E46456894B91C515F985B /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44DDB63A8A3076223B9B295 /* Haptics.swift */; };
+		0726DB3B17E145955EB5A84E /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D6239CE3C972AAC163BF270F /* Supabase */; };
+		0F48566F0ED6037347C7133C /* YogiShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E71304D3CFDAE309AC5A3D9D /* YogiShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DEC97151B260D5084771EC66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F4AA952C1F11FDB7FD886E52;
+			remoteInfo = YogiShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		43E1F730AD143F910CE725B9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0F48566F0ED6037347C7133C /* YogiShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1B0CF95D19EA0924F2AA2E5D /* AddAnythingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnythingSheet.swift; sourceTree = "<group>"; };
+		15F747AF28061E13DDC22E6A /* ShareInboxImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInboxImporter.swift; sourceTree = "<group>"; };
+		EBC7EF5D87CBEA35745D1A22 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		235189D18E6F54DAFB37D063 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		466CF8FBC9E9142907C74936 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		0DE3F58BD81FD88BCCF8AB97 /* YogiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YogiApp.swift; sourceTree = "<group>"; };
+		FF3E7F2ECFF474F145152023 /* YogiBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YogiBackend.swift; sourceTree = "<group>"; };
+		6212FA2C541197E4195971B8 /* AskYogiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskYogiSheet.swift; sourceTree = "<group>"; };
+		A6F868EBF6FFA47C871CBF9E /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		3F4C4D826B4D4495AEA8C27A /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		6990A99FCB811C8408799FA4 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		596A88506D0E84ED812978EB /* Copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copy.swift; sourceTree = "<group>"; };
+		A44DDB63A8A3076223B9B295 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		46A4B2AEBE64BA159298B009 /* Mascot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mascot.swift; sourceTree = "<group>"; };
+		0A9E5621D370BD9E1EDB60D0 /* Motion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motion.swift; sourceTree = "<group>"; };
+		DAC20AA1C4A08E7508381C01 /* YogiColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YogiColor.swift; sourceTree = "<group>"; };
+		BF86CF40B2820DCEDD8285ED /* YogiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YogiType.swift; sourceTree = "<group>"; };
+		02E403C5781F1A6A579F64A6 /* ItemSheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSheets.swift; sourceTree = "<group>"; };
+		A7699B0980FD1C16CE1AA043 /* ReviewFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFormView.swift; sourceTree = "<group>"; };
+		1716CE736E365777D2AF5858 /* SaveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDetailView.swift; sourceTree = "<group>"; };
+		6DC67EFE58A2BDBBB4CA96A1 /* StreakModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakModal.swift; sourceTree = "<group>"; };
+		0C615DF770E510D8DDF932F4 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		AF8152FA98C01A5B1397C134 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		814F8C3667E2306CB49FB69D /* MapTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabView.swift; sourceTree = "<group>"; };
+		531C28ABA197B5773A487E4C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		5FB1588AE90618A40D3BF131 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		82CF01220DF0B5E1FC1254ED /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		91D3EEC42114096900097B73 /* OnboardingSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSteps.swift; sourceTree = "<group>"; };
+		9C9356C22B5391885501F2C6 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		27BC82C3AFBC96B4F51AE342 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		D377E3B2257EB11A830A1484 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		127A513C2046021F36413D3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08AC1D9B0EA3238C11045F74 /* Yogi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yogi.entitlements; sourceTree = "<group>"; };
+		558255B078FC57DC8267F34B /* Yogi.storekit */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Yogi.storekit; sourceTree = "<group>"; };
+		691FB6B20546B2793B4289C9 /* Yogi.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Yogi.xcconfig; sourceTree = "<group>"; };
+		FE8BAF127C16F318154444D6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8620E73023D95260CB11F495 /* ShareInbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInbox.swift; sourceTree = "<group>"; };
+		DE3486796C504D1C94232EDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1CF2ABAAB3F8257B877EDEB /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		557FC1BDA509D4B649A7E5C5 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		C26A1B1649A092A1D010C12C /* YogiShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YogiShare.entitlements; sourceTree = "<group>"; };
+		4D3D512A556E4A6B1B358544 /* Yogi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yogi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E71304D3CFDAE309AC5A3D9D /* YogiShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = YogiShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		358FA25E4D85F4A65A264074 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0726DB3B17E145955EB5A84E /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98FE3BCBF6F23C8641C9333C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC8C41C6880A374C895E2335 = {
+			isa = PBXGroup;
+			children = (
+				AA480A641BB14D2C1226CC1A /* Yogi */,
+				B59498854A97DC86270B4583 /* YogiShare */,
+				C863DA5204F95EC573510473 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA480A641BB14D2C1226CC1A /* Yogi */ = {
+			isa = PBXGroup;
+			children = (
+				9E481364031E56C30E096962 /* Add */,
+				7189898F86D72519688021C3 /* App */,
+				FF0C5E8FF46C4238BDF298AC /* Backend */,
+				5A728990A8B81890B3FCE1EF /* Chat */,
+				D64C0D5DA6B615506F9DAF01 /* Community */,
+				C071A3F924D280FB8BEF0FE9 /* DesignSystem */,
+				8ADFE7DB94529AB4D7A272B7 /* Detail */,
+				C8D992E27647137575ACFF46 /* Library */,
+				30109462839C4BC788F83B2A /* Map */,
+				7987D03471B06C599003EB4B /* Models */,
+				94ECB9B7C4A8739243EDDDBB /* Onboarding */,
+				88FE12B15BF01693ABEE38B9 /* Paywall */,
+				BE51A0AEF3448B6194DC83F6 /* Profile */,
+				E02654EF944465F5F6FA4B15 /* Resources */,
+				4ADB00E89215BE2F8ECBDCDE /* Settings */,
+				23E418A670133D471D54347F /* Shared */,
+			);
+			path = Yogi;
+			sourceTree = "<group>";
+		};
+		9E481364031E56C30E096962 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				1B0CF95D19EA0924F2AA2E5D /* AddAnythingSheet.swift */,
+				15F747AF28061E13DDC22E6A /* ShareInboxImporter.swift */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		7189898F86D72519688021C3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EBC7EF5D87CBEA35745D1A22 /* AppState.swift */,
+				235189D18E6F54DAFB37D063 /* RootView.swift */,
+				466CF8FBC9E9142907C74936 /* Services.swift */,
+				0DE3F58BD81FD88BCCF8AB97 /* YogiApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FF0C5E8FF46C4238BDF298AC /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				FF3E7F2ECFF474F145152023 /* YogiBackend.swift */,
+			);
+			path = Backend;
+			sourceTree = "<group>";
+		};
+		5A728990A8B81890B3FCE1EF /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				6212FA2C541197E4195971B8 /* AskYogiSheet.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		D64C0D5DA6B615506F9DAF01 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				A6F868EBF6FFA47C871CBF9E /* CommunityView.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
+		C071A3F924D280FB8BEF0FE9 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				3F4C4D826B4D4495AEA8C27A /* Buttons.swift */,
+				6990A99FCB811C8408799FA4 /* Components.swift */,
+				596A88506D0E84ED812978EB /* Copy.swift */,
+				A44DDB63A8A3076223B9B295 /* Haptics.swift */,
+				46A4B2AEBE64BA159298B009 /* Mascot.swift */,
+				0A9E5621D370BD9E1EDB60D0 /* Motion.swift */,
+				DAC20AA1C4A08E7508381C01 /* YogiColor.swift */,
+				BF86CF40B2820DCEDD8285ED /* YogiType.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		8ADFE7DB94529AB4D7A272B7 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				02E403C5781F1A6A579F64A6 /* ItemSheets.swift */,
+				A7699B0980FD1C16CE1AA043 /* ReviewFormView.swift */,
+				1716CE736E365777D2AF5858 /* SaveDetailView.swift */,
+				6DC67EFE58A2BDBBB4CA96A1 /* StreakModal.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		C8D992E27647137575ACFF46 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				0C615DF770E510D8DDF932F4 /* CategoryView.swift */,
+				AF8152FA98C01A5B1397C134 /* LibraryView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		30109462839C4BC788F83B2A /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				814F8C3667E2306CB49FB69D /* MapTabView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		7987D03471B06C599003EB4B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				531C28ABA197B5773A487E4C /* Models.swift */,
+				5FB1588AE90618A40D3BF131 /* SampleData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		94ECB9B7C4A8739243EDDDBB /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				82CF01220DF0B5E1FC1254ED /* OnboardingFlow.swift */,
+				91D3EEC42114096900097B73 /* OnboardingSteps.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		88FE12B15BF01693ABEE38B9 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				9C9356C22B5391885501F2C6 /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
+		BE51A0AEF3448B6194DC83F6 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				27BC82C3AFBC96B4F51AE342 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		E02654EF944465F5F6FA4B15 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D377E3B2257EB11A830A1484 /* Assets.xcassets */,
+				127A513C2046021F36413D3B /* Info.plist */,
+				08AC1D9B0EA3238C11045F74 /* Yogi.entitlements */,
+				558255B078FC57DC8267F34B /* Yogi.storekit */,
+				691FB6B20546B2793B4289C9 /* Yogi.xcconfig */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4ADB00E89215BE2F8ECBDCDE /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FE8BAF127C16F318154444D6 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		23E418A670133D471D54347F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				8620E73023D95260CB11F495 /* ShareInbox.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B59498854A97DC86270B4583 /* YogiShare */ = {
+			isa = PBXGroup;
+			children = (
+				DE3486796C504D1C94232EDE /* Info.plist */,
+				E1CF2ABAAB3F8257B877EDEB /* ShareSheetView.swift */,
+				557FC1BDA509D4B649A7E5C5 /* ShareViewController.swift */,
+				C26A1B1649A092A1D010C12C /* YogiShare.entitlements */,
+			);
+			path = YogiShare;
+			sourceTree = "<group>";
+		};
+		C863DA5204F95EC573510473 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D3D512A556E4A6B1B358544 /* Yogi.app */,
+				E71304D3CFDAE309AC5A3D9D /* YogiShare.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5A4882E9E3B94FFBA0FDD92E /* Yogi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4506B6D744BA1C03FFB432EE /* Build configuration list for PBXNativeTarget "Yogi" */;
+			buildPhases = (
+				0BFFDFA2DA396FDB6840AAD7 /* Sources */,
+				358FA25E4D85F4A65A264074 /* Frameworks */,
+				CF3E47835444E935B6532775 /* Resources */,
+				43E1F730AD143F910CE725B9 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F6DD8199FCA2C847D0EFD43 /* PBXTargetDependency */,
+			);
+			name = Yogi;
+			packageProductDependencies = (
+				D6239CE3C972AAC163BF270F /* Supabase */,
+			);
+			productName = Yogi;
+			productReference = 4D3D512A556E4A6B1B358544 /* Yogi.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F4AA952C1F11FDB7FD886E52 /* YogiShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C3E5ED6FCB48DBB060CAC6F /* Build configuration list for PBXNativeTarget "YogiShare" */;
+			buildPhases = (
+				0DEC091EE79B40CAB2D813BB /* Sources */,
+				98FE3BCBF6F23C8641C9333C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YogiShare;
+			productName = YogiShare;
+			productReference = E71304D3CFDAE309AC5A3D9D /* YogiShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					5A4882E9E3B94FFBA0FDD92E = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					F4AA952C1F11FDB7FD886E52 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = F14EE13A45B7EF7555B4624F /* Build configuration list for PBXProject "Yogi" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DC8C41C6880A374C895E2335;
+			packageReferences = (
+				8653D0181113AD48D0A5EB9E /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			productRefGroup = C863DA5204F95EC573510473 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5A4882E9E3B94FFBA0FDD92E /* Yogi */,
+				F4AA952C1F11FDB7FD886E52 /* YogiShare */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CF3E47835444E935B6532775 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FDB530ABE709329D3B0F140 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0BFFDFA2DA396FDB6840AAD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6FC0E82E38027FC50A2F5815 /* AddAnythingSheet.swift in Sources */,
+				AAB813592AAD9CB18C24F3DF /* ShareInboxImporter.swift in Sources */,
+				0573FAD830AA49F3BA56B005 /* AppState.swift in Sources */,
+				3826C0A35B52D17E300CD090 /* RootView.swift in Sources */,
+				6C191845AF9B1A6AF6B31141 /* Services.swift in Sources */,
+				CE2B750D7535FC35B7B94B86 /* YogiApp.swift in Sources */,
+				5095081AA1D3C09CAF20C467 /* YogiBackend.swift in Sources */,
+				4EF87D7E81B7C404EA8D2189 /* AskYogiSheet.swift in Sources */,
+				45CA64C0AAD2369BD93B5ACC /* CommunityView.swift in Sources */,
+				396BC1A77E99E327759F77AD /* Buttons.swift in Sources */,
+				37B0C9E5E11709558A45FE11 /* Components.swift in Sources */,
+				31CF5B8FB284E7EE963288D8 /* Copy.swift in Sources */,
+				540AF066FC19BEF7E4332971 /* Haptics.swift in Sources */,
+				A535A59A44515552B782C603 /* Mascot.swift in Sources */,
+				ED0E261922144BD3E6D402FB /* Motion.swift in Sources */,
+				1B83E44A5FF20145BF72F2BC /* YogiColor.swift in Sources */,
+				6B9FDC94DE79B9E53FCD77E7 /* YogiType.swift in Sources */,
+				9924CBDA5FB40D05366BE777 /* ItemSheets.swift in Sources */,
+				3FE175627240C9D3EB66467E /* ReviewFormView.swift in Sources */,
+				F6E0CA407E2823FF96498CDB /* SaveDetailView.swift in Sources */,
+				6C7E812B07DD71AF5A9B18F7 /* StreakModal.swift in Sources */,
+				E4C59D98040C998772BDF1CE /* CategoryView.swift in Sources */,
+				7B4E114DA032536557759564 /* LibraryView.swift in Sources */,
+				1A52F116566A79C195CEC5BD /* MapTabView.swift in Sources */,
+				F20F2F86E60AF6FF0B6ABB67 /* Models.swift in Sources */,
+				A1AC091B4180B64FD2EE3C96 /* SampleData.swift in Sources */,
+				9575AD328FB7CA066D37EF7E /* OnboardingFlow.swift in Sources */,
+				2601A3EA9E7FA31B7BBFFEC2 /* OnboardingSteps.swift in Sources */,
+				7B14AA6FD5192FB8A8130BCB /* PaywallView.swift in Sources */,
+				9445BB3D5D60165638308F66 /* ProfileView.swift in Sources */,
+				3806DCA339A84EEE2B8C18FF /* SettingsView.swift in Sources */,
+				99129894952966ED02D413EB /* ShareInbox.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0DEC091EE79B40CAB2D813BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6073A91D6EDF530A4F383D6 /* ShareSheetView.swift in Sources */,
+				A6FC1CEAD86E0257D43D0011 /* ShareViewController.swift in Sources */,
+				130C544E84D4CED1D28969DC /* ShareInbox.swift in Sources */,
+				1088BE4FFBDDAF802054E1AE /* Models.swift in Sources */,
+				67FDD8CDCEC962413C246574 /* YogiColor.swift in Sources */,
+				36DAD3C90DCE62404F7BA4B7 /* YogiType.swift in Sources */,
+				E02FEA2F8F9EDB33D9E4ECD3 /* Buttons.swift in Sources */,
+				4D2E46456894B91C515F985B /* Haptics.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4F6DD8199FCA2C847D0EFD43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F4AA952C1F11FDB7FD886E52 /* YogiShare */;
+			targetProxy = DEC97151B260D5084771EC66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3B960BB153FBE21860043C5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 691FB6B20546B2793B4289C9 /* Yogi.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		D9C682E60852527C93A1348E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 691FB6B20546B2793B4289C9 /* Yogi.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.10;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B27C166FEE6C4FA45C3671B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Browse AppIcon-King AppIcon-Reads AppIcon-Cooks AppIcon-News";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Yogi/Resources/Yogi.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Yogi/Resources/Info.plist;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.yogi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D05B024AFE25F20D40CFC04E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Browse AppIcon-King AppIcon-Reads AppIcon-Cooks AppIcon-News";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = Yogi/Resources/Yogi.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Yogi/Resources/Info.plist;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.yogi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		2F9F3A4EF35DF79236C258C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = YogiShare/YogiShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YogiShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.yogi.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		28CB0CF468140A52BFDD91CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = YogiShare/YogiShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YogiShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sourcedai.yogi.share;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F14EE13A45B7EF7555B4624F /* Build configuration list for PBXProject "Yogi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B960BB153FBE21860043C5E /* Debug */,
+				D9C682E60852527C93A1348E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4506B6D744BA1C03FFB432EE /* Build configuration list for PBXNativeTarget "Yogi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B27C166FEE6C4FA45C3671B4 /* Debug */,
+				D05B024AFE25F20D40CFC04E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C3E5ED6FCB48DBB060CAC6F /* Build configuration list for PBXNativeTarget "YogiShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F9F3A4EF35DF79236C258C2 /* Debug */,
+				28CB0CF468140A52BFDD91CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8653D0181113AD48D0A5EB9E /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.20.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D6239CE3C972AAC163BF270F /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8653D0181113AD48D0A5EB9E /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+}

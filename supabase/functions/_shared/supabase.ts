@@ -40,7 +40,7 @@ export function json(body: unknown, status = 200): Response {
 /** Strip a web page down to readable text so the model sees content, not markup. */
 export async function fetchReadableText(url: string, maxChars = 60_000): Promise<{ text: string; title: string | null; image: string | null }> {
   const res = await fetch(url, {
-    headers: { "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AlboBot/1.0", accept: "text/html,*/*" },
+    headers: { "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) YogiBot/1.0", accept: "text/html,*/*" },
     redirect: "follow",
   });
   const html = await res.text();

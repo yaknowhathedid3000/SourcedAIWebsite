@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Albo.xcodeproj from the source tree.
+"""Generate Yogi.xcodeproj from the source tree.
 
 The project used to be produced by XcodeGen, which meant you could not open the
 repo in Xcode without installing a toolchain first. This writes the same project
@@ -18,14 +18,14 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-IOS = ROOT / "ios" / "Albo"
-PROJ = IOS / "Albo.xcodeproj"
+IOS = ROOT / "ios" / "Yogi"
+PROJ = IOS / "Yogi.xcodeproj"
 
-APP = "Albo"
-EXT = "AlboShare"
-APP_BUNDLE = "com.sourcedai.albo"
-EXT_BUNDLE = "com.sourcedai.albo.share"
-APP_GROUP = "group.com.sourcedai.albo"
+APP = "Yogi"
+EXT = "YogiShare"
+APP_BUNDLE = "com.sourcedai.yogi"
+EXT_BUNDLE = "com.sourcedai.yogi.share"
+APP_GROUP = "group.com.sourcedai.yogi"
 DEPLOYMENT = "17.0"
 SWIFT_VERSION = "5.10"
 MARKETING_VERSION = "0.1.0"
@@ -34,12 +34,12 @@ CURRENT_PROJECT_VERSION = "1"
 # Files the extension compiles: it is a separate process, so it takes the
 # dependency-free pieces it needs rather than linking the whole app.
 EXT_SHARED_SOURCES = [
-    "Albo/Shared/ShareInbox.swift",
-    "Albo/Models/Models.swift",
-    "Albo/DesignSystem/AlboColor.swift",
-    "Albo/DesignSystem/AlboType.swift",
-    "Albo/DesignSystem/Buttons.swift",
-    "Albo/DesignSystem/Haptics.swift",
+    "Yogi/Shared/ShareInbox.swift",
+    "Yogi/Models/Models.swift",
+    "Yogi/DesignSystem/YogiColor.swift",
+    "Yogi/DesignSystem/YogiType.swift",
+    "Yogi/DesignSystem/Buttons.swift",
+    "Yogi/DesignSystem/Haptics.swift",
 ]
 
 
@@ -60,20 +60,20 @@ def swift_files(folder: str) -> list[str]:
     )
 
 
-APP_SOURCES = swift_files("Albo")
-EXT_SOURCES = swift_files("AlboShare") + EXT_SHARED_SOURCES
+APP_SOURCES = swift_files("Yogi")
+EXT_SOURCES = swift_files("YogiShare") + EXT_SHARED_SOURCES
 
-APP_RESOURCES = ["Albo/Resources/Assets.xcassets"]
+APP_RESOURCES = ["Yogi/Resources/Assets.xcassets"]
 
 # Every path that needs a PBXFileReference.
 ALL_PATHS = sorted(set(
     APP_SOURCES + EXT_SOURCES + APP_RESOURCES + [
-        "Albo/Resources/Info.plist",
-        "Albo/Resources/Albo.entitlements",
-        "Albo/Resources/Albo.xcconfig",
-        "Albo/Resources/Albo.storekit",
-        "AlboShare/Info.plist",
-        "AlboShare/AlboShare.entitlements",
+        "Yogi/Resources/Info.plist",
+        "Yogi/Resources/Yogi.entitlements",
+        "Yogi/Resources/Yogi.xcconfig",
+        "Yogi/Resources/Yogi.storekit",
+        "YogiShare/Info.plist",
+        "YogiShare/YogiShare.entitlements",
     ]
 ))
 
@@ -100,7 +100,7 @@ def file_type(path: str) -> str:
 
 def write_plists() -> None:
     app_info = {
-        "CFBundleDisplayName": "Albo",
+        "CFBundleDisplayName": "Yogi",
         "CFBundleName": "$(PRODUCT_NAME)",
         "CFBundleIdentifier": "$(PRODUCT_BUNDLE_IDENTIFIER)",
         "CFBundlePackageType": "$(PRODUCT_BUNDLE_PACKAGE_TYPE)",
@@ -116,27 +116,27 @@ def write_plists() -> None:
         "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
         "UIApplicationSceneManifest": {"UIApplicationSupportsMultipleScenes": False},
         "CFBundleURLTypes": [
-            {"CFBundleURLName": APP_BUNDLE, "CFBundleURLSchemes": ["albo"]}
+            {"CFBundleURLName": APP_BUNDLE, "CFBundleURLSchemes": ["yogi"]}
         ],
         "NSUserTrackingUsageDescription":
-            "This allows Albo to provide you with a more personalised experience and "
+            "This allows Yogi to provide you with a more personalised experience and "
             "measure the effectiveness of our campaigns.",
         "NSPhotoLibraryUsageDescription":
-            "Albo needs photo access to add profile pictures, review photos and screenshot imports.",
+            "Yogi needs photo access to add profile pictures, review photos and screenshot imports.",
         "NSCameraUsageDescription":
-            "Albo needs camera access to take profile pictures and scan QR codes.",
+            "Yogi needs camera access to take profile pictures and scan QR codes.",
         "NSLocationWhenInUseUsageDescription":
-            "Albo uses your location to show places near you and calculate distances to saved locations.",
+            "Yogi uses your location to show places near you and calculate distances to saved locations.",
         "NSLocationAlwaysAndWhenInUseUsageDescription":
-            "Albo uses your location in the background to remind you when you're near a saved place.",
+            "Yogi uses your location in the background to remind you when you're near a saved place.",
         "NSCalendarsWriteOnlyAccessUsageDescription":
-            "Albo needs calendar access to add events to your calendar.",
+            "Yogi needs calendar access to add events to your calendar.",
         "NSContactsUsageDescription":
-            "Albo uses your contacts to help you find friends on Albo.",
+            "Yogi uses your contacts to help you find friends on Yogi.",
     }
 
     ext_info = {
-        "CFBundleDisplayName": "Albo",
+        "CFBundleDisplayName": "Yogi",
         "CFBundleName": "$(PRODUCT_NAME)",
         "CFBundleIdentifier": "$(PRODUCT_BUNDLE_IDENTIFIER)",
         "CFBundlePackageType": "$(PRODUCT_BUNDLE_PACKAGE_TYPE)",
@@ -166,10 +166,10 @@ def write_plists() -> None:
     ext_ent = {"com.apple.security.application-groups": [APP_GROUP]}
 
     for path, data in [
-        ("Albo/Resources/Info.plist", app_info),
-        ("Albo/Resources/Albo.entitlements", app_ent),
-        ("AlboShare/Info.plist", ext_info),
-        ("AlboShare/AlboShare.entitlements", ext_ent),
+        ("Yogi/Resources/Info.plist", app_info),
+        ("Yogi/Resources/Yogi.entitlements", app_ent),
+        ("YogiShare/Info.plist", ext_info),
+        ("YogiShare/YogiShare.entitlements", ext_ent),
     ]:
         target = IOS / path
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -199,8 +199,8 @@ def build_settings(target: str, config: str) -> dict:
             "ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS": "YES",
             "ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES":
                 "AppIcon-Browse AppIcon-King AppIcon-Reads AppIcon-Cooks AppIcon-News",
-            "CODE_SIGN_ENTITLEMENTS": "Albo/Resources/Albo.entitlements",
-            "INFOPLIST_FILE": "Albo/Resources/Info.plist",
+            "CODE_SIGN_ENTITLEMENTS": "Yogi/Resources/Yogi.entitlements",
+            "INFOPLIST_FILE": "Yogi/Resources/Info.plist",
             "INFOPLIST_KEY_UIUserInterfaceStyle": "Automatic",
             "PRODUCT_BUNDLE_IDENTIFIER": APP_BUNDLE,
             "PRODUCT_NAME": "$(TARGET_NAME)",
@@ -208,8 +208,8 @@ def build_settings(target: str, config: str) -> dict:
         })
     else:
         common.update({
-            "CODE_SIGN_ENTITLEMENTS": "AlboShare/AlboShare.entitlements",
-            "INFOPLIST_FILE": "AlboShare/Info.plist",
+            "CODE_SIGN_ENTITLEMENTS": "YogiShare/YogiShare.entitlements",
+            "INFOPLIST_FILE": "YogiShare/Info.plist",
             "PRODUCT_BUNDLE_IDENTIFIER": EXT_BUNDLE,
             "PRODUCT_NAME": "$(TARGET_NAME)",
             "SKIP_INSTALL": "YES",
@@ -594,12 +594,12 @@ def generate_rest(ids, file_ref, app_build, ext_build) -> str:
     add("")
 
     # ---- XCBuildConfiguration
-    xcconfig_ref = file_ref["Albo/Resources/Albo.xcconfig"]
+    xcconfig_ref = file_ref["Yogi/Resources/Yogi.xcconfig"]
     add("/* Begin XCBuildConfiguration section */")
     for cfg in ("Debug", "Release"):
         add(f"\t\t{ids[f'proj_{cfg}']} /* {cfg} */ = {{")
         add("\t\t\tisa = XCBuildConfiguration;")
-        add(f"\t\t\tbaseConfigurationReference = {xcconfig_ref} /* Albo.xcconfig */;")
+        add(f"\t\t\tbaseConfigurationReference = {xcconfig_ref} /* Yogi.xcconfig */;")
         add("\t\t\tbuildSettings = {")
         add(fmt_settings(project_settings(cfg), "\t\t\t\t"))
         add("\t\t\t};")
@@ -681,7 +681,7 @@ SCHEME = """<?xml version="1.0" encoding="UTF-8"?>
                BlueprintIdentifier = "{blueprint}"
                BuildableName = "{buildable}"
                BlueprintName = "{target}"
-               ReferencedContainer = "container:Albo.xcodeproj">
+               ReferencedContainer = "container:Yogi.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -711,7 +711,7 @@ SCHEME = """<?xml version="1.0" encoding="UTF-8"?>
             BlueprintIdentifier = "{blueprint}"
             BuildableName = "{buildable}"
             BlueprintName = "{target}"
-            ReferencedContainer = "container:Albo.xcodeproj">
+            ReferencedContainer = "container:Yogi.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -728,7 +728,7 @@ SCHEME = """<?xml version="1.0" encoding="UTF-8"?>
             BlueprintIdentifier = "{blueprint}"
             BuildableName = "{buildable}"
             BlueprintName = "{target}"
-            ReferencedContainer = "container:Albo.xcodeproj">
+            ReferencedContainer = "container:Yogi.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
@@ -744,7 +744,7 @@ SCHEME = """<?xml version="1.0" encoding="UTF-8"?>
 
 STOREKIT_BLOCK = """
       <StoreKitConfigurationFileReference
-         identifier = "../../../Albo/Resources/Albo.storekit">
+         identifier = "../../../Yogi/Resources/Yogi.storekit">
       </StoreKitConfigurationFileReference>"""
 
 WORKSPACE = """<?xml version="1.0" encoding="UTF-8"?>

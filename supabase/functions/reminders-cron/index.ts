@@ -1,6 +1,6 @@
 // Fires due reminders as push notifications and mirrors them into the
 // notifications table (Albo #131). Schedule it every 5 minutes:
-//   select cron.schedule('albo-reminders', '*/5 * * * *',
+//   select cron.schedule('yogi-reminders', '*/5 * * * *',
 //     $$ select net.http_post(url := '<project-url>/functions/v1/reminders-cron',
 //        headers := '{"Authorization": "Bearer <service-role-key>"}'::jsonb) $$);
 //

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Mascot, Wordmark } from "./Mascot";
 
-// Tab order mirrors the iOS AlboTabBar: Library, Map, Add, Community, Profile.
+// Tab order mirrors the iOS YogiTabBar: Library, Map, Add, Community, Profile.
 const TABS = [
   { href: "/library", label: "Library", icon: HouseIcon },
   { href: "/map", label: "Map", icon: GlobeIcon },
@@ -18,7 +18,7 @@ export function AppNav() {
   const active = (href: string) => path === href || path.startsWith(href + "/");
   return (
     <aside className="fixed inset-y-0 left-0 flex w-[72px] flex-col border-r border-hairline bg-white px-3 py-6 lg:w-60 lg:px-4">
-      <Link href="/library" className="mb-8 flex items-center justify-center gap-2 px-1 lg:justify-start lg:px-2" aria-label="Albo library">
+      <Link href="/library" className="mb-8 flex items-center justify-center gap-2 px-1 lg:justify-start lg:px-2" aria-label="Yogi library">
         <Mascot size={30} />
         <Wordmark className="hidden text-[24px] lg:inline" />
       </Link>

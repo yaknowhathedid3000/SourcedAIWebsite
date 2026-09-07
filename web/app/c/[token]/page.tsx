@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
   const { token } = await params;
   const data = await getCollectionByToken(token);
-  return { title: data ? `${data.collection.name} · shared plan` : "Shared plan", description: data?.collection.details ?? "A plan shared from Albo." };
+  return { title: data ? `${data.collection.name} · shared plan` : "Shared plan", description: data?.collection.details ?? "A plan shared from Yogi." };
 }
 
 /**
@@ -61,7 +61,7 @@ export default async function SharedPlanPage({ params }: { params: Promise<{ tok
       </section>
       <footer className="mt-auto flex flex-col items-center gap-2 pt-6 text-center">
         <Mascot size={40} variant="traveler" />
-        <p className="balance text-[13px] text-muted">Saved with Albo. Get the app to save from Instagram, TikTok and Safari.</p>
+        <p className="balance text-[13px] text-muted">Saved with Yogi. Get the app to save from Instagram, TikTok and Safari.</p>
       </footer>
     </main>
   );

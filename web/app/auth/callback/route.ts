@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { serverClient } from "@/lib/supabase/server";
 
-/** OAuth return leg for Google and Apple sign-in (Albo web login). */
+/** OAuth return leg for Google and Apple sign-in (Yogi web login). */
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");

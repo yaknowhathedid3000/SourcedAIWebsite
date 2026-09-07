@@ -18,7 +18,7 @@ export default async function ProfilePage() {
         <Mascot size={88} variant={profile?.avatar_mascot} />
         <div>
           <h1 className="font-serif text-[30px] font-bold leading-tight">{profile?.name || "You"}</h1>
-          <p className="text-[15px] text-ink2">@{profile?.handle ?? "albo"}{profile?.country ? ` · ${profile.country}` : ""}</p>
+          <p className="text-[15px] text-ink2">@{profile?.handle ?? "yogi"}{profile?.country ? ` · ${profile.country}` : ""}</p>
         </div>
         {profile?.bio && <p className="balance max-w-sm text-[15px] leading-6">{profile.bio}</p>}
         <div className="flex gap-2">
@@ -59,7 +59,7 @@ export default async function ProfilePage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <p className="balance text-[13px] leading-5 text-muted">Account settings, subscription and appearance live in the Albo app.</p>
+        <p className="balance text-[13px] leading-5 text-muted">Account settings, subscription and appearance live in the Yogi app.</p>
         {user && !user.demo ? <SignOutButton /> : <Link href="/login" className="btn-secondary">Sign in</Link>}
       </section>
     </div>

@@ -1,8 +1,8 @@
-# Supabase CLI config for the Albo backend.
+# Supabase CLI config for the Yogi backend.
 # `supabase link --project-ref <ref>` writes the ref into your local state; this
 # file keeps function settings and auth providers under version control.
 
-project_id = "albo"
+project_id = "yogi"
 
 [api]
 enabled = true
@@ -13,8 +13,8 @@ max_rows = 500
 major_version = 17
 
 [auth]
-site_url = "https://albo.inc"
-additional_redirect_urls = ["albo://auth-callback"]
+site_url = "https://yogi.app"
+additional_redirect_urls = ["yogi://auth-callback"]
 enable_signup = true
 
 [auth.external.apple]
@@ -31,7 +31,7 @@ skip_nonce_check = true
 [functions.extract]
 verify_jwt = true
 
-[functions.ask-albo]
+[functions.ask-yogi]
 verify_jwt = true
 
 [functions.reminders-cron]

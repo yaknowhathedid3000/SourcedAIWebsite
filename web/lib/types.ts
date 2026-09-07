@@ -1,4 +1,4 @@
-// Mirrors ios/Albo/Albo/Models/Models.swift and the Postgres schema.
+// Mirrors ios/Yogi/Yogi/Models/Models.swift and the Postgres schema.
 
 export type SaveCategory =
   | "recipe" | "place" | "film" | "book" | "product" | "workout" | "software"

@@ -1,6 +1,6 @@
 import { Mascot } from "./Mascot";
 
-// The login hero from albo.inc/login: source-platform icons circling the mascot.
+// The login hero from yogi.app/login: source-platform icons circling the mascot.
 const INNER = [
   { label: "Instagram", emoji: "📸", bg: "#FDE7F3" },
   { label: "TikTok", emoji: "🎵", bg: "#E8F8FA" },

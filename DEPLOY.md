@@ -1,4 +1,4 @@
-# Deploying Albo from Xcode
+# Deploying Yogi from Xcode
 
 Requires macOS with Xcode 15.4+ and an Apple Developer account ($99/yr) for anything
 beyond the simulator. No other tooling — the Xcode project is committed.
@@ -10,7 +10,7 @@ here with no credentials at all — the app runs on local heuristics and sample 
 
 ## 1. Open it
 
-Double-click **`ios/Albo/Albo.xcodeproj`**. That is the whole step — the project file is in
+Double-click **`ios/Yogi/Yogi.xcodeproj`**. That is the whole step — the project file is in
 the repo, so there is no toolchain to install first.
 
 Xcode resolves the Supabase package from GitHub on first open. Wait for the progress bar in
@@ -37,10 +37,10 @@ meantime is lost — the script is a repair tool, not part of the normal loop.
 
 Xcode will show a red signing error until you pick a team. Do it in the UI:
 
-1. Click **Albo** at the top of the file navigator (the blue project icon).
-2. In the target list, select **Albo** → **Signing & Capabilities** tab.
+1. Click **Yogi** at the top of the file navigator (the blue project icon).
+2. In the target list, select **Yogi** → **Signing & Capabilities** tab.
 3. Set **Team** to your account. Leave "Automatically manage signing" ticked.
-4. Select the **AlboShare** target in the same list and set the same team.
+4. Select the **YogiShare** target in the same list and set the same team.
 
 Both targets already declare their capabilities (Sign in with Apple and App Groups on the
 app, App Groups on the extension), so they appear in that tab with no setup.
@@ -50,7 +50,7 @@ prefix on both targets — then change the App Group to match in three places, o
 will silently vanish:
 
 - both targets' **App Groups** rows in Signing & Capabilities
-- `Albo/Shared/ShareInbox.swift` → `AlboAppGroup.identifier`
+- `Yogi/Shared/ShareInbox.swift` → `YogiAppGroup.identifier`
 
 If the App Groups row shows a red error, click the refresh (circular arrow) button; Xcode
 registers the group for you if your account has permission.
@@ -59,7 +59,7 @@ registers the group for you if your account has permission.
 
 Pick any iPhone running iOS 17+ and press ⌘R.
 
-The `Albo` scheme already has `Albo.storekit` attached, so the paywall shows the £29.99/yr
+The `Yogi` scheme already has `Yogi.storekit` attached, so the paywall shows the £29.99/yr
 product and purchases complete against the local StoreKit file. Nothing is charged and no
 App Store Connect record is needed.
 
@@ -77,21 +77,21 @@ A free (non-paid) Apple ID can sign to a device, but the provisioning profile ex
 ## 5. Test the share extension
 
 In Safari on the device or simulator, open any page → Share → scroll the bottom action row
-→ **Add to Albo**. If it is not there, tap "Edit Actions…" and enable it.
+→ **Add to Yogi**. If it is not there, tap "Edit Actions…" and enable it.
 
-To debug it with breakpoints: Product → Scheme → AlboShare, press ⌘R, and pick Safari when
+To debug it with breakpoints: Product → Scheme → YogiShare, press ⌘R, and pick Safari when
 Xcode asks for a host app.
 
 Two things that confuse everyone:
 
-- The save appears in Albo when you next **open Albo**, not the instant you share. The
+- The save appears in Yogi when you next **open Yogi**, not the instant you share. The
   extension only queues; the app does the import. That is deliberate — see the README.
 - After changing extension code, delete the app from the device before reinstalling. iOS
   caches extension registrations aggressively.
 
 ## 6. Add the backend (optional until TestFlight)
 
-Create `ios/Albo/Albo/Resources/Albo.local.xcconfig` (git-ignored, and already
+Create `ios/Yogi/Yogi/Resources/Yogi.local.xcconfig` (git-ignored, and already
 `#include?`'d by the checked-in xcconfig) with:
 
 ```
@@ -104,12 +104,12 @@ The `$()` is required — xcconfig reads a bare `//` as a comment. Full backend 
 
 ## 7. Archive and upload to TestFlight
 
-First create the app record in App Store Connect with bundle ID `com.sourcedai.albo`
+First create the app record in App Store Connect with bundle ID `com.sourcedai.yogi`
 (My Apps → + → New App). The upload is rejected without it.
 
 Then:
 
-1. Bump the build number: project → Albo target → General → **Build**. Every upload needs a
+1. Bump the build number: project → Yogi target → General → **Build**. Every upload needs a
    build number higher than the last one for that version string. Do it on both targets.
 2. Destination menu → **Any iOS Device (arm64)**. Archive is greyed out on a simulator.
 3. Product → Archive.
@@ -127,7 +127,7 @@ testers immediately; external testers need a review pass.
 Beyond TestFlight you also need: screenshots at 6.7" and 6.5", a privacy policy URL, App
 Privacy answers (this app collects saved content and, if you enable it, location), and a
 demo account for review. If subscriptions are live, review will not pass until
-`com.sourcedai.albo.pro.yearly` is approved alongside the build.
+`com.sourcedai.yogi.pro.yearly` is approved alongside the build.
 
 ---
 
@@ -138,8 +138,8 @@ demo account for review. If subscriptions are live, review will not pass until
 | `No such module 'Supabase'` | Package still resolving, or resolution failed. File → Packages → Resolve Package Versions. |
 | Signing settings vanished | You re-ran `tools/generate_xcodeproj.py`, which overwrites the project. Set the team again in Xcode. |
 | `Failed to register bundle identifier` | Taken by another account. Change the prefix per step 2. |
-| Share extension missing from the share sheet | Extension did not install. Delete the app, rebuild. Check AlboShare actually built. |
+| Share extension missing from the share sheet | Extension did not install. Delete the app, rebuild. Check YogiShare actually built. |
 | Shared links never appear in the app | App Group mismatch or not enabled on both targets. Compare the string in all three places from step 2. |
-| Paywall shows no price | StoreKit config not attached (use the `Albo` scheme), or on a real build the product does not exist in App Store Connect yet. |
+| Paywall shows no price | StoreKit config not attached (use the `Yogi` scheme), or on a real build the product does not exist in App Store Connect yet. |
 | Archive greyed out | Destination is a simulator. Switch to Any iOS Device (arm64). |
-| `Invalid Bundle. Missing Info.plist value CFBundleIconName` | The app icon asset is missing from the build. Check Assets.xcassets is in the Albo target's Copy Bundle Resources phase. |
+| `Invalid Bundle. Missing Info.plist value CFBundleIconName` | The app icon asset is missing from the build. Check Assets.xcassets is in the Yogi target's Copy Bundle Resources phase. |

@@ -1,4 +1,4 @@
-// Albo "magic import": a URL, a note, or up to nine screenshots in; typed saves out.
+// Yogi "magic import": a URL, a note, or up to nine screenshots in; typed saves out.
 // Powers Albo #25 ("Importing... watching everything at 2x speed"), #61, #68, #96.
 //
 // POST /functions/v1/extract   (user JWT in Authorization)
@@ -85,7 +85,7 @@ const Extracted = z.object({
   })).describe("Every distinct thing worth saving. A travel video listing 12 restaurants yields 12 place items."),
 });
 
-const SYSTEM = `You are Albo's extraction engine. Albo is a save-for-later app: people share a TikTok, Instagram post, web page, note, or screenshot and Albo turns it into structured saves they can act on later.
+const SYSTEM = `You are Albo's extraction engine. Yogi is a save-for-later app: people share a TikTok, Instagram post, web page, note, or screenshot and Yogi turns it into structured saves they can act on later.
 
 Rules:
 - Return every distinct actionable thing in the content: each restaurant, each recipe, each film, each product. A "12 best places in Tokyo" post returns 12 place items.

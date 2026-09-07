@@ -1,4 +1,4 @@
-# Connecting Albo to the outside world
+# Connecting Yogi to the outside world
 
 Everything in this repo runs today without a single credential — the app falls back to local
 heuristics, the web companion runs in demo mode. This is the list of what to connect to make
@@ -12,15 +12,15 @@ Nothing here is optional-but-nice. If a section says the feature is dead without
 
 | What | Value |
 |---|---|
-| App bundle ID | `com.sourcedai.albo` |
-| Share extension bundle ID | `com.sourcedai.albo.share` |
-| App Group | `group.com.sourcedai.albo` |
-| URL scheme | `albo://` |
+| App bundle ID | `com.sourcedai.yogi` |
+| Share extension bundle ID | `com.sourcedai.yogi.share` |
+| App Group | `group.com.sourcedai.yogi` |
+| URL scheme | `yogi://` |
 
 In the Apple Developer portal:
 
 1. Register both bundle IDs.
-2. Create the App Group `group.com.sourcedai.albo` and enable it on **both** identifiers.
+2. Create the App Group `group.com.sourcedai.yogi` and enable it on **both** identifiers.
    If you only enable it on the app, the share extension writes into a container the app
    cannot read and shared links vanish with no error.
 3. Enable **Sign in with Apple** on the app identifier.
@@ -28,14 +28,14 @@ In the Apple Developer portal:
    already `Automatic`.
 
 Changing the bundle prefix means changing it in four places: `project.yml`
-(`PRODUCT_BUNDLE_IDENTIFIER` on both targets), `Albo/Shared/ShareInbox.swift`
-(`AlboAppGroup.identifier`), and the entitlements blocks in `project.yml`.
+(`PRODUCT_BUNDLE_IDENTIFIER` on both targets), `Yogi/Shared/ShareInbox.swift`
+(`YogiAppGroup.identifier`), and the entitlements blocks in `project.yml`.
 
 ## 2. Supabase (blocks: sync, accounts, AI import, sharing)
 
 1. Create a project. Copy the project URL and the **publishable/anon** key.
-2. Put them in `ios/Albo/Albo/Resources/Albo.local.xcconfig` (git-ignored, the parent
-   `Albo.xcconfig` `#include?`s it):
+2. Put them in `ios/Yogi/Yogi/Resources/Yogi.local.xcconfig` (git-ignored, the parent
+   `Yogi.xcconfig` `#include?`s it):
 
    ```
    SUPABASE_URL = https:/$()/YOUR-REF.supabase.co
@@ -55,7 +55,7 @@ Changing the bundle prefix means changing it in four places: `project.yml`
 4. Deploy the edge functions:
 
    ```
-   supabase functions deploy extract ask-albo reminders-cron
+   supabase functions deploy extract ask-yogi reminders-cron
    ```
 
 5. Set the function secrets:
@@ -73,22 +73,22 @@ Changing the bundle prefix means changing it in four places: `project.yml`
 Until this is done `ImportService` uses local heuristics: imports still produce saves, but
 they are guessed from the URL rather than read.
 
-## 3. Anthropic API key (blocks: real import and Ask Albo)
+## 3. Anthropic API key (blocks: real import and Ask Yogi)
 
-Both `extract` and `ask-albo` call Claude. Get a key at console.anthropic.com and set it as
+Both `extract` and `ask-yogi` call Claude. Get a key at console.anthropic.com and set it as
 the `ANTHROPIC_API_KEY` function secret above. This is the only thing standing between
-"Albo guessed this is an article" and "Albo read the recipe and pulled the ingredients".
+"Yogi guessed this is an article" and "Yogi read the recipe and pulled the ingredients".
 
 ## 4. App Store Connect (blocks: subscriptions)
 
-1. Create the app record for `com.sourcedai.albo`.
+1. Create the app record for `com.sourcedai.yogi`.
 2. Create a subscription group and an auto-renewing subscription with product ID
-   `com.sourcedai.albo.pro.yearly` — this exact string is in `PurchaseService.yearlyProductID`
-   and in `Albo/Resources/Albo.storekit`.
+   `com.sourcedai.yogi.pro.yearly` — this exact string is in `PurchaseService.yearlyProductID`
+   and in `Yogi/Resources/Yogi.storekit`.
 3. Fill in the paid-apps agreement and banking, or StoreKit returns no products and the
    paywall shows an empty state.
 
-Until then the run scheme uses the local `Albo.storekit` file, so purchases work in the
+Until then the run scheme uses the local `Yogi.storekit` file, so purchases work in the
 simulator and do nothing real.
 
 ## 5. Reminders cron (optional: local reminders already work)
@@ -97,7 +97,7 @@ The app schedules local notifications itself, so reminders fire on-device with n
 connected. The cron is a backstop for reinstalls and multi-device users:
 
 ```sql
-select cron.schedule('albo-reminders', '*/5 * * * *',
+select cron.schedule('yogi-reminders', '*/5 * * * *',
   $$ select net.http_post(
        url := 'https://YOUR-REF.supabase.co/functions/v1/reminders-cron',
        headers := '{"Authorization": "Bearer YOUR-SERVICE-ROLE-KEY"}'::jsonb) $$);

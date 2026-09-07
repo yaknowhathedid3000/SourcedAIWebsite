@@ -43,7 +43,7 @@ export default async function LibraryPage() {
           <div className="rounded-card bg-surface p-8 text-center">
             <Mascot size={56} className="mx-auto" />
             <p className="balance mt-3 text-[17px] font-semibold">Nothing saved yet</p>
-            <p className="balance mt-1 text-[14px] text-ink2">Paste a link from Instagram, TikTok or Safari and Albo files it for you.</p>
+            <p className="balance mt-1 text-[14px] text-ink2">Paste a link from Instagram, TikTok or Safari and Yogi files it for you.</p>
             <Link href="/add" className="btn-primary mx-auto mt-5 max-w-[240px]">Save something</Link>
           </div>
         ) : (

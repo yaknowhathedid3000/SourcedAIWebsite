@@ -1,6 +1,6 @@
-# Albo web
+# Yogi web
 
-The desktop companion to the Albo iOS app. It gives the library a big screen, and it is how a plan leaves the group chat: every public collection gets a link (`/c/<token>`) anyone can open, and joining it drops the plan into their own library.
+The desktop companion to the Yogi iOS app. It gives the library a big screen, and it is how a plan leaves the group chat: every public collection gets a link (`/c/<token>`) anyone can open, and joining it drops the plan into their own library.
 
 Built with Next.js 15 (App Router), React 19, Tailwind, and Supabase SSR auth. It shares the Postgres schema in `../supabase` with the iOS app, so a save made on the phone shows up here and a status change here syncs back.
 
@@ -30,7 +30,7 @@ Vercel: import the repo, set the root directory to `web`, add the two environmen
 
 | Route | What it is |
 | --- | --- |
-| `/login` | The albo.inc sign-in: orbiting platform icons, Google / Apple / QR, and the "Set up your account on the Albo app" sheet with store badges |
+| `/login` | The yogi.app sign-in: orbiting platform icons, Google / Apple / QR, and the "Set up your account on the Yogi app" sheet with store badges |
 | `/library` | Greeting, category chips, Recently saved, Collections |
 | `/library/[category]` | All / Want to / Done tabs in the italic serif, list or grid |
 | `/saves/[id]` | Item detail: hero, meta line, slide-to-confirm "Made it? / Visited?", recipe checklist with serving multiplier, place map and directions, event with add-to-calendar |
@@ -41,7 +41,7 @@ Vercel: import the repo, set the root directory to `web`, add the two environmen
 | `/profile` | Profile card, stats, journal, sign out |
 | `/add` | Paste a link (extracted by the `extract` edge function) or write a note |
 
-Design tokens live in `tailwind.config.ts` and mirror `ios/Albo/Albo/DesignSystem`. Serif headings use Source Serif 4 as the web stand-in for New York; the sans is Instrument Sans standing in for SF Pro.
+Design tokens live in `tailwind.config.ts` and mirror `ios/Yogi/Yogi/DesignSystem`. Serif headings use Source Serif 4 as the web stand-in for New York; the sans is Instrument Sans standing in for SF Pro.
 
 ## Layout
 

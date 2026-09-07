@@ -7,7 +7,7 @@ import { browserClient, isConfigured } from "@/lib/supabase/client";
 
 type Modal = null | "setup" | "qr";
 
-/** The albo.inc/login "Sign In" card: Google, Apple, QR, and the "Set up your account on the Albo app" modal. */
+/** The yogi.app/login "Sign In" card: Google, Apple, QR, and the "Set up your account on the Yogi app" modal. */
 export function LoginPanel({ next, error }: { next: string; error?: string }) {
   const [modal, setModal] = useState<Modal>(error === "no_account" ? "setup" : null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function LoginPanel({ next, error }: { next: string; error?: string }) {
     if (error) { setMessage(error.message); setBusy(null); }
   };
 
-  const qrValue = typeof window === "undefined" ? "https://albo.app/download" : `${window.location.origin}/login?via=qr`;
+  const qrValue = typeof window === "undefined" ? "https://yogi.app/download" : `${window.location.origin}/login?via=qr`;
 
   return (
     <>
@@ -49,7 +49,7 @@ export function LoginPanel({ next, error }: { next: string; error?: string }) {
           </div>
         )}
         <p className="mt-6 text-[12px] leading-5 text-muted">
-          New here? Create your account on the Albo app first, then sign in with the same Google or Apple ID.{" "}
+          New here? Create your account on the Yogi app first, then sign in with the same Google or Apple ID.{" "}
           <button type="button" onClick={() => setModal("setup")} className="font-semibold text-ink underline underline-offset-2">Get the app</button>
         </p>
       </div>
@@ -59,18 +59,18 @@ export function LoginPanel({ next, error }: { next: string; error?: string }) {
           <div className="w-full max-w-[440px] rounded-t-sheet bg-white px-7 pb-[max(28px,env(safe-area-inset-bottom))] pt-7 sm:rounded-sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal>
             {modal === "setup" ? (
               <>
-                <h2 className="balance font-serif text-[26px] font-bold leading-tight">Set up your account on the Albo app</h2>
-                <p className="balance mt-2 text-[15px] leading-6 text-ink2">To use the web app, you first need to create an account on the Albo mobile app.</p>
-                <div className="mx-auto mt-6 w-fit rounded-2xl border border-hairline p-3"><QRCodeSVG value="https://albo.app/download" size={164} /></div>
+                <h2 className="balance font-serif text-[26px] font-bold leading-tight">Set up your account on the Yogi app</h2>
+                <p className="balance mt-2 text-[15px] leading-6 text-ink2">To use the web app, you first need to create an account on the Yogi mobile app.</p>
+                <div className="mx-auto mt-6 w-fit rounded-2xl border border-hairline p-3"><QRCodeSVG value="https://yogi.app/download" size={164} /></div>
                 <div className="mt-6 grid grid-cols-2 gap-3">
-                  <StoreBadge label="Download on the" store="App Store" href="https://apps.apple.com/app/albo-save-organize/id6484345096" />
-                  <StoreBadge label="GET IT ON" store="Google Play" href="https://play.google.com/store/apps/details?id=inc.albo" />
+                  <StoreBadge label="Download on the" store="App Store" href="https://apps.apple.com/app/yogi-save-organize/id6484345096" />
+                  <StoreBadge label="GET IT ON" store="Google Play" href="https://play.google.com/store/apps/details?id=inc.yogi" />
                 </div>
               </>
             ) : (
               <>
-                <h2 className="balance font-serif text-[26px] font-bold leading-tight">Scan with the Albo app</h2>
-                <p className="balance mt-2 text-[15px] leading-6 text-ink2">Open Albo on your phone, go to Profile → Sign in on web, and point the camera here.</p>
+                <h2 className="balance font-serif text-[26px] font-bold leading-tight">Scan with the Yogi app</h2>
+                <p className="balance mt-2 text-[15px] leading-6 text-ink2">Open Yogi on your phone, go to Profile → Sign in on web, and point the camera here.</p>
                 <div className="mx-auto mt-6 w-fit rounded-2xl border border-hairline p-3"><QRCodeSVG value={qrValue} size={184} /></div>
               </>
             )}
