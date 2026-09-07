@@ -63,7 +63,7 @@ def swift_files(folder: str) -> list[str]:
 APP_SOURCES = swift_files("Yogi")
 EXT_SOURCES = swift_files("YogiShare") + EXT_SHARED_SOURCES
 
-APP_RESOURCES = ["Yogi/Resources/Assets.xcassets"]
+APP_RESOURCES = ["Yogi/Resources/Assets.xcassets", "Yogi/Resources/LaunchScreen.storyboard"]
 
 # Every path that needs a PBXFileReference.
 ALL_PATHS = sorted(set(
@@ -91,6 +91,8 @@ def file_type(path: str) -> str:
         return "text.xcconfig"
     if path.endswith(".storekit"):
         return "text.json"
+    if path.endswith(".storyboard"):
+        return "file.storyboard"
     return "text"
 
 
@@ -112,7 +114,9 @@ def write_plists() -> None:
         "SUPABASE_URL": "$(SUPABASE_URL)",
         "SUPABASE_ANON_KEY": "$(SUPABASE_ANON_KEY)",
         "ITSAppUsesNonExemptEncryption": False,
-        "UILaunchScreen": {"UIColorName": "LaunchBackground"},
+        # A storyboard, not the UILaunchScreen dict: that form scales UIImageName to
+        # fill the screen, which turns a square mark into a giant crop.
+        "UILaunchStoryboardName": "LaunchScreen",
         "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
         "UIApplicationSceneManifest": {"UIApplicationSupportsMultipleScenes": False},
         "CFBundleURLTypes": [

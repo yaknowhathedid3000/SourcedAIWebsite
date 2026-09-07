@@ -41,6 +41,7 @@
 		3806DCA339A84EEE2B8C18FF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8BAF127C16F318154444D6 /* SettingsView.swift */; };
 		99129894952966ED02D413EB /* ShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8620E73023D95260CB11F495 /* ShareInbox.swift */; };
 		6FDB530ABE709329D3B0F140 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D377E3B2257EB11A830A1484 /* Assets.xcassets */; };
+		1CE8DC3C08DA923AA3793193 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC4D0C98A8210ED73EC17E79 /* LaunchScreen.storyboard */; };
 		B6073A91D6EDF530A4F383D6 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF2ABAAB3F8257B877EDEB /* ShareSheetView.swift */; };
 		A6FC1CEAD86E0257D43D0011 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557FC1BDA509D4B649A7E5C5 /* ShareViewController.swift */; };
 		130C544E84D4CED1D28969DC /* ShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8620E73023D95260CB11F495 /* ShareInbox.swift */; };
@@ -111,6 +112,7 @@
 		27BC82C3AFBC96B4F51AE342 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		D377E3B2257EB11A830A1484 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		127A513C2046021F36413D3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC4D0C98A8210ED73EC17E79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08AC1D9B0EA3238C11045F74 /* Yogi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yogi.entitlements; sourceTree = "<group>"; };
 		558255B078FC57DC8267F34B /* Yogi.storekit */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Yogi.storekit; sourceTree = "<group>"; };
 		691FB6B20546B2793B4289C9 /* Yogi.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Yogi.xcconfig; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				D377E3B2257EB11A830A1484 /* Assets.xcassets */,
 				127A513C2046021F36413D3B /* Info.plist */,
+				BC4D0C98A8210ED73EC17E79 /* LaunchScreen.storyboard */,
 				08AC1D9B0EA3238C11045F74 /* Yogi.entitlements */,
 				558255B078FC57DC8267F34B /* Yogi.storekit */,
 				691FB6B20546B2793B4289C9 /* Yogi.xcconfig */,
@@ -432,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FDB530ABE709329D3B0F140 /* Assets.xcassets in Resources */,
+				1CE8DC3C08DA923AA3793193 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
