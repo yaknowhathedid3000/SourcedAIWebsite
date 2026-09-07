@@ -307,11 +307,51 @@ struct EventsList: View {
                         }
                         .buttonStyle(PressableButtonStyle())
                         .simultaneousGesture(TapGesture().onEnded { if app.save(e.id) == nil { app.saves.append(e) } })
+                        EventExtras(save: e)
                     }
                 }
             }
         }
         .padding(.top, 8)
+    }
+}
+
+/// The row under an event: put it in the calendar, and the promo code if the
+/// listing carries one. Albo surfaces both here rather than burying them in the
+/// detail screen, because an offer you find later is an offer you missed.
+struct EventExtras: View {
+    @Environment(AppState.self) private var app
+    let save: Save
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Button {
+                Haptics.tap()
+                app.addToCalendar(save)
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "plus")
+                    Text("Add to Calendar")
+                }
+                .font(.yogiSans(15, weight: .semibold))
+                .foregroundStyle(YogiColor.systemBlue)
+                .padding(.horizontal, 14).frame(height: 38)
+                .background(Capsule().fill(YogiColor.systemBlue.opacity(0.10)))
+            }
+            .buttonStyle(.plain)
+
+            if let offer = save.event?.offer {
+                Text(offer)
+                    .font(.yogiSans(14, weight: .bold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 12).frame(height: 32)
+                    .background(Capsule().fill(YogiColor.danger))
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.leading, 100)
+        .padding(.top, -6)
     }
 }
 

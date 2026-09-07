@@ -1,3 +1,4 @@
+import EventKit
 import Foundation
 import StoreKit
 import UserNotifications
@@ -219,6 +220,37 @@ enum PurchaseService {
 // MARK: - Notifications (Albo #36, #92, #131)
 
 enum NotificationService {
+    private static let store = EKEventStore()
+
+    /// Writes an event into the user's default calendar. Uses write-only access,
+    /// which is the narrowest scope that does the job and the one Info.plist asks
+    /// for, so Yogi never gains the ability to read what else is in there.
+    static func addEventToCalendar(title: String,
+                                   start: Date,
+                                   end: Date?,
+                                   location: String?,
+                                   completion: @escaping (Bool) -> Void) {
+        let write: (Bool) -> Void = { granted in
+            guard granted else {
+                DispatchQueue.main.async { completion(false) }
+                return
+            }
+            let event = EKEvent(eventStore: store)
+            event.title = title
+            event.startDate = start
+            event.endDate = end ?? start.addingTimeInterval(2 * 60 * 60)
+            event.location = location
+            event.calendar = store.defaultCalendarForNewEvents
+            let ok = (try? store.save(event, span: .thisEvent)) != nil
+            DispatchQueue.main.async { completion(ok) }
+        }
+        if #available(iOS 17.0, *) {
+            store.requestWriteOnlyAccessToEvents { granted, _ in write(granted) }
+        } else {
+            store.requestAccess(to: .event) { granted, _ in write(granted) }
+        }
+    }
+
     static func requestAuthorization() async -> Bool {
         let center = UNUserNotificationCenter.current()
         return (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false

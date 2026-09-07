@@ -274,6 +274,8 @@ struct EventDetails: Codable, Hashable {
     var organizer: String?
     var kind: String               // "Community"
     var about: String?
+    /// "20% off with CODEJANE" style promotion attached to the event.
+    var offer: String?
     var latitude: Double?
     var longitude: Double?
 }
@@ -286,6 +288,45 @@ struct MediaDetails: Codable, Hashable {
     var author: String?
     var runtimeLabel: String?
     var tags: [String] = []        // workouts: "Bodyweight", "Upper Body"
+    /// Where it can actually be watched, so the Decider can say so.
+    var streaming: [StreamingService] = []
+}
+
+/// The services shown as badges on a film or show (Albo's "Pick what to watch next").
+enum StreamingService: String, Codable, CaseIterable, Identifiable, Hashable {
+    case netflix, prime, appleTV, disney, mubi
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .netflix: return "Netflix"
+        case .prime: return "Prime Video"
+        case .appleTV: return "Apple TV+"
+        case .disney: return "Disney+"
+        case .mubi: return "MUBI"
+        }
+    }
+
+    var mark: String {
+        switch self {
+        case .netflix: return "N"
+        case .prime: return "prime"
+        case .appleTV: return ""
+        case .disney: return "D+"
+        case .mubi: return "M"
+        }
+    }
+
+    var tint: UInt32 {
+        switch self {
+        case .netflix: return 0xE50914
+        case .prime: return 0x00A8E1
+        case .appleTV: return 0x1C1C1E
+        case .disney: return 0x113CCF
+        case .mubi: return 0x000000
+        }
+    }
 }
 
 struct Reaction: Codable, Hashable, Identifiable {
@@ -319,6 +360,15 @@ struct Save: Identifiable, Hashable, Codable {
     var mentionedInNoteID: UUID?
 
     /// Meta line: "15 mins · American · Dessert" or "Association / Organization · 4.2".
+    /// "5 months ago" for the Decider card. Nil for anything saved today.
+    var savedAgoLabel: String? {
+        let days = Calendar.current.dateComponents([.day], from: createdAt, to: Date()).day ?? 0
+        guard days >= 1 else { return nil }
+        if days < 30 { return days == 1 ? "yesterday" : "\(days) days ago" }
+        let months = days / 30
+        return months == 1 ? "1 month ago" : "\(months) months ago"
+    }
+
     var metaLine: String {
         if let r = recipe {
             return [r.timeLabel, r.cuisine, r.course].compactMap { $0 }.joined(separator: " · ")

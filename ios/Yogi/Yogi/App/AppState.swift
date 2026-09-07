@@ -124,6 +124,18 @@ final class AppState {
         gamification.stamps = s
     }
 
+    /// Writes an event save into the system calendar. EventKit access is
+    /// requested lazily, so declining just leaves the save where it was.
+    func addToCalendar(_ save: Save) {
+        guard let event = save.event else { return }
+        NotificationService.addEventToCalendar(title: save.title,
+                                               start: event.start,
+                                               end: event.end,
+                                               location: event.address ?? event.venue) { [weak self] ok in
+            self?.showToast(ok ? "Added to your calendar" : "Calendar access is off in Settings")
+        }
+    }
+
     func remove(_ id: UUID) {
         saves.removeAll { $0.id == id }
         for i in collections.indices { collections[i].saveIDs.removeAll { $0 == id } }

@@ -260,20 +260,107 @@ struct DeciderEmptyView: View {
 }
 
 /// The Decider's pick, presented as a small sheet.
+/// The Decider's answer. For films and shows this is Albo's "pick what to watch
+/// next": the poster, where it is streaming, and a straight skip-or-commit.
 struct DeciderResult: View {
+    @Environment(AppState.self) private var app
     @Environment(\.dismiss) private var dismiss
     let save: Save
+    var onSkip: (() -> Void)? = nil
+
+    private var isWatchable: Bool { save.category == .film || save.category == .tvShow }
+
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 14) {
             Capsule().fill(YogiColor.hairline).frame(width: 40, height: 5).padding(.top, 8)
-            Text("🎲").font(.system(size: 54))
-            Text("The Decider says").font(.yogiSans(15)).foregroundStyle(YogiColor.muted)
+
+            if isWatchable {
+                if let saved = save.savedAgoLabel {
+                    Text("Saved \(saved)").font(.yogiSans(14)).foregroundStyle(YogiColor.muted)
+                }
+                SaveCover(save: save, cornerRadius: 16)
+                    .frame(width: 150, height: 214)
+                    .shadow(color: .black.opacity(0.18), radius: 14, y: 8)
+                    .padding(.top, 2)
+            } else {
+                Text("🎲").font(.system(size: 54))
+                Text("The Decider says").font(.yogiSans(15)).foregroundStyle(YogiColor.muted)
+            }
+
             Text(save.title).yogiText(.sheetTitle).multilineTextAlignment(.center)
             Text(save.metaLine).font(.yogiSans(16)).foregroundStyle(YogiColor.inkSecondary)
-            Spacer()
-            PrimaryButton(title: "Let's do it") { dismiss() }.padding(.horizontal, 24)
+
+            if isWatchable {
+                let services = save.media?.streaming ?? []
+                if !services.isEmpty {
+                    HStack(spacing: 10) {
+                        ForEach(services) { s in StreamingBadge(service: s) }
+                    }
+                    .padding(.top, 2)
+                }
+                if let url = save.sourceURL {
+                    Link(destination: url) {
+                        HStack(spacing: 6) {
+                            Image(systemName: "play.circle")
+                            Text("Watch trailer")
+                        }
+                        .font(.yogiSans(16, weight: .medium))
+                        .foregroundStyle(YogiColor.systemBlue)
+                    }
+                }
+            }
+
+            Spacer(minLength: 8)
+
+            if isWatchable {
+                HStack(spacing: 12) {
+                    Button {
+                        Haptics.tap()
+                        dismiss()
+                        onSkip?()
+                    } label: {
+                        Text("Skip").font(.yogiSans(18, weight: .semibold)).foregroundStyle(YogiColor.ink)
+                            .frame(maxWidth: .infinity).frame(height: 58)
+                            .background(YogiColor.optionFill, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    Button {
+                        Haptics.success()
+                        app.showToast("Added to Wants to watch")
+                        dismiss()
+                    } label: {
+                        Text("Wanna watch").font(.yogiSans(18, weight: .semibold)).foregroundStyle(.white)
+                            .frame(maxWidth: .infinity).frame(height: 58)
+                            .background(YogiColor.ink, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, 24)
+            } else {
+                PrimaryButton(title: "Let's do it") { dismiss() }.padding(.horizontal, 24)
+            }
         }
-        .padding(.bottom, 12)
-        .presentationDetents([.medium])
+        .padding(.bottom, 14)
+        .presentationDetents([isWatchable ? .large : .medium])
+    }
+}
+
+/// Small service chip: the platform's mark on its own colour.
+struct StreamingBadge: View {
+    let service: StreamingService
+    var body: some View {
+        HStack(spacing: 6) {
+            ZStack {
+                Circle().fill(Color(hex: service.tint)).frame(width: 24, height: 24)
+                if service == .appleTV {
+                    Image(systemName: "appletv.fill").font(.system(size: 11)).foregroundStyle(.white)
+                } else {
+                    Text(service.mark).font(.system(size: 11, weight: .heavy)).foregroundStyle(.white)
+                }
+            }
+            Text(service.title).font(.yogiSans(14, weight: .medium)).foregroundStyle(YogiColor.ink)
+        }
+        .padding(.horizontal, 10).frame(height: 36)
+        .background(YogiColor.optionFill, in: Capsule())
     }
 }

@@ -122,11 +122,11 @@ enum SampleData {
              savedBy: [isaac, karolina, jake], reactions: [Reaction(emoji: "❤️", count: 3)])
         let s7 = Save(id: hailMaryID, category: .book, title: "Project Hail Mary", subtitle: "Andy Weir", coverEmoji: "🚀", coverTint: 0x1D3557,
              sourcePlatform: .manual, status: .done, saveCount: 763, createdAt: date(2026, 6, 11, 17),
-             media: MediaDetails(year: 2021, genre: "Science fiction", pages: 496, rating: 4.5, author: "Andy Weir"),
+             media: MediaDetails(year: 2021, genre: "Science fiction", pages: 496, rating: 4.5, author: "Andy Weir", streaming: [.netflix, .prime]),
              savedBy: [karolina, me])
         let s8 = Save(id: onceUponID, category: .film, title: "Once Upon a Time in Hollywood", coverEmoji: "🎬", coverTint: 0xF4D35E,
              sourcePlatform: .instagram, status: .wantTo, saveCount: 812, createdAt: date(2026, 6, 9, 20),
-             media: MediaDetails(year: 2019, genre: "Comedy", runtimeLabel: "2h 41m"),
+             media: MediaDetails(year: 2019, genre: "Comedy", runtimeLabel: "2h 41m", streaming: [.appleTV]),
              savedBy: [antonia])
         let s9 = Save(id: iveEventID, category: .event, title: "IVE - Show What I Am Fan Support by aijoowon", coverEmoji: "🎤", coverTint: 0x2B2D42,
              sourcePlatform: .instagram, status: .wantTo, saveCount: 1, createdAt: date(2026, 6, 12, 9),
@@ -137,10 +137,10 @@ enum SampleData {
              savedBy: [me])
         let s10 = Save(id: pullUpID, category: .workout, title: "Pull-Up", coverEmoji: "🏋️", coverTint: 0xE0F2F1,
              sourcePlatform: .manual, status: .saved, saveCount: 4, createdAt: date(2026, 6, 12, 10),
-             media: MediaDetails(tags: ["Bodyweight", "Strength", "Upper Body", "Back"]), savedBy: [isaac, jake])
+             media: MediaDetails(tags: ["Bodyweight", "Strength", "Upper Body", "Back"], streaming: [.netflix]), savedBy: [isaac, jake])
         let s11 = Save(id: lateralRaiseID, category: .workout, title: "Lateral Raise", coverEmoji: "💪", coverTint: 0xE8EAF6,
              sourcePlatform: .manual, status: .saved, saveCount: 1, createdAt: date(2026, 6, 12, 10),
-             media: MediaDetails(tags: ["Strength", "Upper Body", "Shoulders"]), savedBy: [me])
+             media: MediaDetails(tags: ["Strength", "Upper Body", "Shoulders"], streaming: [.prime, .mubi]), savedBy: [me])
         let s12 = Save(id: stAlbansID, category: .article, title: "10 of the Best Things to do in St Albans", subtitle: "emilyluxton.co.uk", coverEmoji: "🌳", coverTint: 0xCDE7C4,
              sourceURL: URL(string: "https://www.emilyluxton.co.uk/st-albans"), sourcePlatform: .safari, status: .saved, saveCount: 1,
              createdAt: date(2026, 6, 10, 8), savedBy: [me])
@@ -242,12 +242,12 @@ enum SampleData {
     // MARK: Search catalog for "manual search" (Albo #105, #110, #120)
     static let catalog: [Save] = {
         saves + [
-            Save(category: .book, title: "Project Hail Mary / Artemis / The Martian", subtitle: "Andy Weir", coverEmoji: "📚", coverTint: 0x457B9D, saveCount: 12, media: MediaDetails(year: 2022, author: "Andy Weir")),
-            Save(category: .book, title: "Project Hail Mary: A Novel", coverEmoji: "📕", coverTint: 0xE63946, saveCount: 3, media: MediaDetails(year: 2021)),
+            Save(category: .book, title: "Project Hail Mary / Artemis / The Martian", subtitle: "Andy Weir", coverEmoji: "📚", coverTint: 0x457B9D, saveCount: 12, media: MediaDetails(year: 2022, author: "Andy Weir", streaming: [.netflix, .prime])),
+            Save(category: .book, title: "Project Hail Mary: A Novel", coverEmoji: "📕", coverTint: 0xE63946, saveCount: 3, media: MediaDetails(year: 2021, streaming: [.appleTV])),
             Save(category: .recipe, title: "Carbonara", coverEmoji: "🍝", coverTint: 0xFFE8D6, saveCount: 1, recipe: RecipeDetails(timeLabel: "10 minutes", cuisine: "Italian-American", course: nil, yieldLabel: nil, ingredients: [], steps: [])),
             Save(category: .recipe, title: "Carbonara", coverEmoji: "🍝", coverTint: 0xF1FAEE, saveCount: 1, recipe: RecipeDetails(timeLabel: "30 minutes", cuisine: "Roman", course: nil, yieldLabel: nil, ingredients: [], steps: [])),
-            Save(category: .workout, title: "Pull-Up Timing", coverEmoji: "⏱️", coverTint: 0xE0F2F1, saveCount: 2, media: MediaDetails(tags: ["Strength", "Back"])),
-            Save(category: .film, title: "Once Upon a Time in the West", coverEmoji: "🤠", coverTint: 0xD4A373, saveCount: 44, media: MediaDetails(year: 1968, genre: "Western")),
+            Save(category: .workout, title: "Pull-Up Timing", coverEmoji: "⏱️", coverTint: 0xE0F2F1, saveCount: 2, media: MediaDetails(tags: ["Strength", "Back"], streaming: [.netflix])),
+            Save(category: .film, title: "Once Upon a Time in the West", coverEmoji: "🤠", coverTint: 0xD4A373, saveCount: 44, media: MediaDetails(year: 1968, genre: "Western", streaming: [.prime, .mubi])),
             Save(category: .place, title: "New York City Hall", coverEmoji: "🏛️", coverTint: 0xE9ECEF, saveCount: 22, place: PlaceDetails(latitude: 40.7128, longitude: -74.0060, category: "City Hall", rating: 4.3, city: "New York", countryFlag: "🇺🇸")),
             Save(category: .place, title: "New York City Ballet", coverEmoji: "🩰", coverTint: 0xFFE5EC, saveCount: 3, place: PlaceDetails(latitude: 40.7725, longitude: -73.9835, category: "Ballet theater", rating: 4.8, city: "New York", countryFlag: "🇺🇸")),
         ]

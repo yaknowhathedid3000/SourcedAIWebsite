@@ -6,6 +6,7 @@ enum LibraryRoute: Hashable {
     case collection(UUID)
     case notifications
     case chat
+    case cleanup
 }
 
 /// Library home (Albo #56, #99): serif header, category chips, Recently saved, Collections, Ask Yogi FAB.
@@ -38,6 +39,7 @@ struct LibraryView: View {
                 case .collection(let id): CollectionDetailView(collectionID: id)
                 case .notifications: NotificationsView()
                 case .chat: ChatView()
+                case .cleanup: CleanupView()
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
@@ -60,6 +62,11 @@ struct LibraryView: View {
                     }
             }
             .accessibilityLabel("Notifications")
+            .padding(.trailing, 18)
+            Button { path.append(LibraryRoute.cleanup) } label: {
+                Image(systemName: "wand.and.sparkles").font(.system(size: 22)).foregroundStyle(YogiColor.ink)
+            }
+            .accessibilityLabel("Clean up your saves")
             .padding(.trailing, 18)
             Button { path.append(LibraryRoute.chat) } label: {
                 Image(systemName: "paperplane").font(.system(size: 24)).foregroundStyle(YogiColor.ink)
