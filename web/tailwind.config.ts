@@ -23,8 +23,8 @@ const config: Config = {
       fontFamily: {
         // Apple Garamond first for anyone who has it, EB Garamond served for
         // everyone else - the closest properly licensed Garamond revival.
-        serif: ['"Apple Garamond"', '"EB Garamond"', '"New York"', "Georgia", "serif"],
-        sans: ['"Instrument Sans"', "system-ui", "-apple-system", '"SF Pro Text"', "sans-serif"],
+        serif: ['"Apple Garamond"', "var(--font-serif)", '"New York"', "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "-apple-system", '"SF Pro Text"', "sans-serif"],
       },
       borderRadius: { pill: "999px", card: "20px", sheet: "28px" },
       boxShadow: {
