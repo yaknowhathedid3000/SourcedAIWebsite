@@ -32,6 +32,7 @@ struct MapTabView: View {
     @State private var showList = false
     @State private var pendingSelection: Save? = nil
     @State private var showWarmup = false
+    @State private var openTrip: Trip?
     @State private var locationManager = CLLocationManager()
 
     private var places: [Save] {
@@ -87,6 +88,17 @@ struct MapTabView: View {
                             .accessibilityLabel("My location")
                     }
                 }
+                if !app.trips.isEmpty {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(app.trips) { t in
+                                Button { openTrip = t } label: { TripCard(trip: t).frame(width: 320) }
+                                    .buttonStyle(PressableButtonStyle())
+                            }
+                        }
+                        .padding(.horizontal, 2)
+                    }
+                }
                 HStack(spacing: 12) {
                     Image(systemName: "magnifyingglass").font(.system(size: 22)).foregroundStyle(YogiColor.inkSecondary)
                     TextField("Search places...", text: $query).font(.yogiSans(19))
@@ -100,6 +112,7 @@ struct MapTabView: View {
             .padding(.horizontal, 16).padding(.bottom, 12)
         }
         .sheet(item: $selected) { s in PlaceSheet(saveID: s.id) }
+        .fullScreenCover(item: $openTrip) { t in TripDetailView(trip: t) }
         .sheet(isPresented: $showList, onDismiss: { if let p = pendingSelection { selected = p; pendingSelection = nil } }) {
             PlacesListSheet(query: query) { s in pendingSelection = s; showList = false }
         }

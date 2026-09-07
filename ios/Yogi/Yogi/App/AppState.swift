@@ -39,6 +39,7 @@ final class AppState {
     var saves: [Save] { didSet { store.set(saves, for: "saves") } }
     var collections: [SaveCollection] { didSet { store.set(collections, for: "collections") } }
     var lists: [CuratedList] { didSet { store.set(lists, for: "lists") } }
+    var trips: [Trip] { didSet { store.set(trips, for: "trips") } }
     var reviews: [Review] { didSet { store.set(reviews, for: "reviews") } }
     var reminders: [Reminder] { didSet { store.set(reminders, for: "reminders") } }
     var notifications: [AppNotification] { didSet { store.set(notifications, for: "notifications") } }
@@ -68,6 +69,7 @@ final class AppState {
         saves = store.get([Save].self, for: "saves") ?? SampleData.saves
         collections = store.get([SaveCollection].self, for: "collections") ?? SampleData.collections
         lists = store.get([CuratedList].self, for: "lists") ?? SampleData.lists
+        trips = store.get([Trip].self, for: "trips") ?? SampleData.trips
         reviews = store.get([Review].self, for: "reviews") ?? SampleData.reviews
         reminders = store.get([Reminder].self, for: "reminders") ?? []
         notifications = store.get([AppNotification].self, for: "notifications") ?? []
@@ -134,6 +136,11 @@ final class AppState {
                                                location: event.address ?? event.venue) { [weak self] ok in
             self?.showToast(ok ? "Added to your calendar" : "Calendar access is off in Settings")
         }
+    }
+
+    /// The places in a trip, in the order they were added.
+    func places(in trip: Trip) -> [Save] {
+        trip.saveIDs.compactMap { id in saves.first { $0.id == id } }
     }
 
     func remove(_ id: UUID) {

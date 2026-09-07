@@ -32,6 +32,10 @@ enum SampleData {
     static let onceUponID = UUID(uuidString: "00000000-0000-0000-0000-000000000013")!
     static let kohCafeID = UUID(uuidString: "00000000-0000-0000-0000-000000000014")!
     static let deliID = UUID(uuidString: "00000000-0000-0000-0000-000000000015")!
+    static let ramenID = UUID(uuidString: "00000000-0000-0000-0000-000000000016")!
+    static let sakeID = UUID(uuidString: "00000000-0000-0000-0000-000000000017")!
+    static let pammID = UUID(uuidString: "00000000-0000-0000-0000-000000000018")!
+    static let teamLabID = UUID(uuidString: "00000000-0000-0000-0000-000000000019")!
     static let recipesCollectionID = UUID(uuidString: "00000000-0000-0000-0000-000000000101")!
     static let homeWorkoutListID = UUID(uuidString: "00000000-0000-0000-0000-000000000201")!
 
@@ -159,7 +163,41 @@ enum SampleData {
                                  phone: nil, website: nil, address: "Makati, Metro Manila", neighborhood: "SALCEDO", city: "Makati", countryFlag: "🇵🇭",
                                  emoji: "🥪", photoEmoji: ["🥪", "🥤"], about: nil),
              savedBy: [gabrielle])
-        return [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15]
+        // Japan, pulled out of saved reels. These are what the trip below gathers.
+        let s16 = Save(id: ramenID, category: .place, title: "French Ramen THE 9 X OSAKA", coverEmoji: "🍜", coverTint: 0xF6D3A8,
+             sourcePlatform: .tiktok, status: .wantTo, saveCount: 61, createdAt: date(2026, 5, 21),
+             place: PlaceDetails(latitude: 34.6687, longitude: 135.5011, category: "Ramen restaurant", rating: 4.7, priceLevel: "$$", hoursLabel: "Opens 11 AM to 9 PM",
+                                 phone: nil, website: nil, address: "Chuo Ward, Osaka", neighborhood: "NAMBA", city: "Osaka", countryFlag: "🇯🇵",
+                                 emoji: "🍜", photoEmoji: ["🍜", "🥢"], about: "French technique, Osaka bowl. Queue before noon."),
+             savedBy: [ren])
+        let s17 = Save(id: sakeID, category: .place, title: "Fushimi Sake Village", coverEmoji: "🍶", coverTint: 0xE3EAF5,
+             sourcePlatform: .instagram, status: .wantTo, saveCount: 34, createdAt: date(2026, 5, 18),
+             place: PlaceDetails(latitude: 34.9320, longitude: 135.7615, category: "Sake brewery", rating: 4.5, priceLevel: "$$", hoursLabel: "Opens 10 AM to 6 PM",
+                                 phone: nil, website: nil, address: "Fushimi Ward, Kyoto", neighborhood: "FUSHIMI", city: "Kyoto", countryFlag: "🇯🇵",
+                                 emoji: "🍶", photoEmoji: ["🍶", "🏮"], about: "Tasting flights across eighteen breweries."),
+             savedBy: [allie, gabrielle])
+        let s18 = Save(id: pammID, category: .place, title: "PAMM 店", coverEmoji: "🛍️", coverTint: 0xF1DCE8,
+             sourcePlatform: .tiktok, status: .wantTo, saveCount: 12, createdAt: date(2026, 5, 12),
+             place: PlaceDetails(latitude: 35.6646, longitude: 139.6982, category: "Store", rating: 4.3, priceLevel: "$$", hoursLabel: "Opens 12 PM to 8 PM",
+                                 phone: nil, website: nil, address: "Shibuya, Tokyo", neighborhood: "TOMIGAYA", city: "Tokyo", countryFlag: "🇯🇵",
+                                 emoji: "🛍️", photoEmoji: ["🛍️", "👕"], about: nil),
+             savedBy: [kimmy])
+        let s19 = Save(id: teamLabID, category: .place, title: "teamLab Borderless", coverEmoji: "🌌", coverTint: 0xD9D3F2,
+             sourcePlatform: .instagram, status: .wantTo, saveCount: 88, createdAt: date(2026, 4, 30),
+             place: PlaceDetails(latitude: 35.6595, longitude: 139.7454, category: "Art museum", rating: 4.6, priceLevel: "$$$", hoursLabel: "Opens 10 AM to 7 PM",
+                                 phone: nil, website: nil, address: "Azabudai Hills, Minato", neighborhood: "AZABUDAI", city: "Tokyo", countryFlag: "🇯🇵",
+                                 emoji: "🌌", photoEmoji: ["🌌", "💡"], about: "Book the first slot, it empties out."),
+             savedBy: [ren, kimmy])
+        return [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17, s18, s19]
+    }()
+
+    // MARK: Trips (Albo "turn reels into travel plans")
+    static let trips: [Trip] = {
+        [Trip(name: "Japan 2026", destination: "Japan", latitude: 35.30, longitude: 137.30, spanDegrees: 7,
+              saveIDs: [pammID, ramenID, sakeID, teamLabID],
+              sources: [.tiktok, .instagram],
+              coverEmoji: ["🗼", "🍜", "🏮"],
+              createdAt: date(2026, 5, 12))]
     }()
 
     // MARK: Collections and lists (Albo #99, #112, #171)

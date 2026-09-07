@@ -248,6 +248,37 @@ struct RecipeDetails: Codable, Hashable {
     var emoji: String = "🍪"
 }
 
+/// A destination assembled out of saves. Albo's "turn reels into travel plans":
+/// you save fifty Tokyo videos over a year, and the trip is what those add up to
+/// once the places have been pulled out of them.
+struct Trip: Identifiable, Codable, Hashable {
+    var id: UUID = UUID()
+    var name: String                       // "Japan 2026"
+    var destination: String                // "Japan"
+    var latitude: Double
+    var longitude: Double
+    var spanDegrees: Double = 6
+    var saveIDs: [UUID] = []
+    /// Where the places came from, in the order they should be listed.
+    var sources: [SourcePlatform] = [.tiktok, .instagram]
+    var coverEmoji: [String] = []
+    var createdAt: Date = Date()
+
+    /// "82 spots found from TikTok and Instagram".
+    func spotsLabel(count: Int) -> String {
+        let noun = count == 1 ? "spot" : "spots"
+        let names = sources.map(\.title)
+        let from: String
+        switch names.count {
+        case 0: return "\(count) \(noun) found"
+        case 1: from = names[0]
+        case 2: from = "\(names[0]) and \(names[1])"
+        default: from = names.dropLast().joined(separator: ", ") + " and " + names[names.count - 1]
+        }
+        return "\(count) \(noun) found from \(from)"
+    }
+}
+
 struct PlaceDetails: Codable, Hashable {
     var latitude: Double
     var longitude: Double
