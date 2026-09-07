@@ -21,8 +21,8 @@ const config: Config = {
         star: "#F5B800",
       },
       fontFamily: {
-        serif: ['"Source Serif 4"', '"New York"', "Georgia", "serif"],
-        sans: ['"Instrument Sans"', "-apple-system", "BlinkMacSystemFont", '"SF Pro Text"', "Inter", "sans-serif"],
+        serif: ["Fraunces", '"New York"', "Georgia", "serif"],
+        sans: ['"Schibsted Grotesk"', "-apple-system", "BlinkMacSystemFont", '"SF Pro Text"', "sans-serif"],
       },
       borderRadius: { pill: "999px", card: "20px", sheet: "28px" },
       boxShadow: {
