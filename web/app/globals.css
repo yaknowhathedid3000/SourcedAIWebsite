@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..600;1,400..500&family=Instrument+Sans:ital,wght@0,400..700;1,400..600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -22,10 +22,8 @@ body {
   @apply font-serif font-bold;
 }
 
-/* Display type. WONK gives Fraunces its characterful g/y; SOFT rounds the
-   terminals so it sits next to the mascot without looking severe. */
+/* Garamond wants to be set light and large, not bold and loud. */
 .font-serif {
-  font-variation-settings: "SOFT" 28, "WONK" 1;
   font-optical-sizing: auto;
 }
 

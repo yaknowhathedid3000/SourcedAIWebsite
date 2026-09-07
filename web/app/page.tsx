@@ -79,7 +79,7 @@ export default function Home() {
       {/* ---------- hero ---------- */}
       <section className="relative z-10 mx-auto max-w-[1180px] px-5 pb-20 pt-4 sm:px-8 sm:pb-24 sm:pt-8">
         <p className="font-serif text-[19px] italic text-ink2">Everything you meant to get round to —</p>
-        <h1 className="balance mt-3 max-w-[14ch] font-serif text-[clamp(3.1rem,8vw,6rem)] font-bold leading-[0.93] tracking-[-0.03em]">
+        <h1 className="balance mt-3 max-w-[14ch] font-serif text-[clamp(3.4rem,8.6vw,6.6rem)] font-normal leading-[1.0] tracking-[-0.012em]">
           Save it. Then <em className="not-italic text-brand">actually</em> do it.
         </h1>
 
@@ -117,7 +117,7 @@ export default function Home() {
       {/* ---------- the line ---------- */}
       <section className="relative z-10 bg-ink py-20 text-white sm:py-28">
         <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
-          <p className="balance max-w-[20ch] font-serif text-[clamp(2.2rem,5.5vw,4rem)] font-bold leading-[1.02] tracking-[-0.02em]">
+          <p className="balance max-w-[20ch] font-serif text-[clamp(2.4rem,6vw,4.4rem)] font-normal leading-[1.04] tracking-[-0.01em]">
             A saved folder is not a plan. It is a pile.
           </p>
           <p className="mt-6 max-w-[48ch] text-[18px] leading-8 text-white/70">
@@ -130,7 +130,7 @@ export default function Home() {
       {/* ---------- how ---------- */}
       <section id="how" className="relative z-10 scroll-mt-6 py-24 sm:py-32">
         <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
-          <h2 className="balance max-w-[16ch] font-serif text-[clamp(2.2rem,5vw,3.6rem)] font-bold leading-[1.02] tracking-[-0.025em]">
+          <h2 className="balance max-w-[16ch] font-serif text-[clamp(2.4rem,5.4vw,4rem)] font-normal leading-[1.04] tracking-[-0.012em]">
             Three taps from seeing it to having it.
           </h2>
           <div className="mt-16 grid gap-14 sm:grid-cols-3 sm:gap-10">
@@ -138,7 +138,7 @@ export default function Home() {
               <div key={s.n} className="flex flex-col items-start">
                 <Polaroid shot={{ ...s.shot, rotate: [-4, 3, -2][i] }} width={150} />
                 <p className="mt-8 font-serif text-[17px] italic text-brand">{s.n}</p>
-                <h3 className="mt-1 font-serif text-[26px] font-bold leading-tight tracking-tight">{s.title}</h3>
+                <h3 className="mt-1 font-serif text-[27px] font-medium leading-tight tracking-[-0.01em]">{s.title}</h3>
                 <p className="mt-2.5 text-[17px] leading-7 text-ink2">{s.body}</p>
               </div>
             ))}
@@ -150,7 +150,7 @@ export default function Home() {
       <section className="relative z-10 border-y border-ink/10 bg-white/45 py-24 sm:py-32">
         <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
           <div className="max-w-[52ch]">
-            <h2 className="balance font-serif text-[clamp(2.2rem,5vw,3.6rem)] font-bold leading-[1.02] tracking-[-0.025em]">
+            <h2 className="balance font-serif text-[clamp(2.4rem,5.4vw,4rem)] font-normal leading-[1.04] tracking-[-0.012em]">
               It already knows what you sent it.
             </h2>
             <p className="mt-5 text-[18px] leading-8 text-ink2">
@@ -174,7 +174,7 @@ export default function Home() {
       {/* ---------- features ---------- */}
       <section className="relative z-10 py-24 sm:py-32">
         <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
-          <h2 className="balance max-w-[16ch] font-serif text-[clamp(2.2rem,5vw,3.6rem)] font-bold leading-[1.02] tracking-[-0.025em]">
+          <h2 className="balance max-w-[16ch] font-serif text-[clamp(2.4rem,5.4vw,4rem)] font-normal leading-[1.04] tracking-[-0.012em]">
             Everything after the save.
           </h2>
           <div className="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
@@ -183,14 +183,14 @@ export default function Home() {
                 <div key={f.title} className="flex flex-col gap-6 sm:col-span-2 sm:flex-row sm:items-center lg:col-span-1 lg:flex-col lg:items-start">
                   {f.shot && <Polaroid shot={f.shot} width={168} className="shrink-0" />}
                   <div>
-                    <h3 className="font-serif text-[26px] font-bold leading-tight tracking-tight">{f.title}</h3>
+                    <h3 className="font-serif text-[27px] font-medium leading-tight tracking-[-0.01em]">{f.title}</h3>
                     <p className="mt-2.5 max-w-[42ch] text-[17px] leading-7 text-ink2">{f.body}</p>
                   </div>
                 </div>
               ) : (
                 <div key={f.title}>
                   <div className="rule-hand" />
-                  <h3 className="mt-5 font-serif text-[24px] font-bold leading-tight tracking-tight">{f.title}</h3>
+                  <h3 className="mt-5 font-serif text-[25px] font-medium leading-tight tracking-[-0.01em]">{f.title}</h3>
                   <p className="mt-2 text-[17px] leading-7 text-ink2">{f.body}</p>
                 </div>
               ),
@@ -203,7 +203,7 @@ export default function Home() {
       <section className="relative z-10 pb-28 sm:pb-36">
         <div className="mx-auto flex max-w-[1180px] flex-col items-center px-5 text-center sm:px-8">
           <Mascot size={62} />
-          <h2 className="balance mt-7 max-w-[16ch] font-serif text-[clamp(2.4rem,6vw,4.2rem)] font-bold leading-[1] tracking-[-0.03em]">
+          <h2 className="balance mt-7 max-w-[16ch] font-serif text-[clamp(2.6rem,6.4vw,4.6rem)] font-normal leading-[1.02] tracking-[-0.012em]">
             Start with the last thing you sent yourself.
           </h2>
           <Link href="/library" className="btn-pill-lg mt-10">

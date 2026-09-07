@@ -26,5 +26,5 @@ export function Mascot({ size = 56, variant = "plain", color = "#1C1C1E", classN
 }
 
 export function Wordmark({ className = "" }: { className?: string }) {
-  return <span className={`font-serif font-bold tracking-tight ${className}`}>yogi</span>;
+  return <span className={`font-serif font-semibold tracking-tight ${className}`}>yogi</span>;
 }
