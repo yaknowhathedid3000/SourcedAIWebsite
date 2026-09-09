@@ -163,10 +163,9 @@ def write_plists() -> None:
         },
     }
 
-    app_ent = {
-        "com.apple.developer.applesignin": ["Default"],
-        "com.apple.security.application-groups": [APP_GROUP],
-    }
+    # No Sign in with Apple: auth is phone-only, so the capability would be an
+    # unused entitlement that App Review asks about.
+    app_ent = {"com.apple.security.application-groups": [APP_GROUP]}
     ext_ent = {"com.apple.security.application-groups": [APP_GROUP]}
 
     for path, data in [

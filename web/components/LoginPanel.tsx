@@ -7,19 +7,34 @@ import { browserClient, isConfigured } from "@/lib/supabase/client";
 
 type Modal = null | "setup" | "qr";
 
-/** The yogi.app/login "Sign In" card: Google, Apple, QR, and the "Set up your account on the Yogi app" modal. */
+/** The yogi.app/login "Sign In" card. Phone only, matching the app: there is no
+ *  password and no third-party provider anywhere in the product. */
 export function LoginPanel({ next, error }: { next: string; error?: string }) {
   const [modal, setModal] = useState<Modal>(error === "no_account" ? "setup" : null);
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(error === "auth" ? "That sign-in didn't complete. Try again." : null);
 
-  const oauth = async (provider: "google" | "apple") => {
+  const [phone, setPhone] = useState("");
+  const [code, setCode] = useState("");
+  const [sent, setSent] = useState(false);
+
+  const sendCode = async () => {
     const sb = browserClient();
     if (!sb) { setModal("setup"); return; }
-    setBusy(provider);
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
-    const { error } = await sb.auth.signInWithOAuth({ provider, options: { redirectTo } });
-    if (error) { setMessage(error.message); setBusy(null); }
+    setBusy("send"); setMessage(null);
+    const { error } = await sb.auth.signInWithOtp({ phone });
+    setBusy(null);
+    if (error) setMessage(error.message); else setSent(true);
+  };
+
+  const verifyCode = async () => {
+    const sb = browserClient();
+    if (!sb) { setModal("setup"); return; }
+    setBusy("verify"); setMessage(null);
+    const { error } = await sb.auth.verifyOtp({ phone, token: code, type: "sms" });
+    setBusy(null);
+    if (error) setMessage(error.message);
+    else window.location.assign(next);
   };
 
   const qrValue = typeof window === "undefined" ? "https://yogi.app/download" : `${window.location.origin}/login?via=qr`;
@@ -30,12 +45,41 @@ export function LoginPanel({ next, error }: { next: string; error?: string }) {
         <h1 className="font-serif text-[34px] font-bold leading-tight">Sign In</h1>
         <p className="balance mt-1 text-[15px] text-ink2">Your saves, plans and journal, on the big screen.</p>
         <div className="mt-7 flex flex-col gap-3">
-          <button type="button" onClick={() => oauth("google")} disabled={busy !== null} className="btn-outline h-[52px] w-full justify-start gap-3 px-5 text-[16px]">
-            <GoogleGlyph /> {busy === "google" ? "Opening Google…" : "Continue with Google"}
-          </button>
-          <button type="button" onClick={() => oauth("apple")} disabled={busy !== null} className="btn-outline h-[52px] w-full justify-start gap-3 px-5 text-[16px]">
-            <AppleGlyph /> {busy === "apple" ? "Opening Apple…" : "Continue with Apple"}
-          </button>
+          {!sent ? (
+            <>
+              <input
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+1 555 123 4567"
+                className="h-[52px] w-full rounded-pill bg-option px-5 text-[16px] outline-none focus:ring-2 focus:ring-ink/20"
+              />
+              <button type="button" onClick={sendCode} disabled={busy !== null || phone.replace(/\D/g, "").length < 7} className="btn-primary h-[52px] text-[16px] disabled:opacity-40">
+                {busy === "send" ? "Sending…" : "Text me a code"}
+              </button>
+            </>
+          ) : (
+            <>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                maxLength={6}
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
+                placeholder="6 digit code"
+                className="h-[52px] w-full rounded-pill bg-option px-5 text-center text-[20px] tracking-[0.4em] outline-none focus:ring-2 focus:ring-ink/20"
+              />
+              <button type="button" onClick={verifyCode} disabled={busy !== null || code.length !== 6} className="btn-primary h-[52px] text-[16px] disabled:opacity-40">
+                {busy === "verify" ? "Checking…" : "Verify"}
+              </button>
+              <button type="button" onClick={() => { setSent(false); setCode(""); }} className="text-[14px] font-medium text-ink2 underline underline-offset-2">
+                Use a different number
+              </button>
+            </>
+          )}
           <button type="button" onClick={() => setModal("qr")} className="btn-outline h-[52px] w-full justify-start gap-3 px-5 text-[16px]">
             <QrGlyph /> Continue with QR code
           </button>
@@ -49,7 +93,7 @@ export function LoginPanel({ next, error }: { next: string; error?: string }) {
           </div>
         )}
         <p className="mt-6 text-[12px] leading-5 text-muted">
-          New here? Create your account on the Yogi app first, then sign in with the same Google or Apple ID.{" "}
+          New here? Create your account on the Yogi app first, then sign in here with the same number.{" "}
           <button type="button" onClick={() => setModal("setup")} className="font-semibold text-ink underline underline-offset-2">Get the app</button>
         </p>
       </div>
@@ -90,12 +134,8 @@ function StoreBadge({ label, store, href }: { label: string; store: string; href
     </a>
   );
 }
-function GoogleGlyph() {
-  return <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h6c-.3 1.4-1 2.6-2.2 3.4v2.8h3.6c2.1-1.9 3.2-4.8 3.2-8.2z" /><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.8c-1 .7-2.3 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.6H2.1v2.9C3.9 20.4 7.7 23 12 23z" /><path fill="#FBBC05" d="M5.8 14c-.2-.7-.4-1.4-.4-2s.1-1.4.4-2V7H2.1C1.4 8.5 1 10.2 1 12s.4 3.5 1.1 5l3.7-3z" /><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2C17.5 2.1 15 1 12 1 7.7 1 3.9 3.6 2.1 7l3.7 3c.9-2.7 3.3-4.6 6.2-4.6z" /></svg>;
-}
-function AppleGlyph() {
-  return <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.5 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.8-1.7 0-3.2 1-4.1 2.5-1.8 3-.5 7.6 1.3 10.1.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.9-1.1-2.9-4.2zM14 5.3c.7-.8 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z" /></svg>;
-}
+
+
 function QrGlyph() {
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><path d="M14 14h3v3h-3zM20 14v.01M17 20h3M14 20v.01M20 17v.01" /></svg>;
 }

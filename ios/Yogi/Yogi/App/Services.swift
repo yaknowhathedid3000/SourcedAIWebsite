@@ -271,3 +271,32 @@ enum NotificationService {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminderID.uuidString])
     }
 }
+
+// MARK: - Auth (phone only)
+
+/// Phone is the only way in. No password to reset, no third-party button, and
+/// because there is no third-party login at all, App Store rule 4.8 (offer Sign
+/// in with Apple alongside Google/Facebook) does not apply to us.
+enum AuthService {
+    static func sendCode(to phone: String) async throws {
+        #if canImport(Supabase)
+        if YogiBackend.shared.isConfigured {
+            try await YogiBackend.shared.sendPhoneCode(phone)
+            return
+        }
+        #endif
+        // Demo mode: pretend, and accept any six digits at the next step.
+        try await Task.sleep(for: .seconds(0.8))
+    }
+
+    static func verify(phone: String, code: String) async throws {
+        #if canImport(Supabase)
+        if YogiBackend.shared.isConfigured {
+            try await YogiBackend.shared.verifyPhoneCode(phone: phone, code: code)
+            return
+        }
+        #endif
+        try await Task.sleep(for: .seconds(0.6))
+        guard code.count == 6 else { throw BackendError.server("Enter the six digit code.") }
+    }
+}

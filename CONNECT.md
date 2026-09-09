@@ -67,8 +67,26 @@ Changing the bundle prefix means changing it in four places: `project.yml`
    `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` are injected by the
    platform — do not set them yourself.
 
-6. Enable **Apple** as an auth provider (Authentication → Providers) with the service ID and
-   key from step 1.
+6. Turn on **Phone** auth (Authentication → Providers) and connect an SMS provider.
+   Phone is the only way into Yogi, so nothing works until this is done.
+
+   Supabase does not send SMS itself; it relays through a provider you pay directly.
+   Twilio is the default. Set the secrets, never commit them:
+
+   ```
+   supabase secrets set TWILIO_ACCOUNT_SID=AC... \
+                        TWILIO_AUTH_TOKEN=... \
+                        TWILIO_MESSAGE_SERVICE_SID=MG...
+   ```
+
+   Budget for it: roughly $0.0079 per SMS in the US, more elsewhere. That is a real
+   cost on every sign-in attempt, including failed ones, so leave the rate limit in
+   `config.toml` (`max_frequency = "30s"`) alone and consider Twilio Verify's fraud
+   guard before launch. SMS pumping — bots triggering codes to premium numbers for a
+   kickback — is the standard way phone auth gets expensive overnight.
+
+7. Leave Apple and Google providers **off**. Adding any third-party sign in triggers
+   App Store rule 4.8, which then obliges you to offer Sign in with Apple too.
 
 Until this is done `ImportService` uses local heuristics: imports still produce saves, but
 they are guessed from the URL rather than read.

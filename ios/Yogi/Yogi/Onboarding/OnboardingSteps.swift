@@ -1,6 +1,5 @@
 import SwiftUI
 import StoreKit
-import AuthenticationServices
 
 // MARK: - #22 to #31 Magic import demos
 
@@ -575,46 +574,34 @@ struct WelcomeClubStep: View {
     }
 }
 
-// MARK: - #45, #46 Sign in
+// MARK: - #45, #46 Sign in (phone only)
 
+/// Two panes in one step: number, then code. Kept together so "Change" can go
+/// back without unwinding the whole onboarding stack.
 struct SignInStep: View {
     let onSignedIn: () -> Void
-    @Environment(AppState.self) private var app
+
+    @State private var pendingPhone: String?
 
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-            OrbitingIcons().frame(height: 380)
-            Spacer()
-            VStack(spacing: 14) {
-                SignInWithAppleButton(.continue) { request in
-                    request.requestedScopes = [.fullName, .email]
-                } onCompletion: { result in
-                    // Sign in with Apple needs the capability and a real device; either way we continue locally.
-                    if case .success = result { app.showToast("Signed in with Apple") }
-                    onSignedIn()
-                }
-                .signInWithAppleButtonStyle(.white)
-                .frame(height: 58)
-                .clipShape(Capsule())
-                .background(Capsule().fill(YogiColor.optionFill).offset(y: 5))
-
-                Button {
-                    app.showToast("Signed in with Google")
-                    onSignedIn()
-                } label: {
-                    HStack(spacing: 10) {
-                        Text("G").font(.system(size: 20, weight: .bold, design: .rounded)).foregroundStyle(YogiColor.systemBlue)
-                        Text("Continue with Google").font(.yogiSans(18, weight: .semibold)).foregroundStyle(YogiColor.ink)
+        Group {
+            if let phone = pendingPhone {
+                VerifyCodeStep(
+                    phone: phone,
+                    onVerified: onSignedIn,
+                    onChangeNumber: { pendingPhone = nil }
+                )
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+            } else {
+                VStack(spacing: 0) {
+                    OrbitingIcons().frame(height: 260)
+                    PhoneSignInStep { phone in
+                        withAnimation(.easeInOut(duration: 0.25)) { pendingPhone = phone }
                     }
-                    .frame(maxWidth: .infinity).frame(height: 58)
-                    .background(Capsule().fill(YogiColor.surface))
-                    .background(Capsule().fill(YogiColor.optionFill).offset(y: 5))
                 }
-                .buttonStyle(PressableButtonStyle())
+                .transition(.opacity)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
         }
     }
 }
+

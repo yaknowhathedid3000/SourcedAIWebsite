@@ -167,13 +167,16 @@ final class YogiBackend {
         get async { try? await client?.auth.session.user.id }
     }
 
-    func signInWithApple(idToken: String, nonce: String?) async throws {
-        _ = try await db().auth.signInWithIdToken(credentials: .init(provider: .apple, idToken: idToken, nonce: nonce))
+    /// Sends the SMS one-time code. Supabase creates the user on first verify,
+    /// so there is no separate sign-up path.
+    func sendPhoneCode(_ phone: String) async throws {
+        try await db().auth.signInWithOTP(phone: phone)
     }
 
-    func signInWithGoogle(idToken: String, accessToken: String?) async throws {
-        _ = try await db().auth.signInWithIdToken(credentials: .init(provider: .google, idToken: idToken, accessToken: accessToken))
+    func verifyPhoneCode(phone: String, code: String) async throws {
+        _ = try await db().auth.verifyOTP(phone: phone, token: code, type: .sms)
     }
+
 
     func signOut() async {
         try? await client?.auth.signOut()
