@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5fb">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/assets/styles.css?v=4">
+  <script src="/config.js?v=4"></script>
+<script>(function(){try{var q=new URLSearchParams(location.search).get("theme");if(q)sessionStorage.setItem("pr_theme",q);var t=q||sessionStorage.getItem("pr_theme")||(window.PAYOUT_ROOM_CONFIG||{}).theme;if(t&&t!=="violet")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <title>Palettes — The Payout Room</title>
+  <meta name="robots" content="noindex">
+</head>
+<body class="page">
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="/" aria-label="The Payout Room, home">
+        <span class="wordmark-name">The <span>Payout</span> Room</span>
+        <span class="wordmark-by">by Savvy B Trades</span>
+      </a>
+      <a class="btn btn-ghost" href="/"><span>← Back<span class="btn-long"> to the page</span></span></a>
+    </div>
+  </header>
+  <main class="page-main">
+    <div class="wrap legal" style="max-width:920px">
+      <div>
+        <span class="eyebrow">Design</span>
+        <h1>Pick the palette.</h1>
+        <p class="lede" style="margin-top:12px">Each option recolours the whole funnel: buttons, pricing card, chart levels, form, the lot. Preview it on the real pages, then tell me which one and I'll set it as the default. Previews stick for your browser session only, so nothing changes for visitors until it's set in the config.</p>
+      </div>
+      <div class="palettes">
+      <article class="palette" data-palette="violet">
+        <div class="palette-head"><h3>Violet</h3><span class="k">theme: "violet"</span></div>
+        <div class="swatches"><span style="background:#5b2be0"></span><span style="background:#7b49ff"></span><span style="background:#14102a"></span><span style="background:#f7f5fb"></span><span style="background:#eeeaf7"></span><span style="background:#14a06a"></span></div>
+        <p>Rich violet on cool lilac-white. Premium, creator-economy energy without leaning on the usual purple gradients.</p>
+        <div class="row">
+          <a class="btn btn-primary" href="/?theme=violet">Preview site <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="/checkout?theme=violet">Preview form</a>
+        </div>
+      </article>
+      <article class="palette" data-palette="royal">
+        <div class="palette-head"><h3>Royal blue</h3><span class="k">theme: "royal"</span></div>
+        <div class="swatches"><span style="background:#1f47e6"></span><span style="background:#3560ff"></span><span style="background:#0f1222"></span><span style="background:#f5f6f9"></span><span style="background:#eceef3"></span><span style="background:#14a06a"></span></div>
+        <p>Deep royal blue on cool paper. Trustworthy, fintech-clean. The palette that was live before this page existed.</p>
+        <div class="row">
+          <a class="btn btn-primary" href="/?theme=royal">Preview site <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="/checkout?theme=royal">Preview form</a>
+        </div>
+      </article>
+      <article class="palette" data-palette="emerald">
+        <div class="palette-head"><h3>Emerald</h3><span class="k">theme: "emerald"</span></div>
+        <div class="swatches"><span style="background:#0e8a6a"></span><span style="background:#16a67f"></span><span style="background:#0f1a16"></span><span style="background:#f4f7f5"></span><span style="background:#e9efec"></span><span style="background:#1fb37c"></span></div>
+        <p>Payout green on a soft mint-white. On-theme for money and funded accounts without going dark or neon.</p>
+        <div class="row">
+          <a class="btn btn-primary" href="/?theme=emerald">Preview site <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="/checkout?theme=emerald">Preview form</a>
+        </div>
+      </article>
+      <article class="palette" data-palette="ember">
+        <div class="palette-head"><h3>Ember</h3><span class="k">theme: "ember"</span></div>
+        <div class="swatches"><span style="background:#e4572e"></span><span style="background:#ff6b40"></span><span style="background:#1c1410"></span><span style="background:#faf6f2"></span><span style="background:#f1eae3"></span><span style="background:#14a06a"></span></div>
+        <p>Burnt orange on warm cream. High-energy and unlike anything else in the trading space.</p>
+        <div class="row">
+          <a class="btn btn-primary" href="/?theme=ember">Preview site <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="/checkout?theme=ember">Preview form</a>
+        </div>
+      </article>
+      </div>
+      <p class="optin-fine">Direct links: <a href="/?theme=violet">violet</a> · <a href="/?theme=royal">royal</a> · <a href="/?theme=emerald">emerald</a> · <a href="/?theme=ember">ember</a>. Add <code>?theme=</code> to any page.</p>
+    </div>
+  </main>
+  <script>(function(){var t=document.documentElement.getAttribute("data-theme")||"violet";var c=document.querySelector('[data-palette="'+t+'"]');if(c)c.classList.add("current");})();</script>
+<footer class="footer">
+    <div class="wrap">
+      <div class="footer-row">
+        <span>The Payout Room · Brad Scholten · <span data-year>2026</span></span>
+        <nav class="footer-links" aria-label="Legal">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </nav>
+      </div>
+      <p class="disclaimer">Results shown are not typical and are not a guarantee of your results. Trading and business ventures involve risk. Your outcome depends on your effort, experience, and market conditions. Nothing in this community is financial advice.</p>
+    </div>
+  </footer>
+  <script src="/assets/site.js?v=4"></script>
+</body>
+</html>

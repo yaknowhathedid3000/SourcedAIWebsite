@@ -14,6 +14,10 @@ window.PAYOUT_ROOM_CONFIG = {
   instagramUrl: "https://www.instagram.com/savvybtrades",
   discordUrl: "",
 
+  // Colour palette: "violet" | "royal" | "emerald" | "ember".
+  // Preview all four at /palettes, or add ?theme=emerald to any page.
+  theme: "violet",
+
   // Optional tracking. Leave empty to load nothing.
   metaPixelId: "",
   gtmId: "",

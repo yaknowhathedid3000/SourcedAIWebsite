@@ -11,6 +11,7 @@ one small script. Deploys to Vercel (or any static host) as-is.
 | `/checkout` | Step 1: opt-in form (first name, email, mobile, SMS consent). Posts to `/api/lead`, then sends people to `checkoutUrl` or `/thanks` |
 | `/thanks` | Landing page after opt-in when no payment link is set yet. Also a good success URL for the payment provider |
 | `/api/lead` | Vercel serverless function. Validates the form, normalises the phone to E.164, forwards everything to the GoHighLevel inbound webhook |
+| `/palettes` | Internal: preview the four colour palettes on the live site |
 | `/privacy` | Privacy policy, including the SMS consent clause |
 | `/terms` | Terms of service |
 
@@ -78,7 +79,9 @@ production function needs Node 18+ (global `fetch`).
 ## Design notes
 
 - Type: Onest throughout, loaded from Google Fonts. Weights 400–800.
-- Colour: warm white ground, charcoal text, one cobalt accent (`--accent` in `assets/styles.css`).
-  Swap that single token to rebrand. Chart green and red appear only in the chart.
+- Colour: four switchable palettes (violet default, royal, emerald, ember) defined at the top of
+  `assets/styles.css`. Set `theme` in `config.js`, preview all four at `/palettes` or with
+  `?theme=` on any page. Every accent-coloured element derives from `--accent-rgb`.
+- Asset URLs carry `?v=N`. Bump N in all pages when CSS or JS changes so browsers refetch.
 - The hero chart is drawn by `assets/site.js` from a fixed seed. It illustrates the key levels
   method (levels marked ahead, price reacting) and is labelled as an illustration, not data.
