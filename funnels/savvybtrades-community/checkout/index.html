@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0d14">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <title>Checkout — The Payout Room</title>
+  <meta name="robots" content="noindex">
+  <script>
+    // If the live checkout link is set in config.js, send people straight there.
+    (function () {
+      var s = document.createElement("script");
+      s.src = "../config.js";
+      s.onload = function () {
+        var c = window.PAYOUT_ROOM_CONFIG || {};
+        if (c.checkoutUrl) window.location.replace(c.checkoutUrl);
+      };
+      document.head.appendChild(s);
+    })();
+  </script>
+</head>
+<body class="page">
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="wordmark" href="../" aria-label="The Payout Room, home">
+        <span class="wordmark-name">The <span>Payout</span> Room</span>
+        <span class="wordmark-by">by Savvy B Trades</span>
+      </a>
+      <a class="btn btn-ghost" href="../"><span>← Back<span class="btn-long"> to the page</span></span></a>
+    </div>
+  </header>
+  <main class="page-main">
+    <div class="wrap checkpoint">
+      <span class="eyebrow">Demo checkpoint</span>
+      <h1>This is where checkout lives.</h1>
+      <p class="lede">In the live build, this button goes straight to the community's own Skool, Whop, or Stripe checkout. 7/month, cancel anytime. One click, they're in the room.</p>
+      <div class="checkpoint-box">
+        <span class="k">To go live</span>
+        <p>Paste the checkout link into <code>checkoutUrl</code> in <code>config.js</code>. Every "Join the community" button on the site, and this page, will send people there automatically. Nothing else needs to change.</p>
+      </div>
+      <a class="back" href="../">← Back to the page</a>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-row">
+        <span>The Payout Room · Brad Scholten · <span data-year>2026</span></span>
+        <nav class="footer-links" aria-label="Legal">
+          <a href="../privacy">Privacy Policy</a>
+          <a href="../terms">Terms of Service</a>
+        </nav>
+      </div>
+      <p class="disclaimer">Results shown are not typical and are not a guarantee of your results. Trading and business ventures involve risk. Your outcome depends on your effort, experience, and market conditions. Nothing in this community is financial advice.</p>
+    </div>
+  </footer>
+  <script src="../config.js"></script>
+  <script src="../assets/site.js"></script>
+</body>
+</html>
