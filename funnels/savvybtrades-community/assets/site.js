@@ -111,11 +111,11 @@
     svg.setAttribute("aria-label", "Candlestick chart with three key levels marked. Price rejects the upper level, bounces off the middle level, then breaks out above.");
 
     var css = getComputedStyle(document.documentElement);
-    var brass = css.getPropertyValue("--accent").trim() || "#2244ff";
-    var up = css.getPropertyValue("--up").trim() || "#17a86b";
-    var down = css.getPropertyValue("--down").trim() || "#e0474f";
-    var muted = css.getPropertyValue("--muted").trim() || "#6f727a";
-    var grid = css.getPropertyValue("--chart-grid").trim() || "rgba(17,18,20,0.06)";
+    var brass = css.getPropertyValue("--accent").trim() || "#1f47e6";
+    var up = css.getPropertyValue("--up").trim() || "#14a06a";
+    var down = css.getPropertyValue("--down").trim() || "#d9454d";
+    var muted = css.getPropertyValue("--muted").trim() || "#6b7186";
+    var grid = css.getPropertyValue("--chart-grid").trim() || "rgba(15,18,34,0.06)";
 
     // Horizontal grid
     for (var g = 0; g < 5; g++) {
