@@ -108,11 +108,11 @@
     svg.setAttribute("aria-label", "Candlestick chart with three key levels marked. Price rejects the upper level, bounces off the middle level, then breaks out above.");
 
     var css = getComputedStyle(document.documentElement);
-    var brass = css.getPropertyValue("--brass").trim() || "#d9a94a";
-    var up = css.getPropertyValue("--up").trim() || "#35c989";
-    var down = css.getPropertyValue("--down").trim() || "#e0555b";
-    var muted = css.getPropertyValue("--muted").trim() || "#918d80";
-    var grid = "rgba(226,216,190,0.07)";
+    var brass = css.getPropertyValue("--accent").trim() || "#2244ff";
+    var up = css.getPropertyValue("--up").trim() || "#17a86b";
+    var down = css.getPropertyValue("--down").trim() || "#e0474f";
+    var muted = css.getPropertyValue("--muted").trim() || "#6f727a";
+    var grid = css.getPropertyValue("--chart-grid").trim() || "rgba(17,18,20,0.06)";
 
     // Horizontal grid
     for (var g = 0; g < 5; g++) {
@@ -123,19 +123,19 @@
     // Level bands + labels
     levels.forEach(function (lv, idx) {
       var ly = y(lv);
-      svg.appendChild(el("rect", { x: padL, y: ly - 6, width: plotW, height: 12, fill: brass, opacity: 0.06 }));
+      svg.appendChild(el("rect", { x: padL, y: ly - 6, width: plotW, height: 12, fill: brass, opacity: 0.05 }));
       svg.appendChild(el("line", { x1: padL, y1: ly, x2: W - padR, y2: ly, stroke: brass, "stroke-width": 1.25, "stroke-dasharray": "6 5", opacity: 0.9 }));
       var tag = el("g", {});
       tag.appendChild(el("rect", { x: W - padR + 8, y: ly - 10, width: padR - 14, height: 20, rx: 4, fill: brass }));
       tag.appendChild(el("text", {
         x: W - padR + 8 + (padR - 14) / 2, y: ly + 4, "text-anchor": "middle",
-        "font-family": "IBM Plex Mono, Menlo, monospace", "font-size": 10.5, "font-weight": 500, fill: "#1a1408"
+        "font-family": "Onest, Helvetica Neue, Arial, sans-serif", "font-size": 10.5, "font-weight": 600, fill: "#ffffff"
       }, lv.toFixed(2)));
       svg.appendChild(tag);
       var name = idx === 0 ? "KEY LEVEL · RESISTANCE" : idx === 1 ? "KEY LEVEL · SUPPORT" : "KEY LEVEL · LOW";
       svg.appendChild(el("text", {
-        x: padL + 4, y: ly - 9, "font-family": "IBM Plex Mono, Menlo, monospace", "font-size": 9.5,
-        "letter-spacing": 1.2, fill: brass, opacity: 0.85
+        x: padL + 4, y: ly - 9, "font-family": "Onest, Helvetica Neue, Arial, sans-serif", "font-size": 9.5,
+        "letter-spacing": 1.2, "font-weight": 600, fill: brass, opacity: 0.9
       }, name));
     });
 
@@ -160,7 +160,7 @@
       svg.appendChild(el("circle", { cx: cx, cy: my, r: 4, fill: brass }));
       svg.appendChild(el("circle", { cx: cx, cy: my, r: 9, fill: "none", stroke: brass, "stroke-width": 1, opacity: 0.5 }));
       svg.appendChild(el("text", {
-        x: cx + 14, y: my + 4, "font-family": "IBM Plex Mono, Menlo, monospace", "font-size": 10,
+        x: cx + 14, y: my + 4, "font-family": "Onest, Helvetica Neue, Arial, sans-serif", "font-size": 10,
         "letter-spacing": 1, fill: muted
       }, label));
     }
@@ -174,14 +174,14 @@
     lp.appendChild(el("rect", { x: W - padR + 8, y: y(last) - 10, width: padR - 14, height: 20, rx: 4, fill: up }));
     lp.appendChild(el("text", {
       x: W - padR + 8 + (padR - 14) / 2, y: y(last) + 4, "text-anchor": "middle",
-      "font-family": "IBM Plex Mono, Menlo, monospace", "font-size": 10.5, "font-weight": 500, fill: "#06140d"
+      "font-family": "Onest, Helvetica Neue, Arial, sans-serif", "font-size": 10.5, "font-weight": 600, fill: "#ffffff"
     }, last.toFixed(2)));
     svg.appendChild(lp);
 
     // Time axis
     ["09:30", "10:30", "11:30", "12:30", "13:30"].forEach(function (t, i) {
       svg.appendChild(el("text", {
-        x: padL + plotW * i / 4, y: H - 10, "font-family": "IBM Plex Mono, Menlo, monospace",
+        x: padL + plotW * i / 4, y: H - 10, "font-family": "Onest, Helvetica Neue, Arial, sans-serif",
         "font-size": 9.5, fill: muted, "text-anchor": i === 0 ? "start" : i === 4 ? "end" : "middle"
       }, t));
     });

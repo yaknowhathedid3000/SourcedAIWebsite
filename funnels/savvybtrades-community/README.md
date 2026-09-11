@@ -41,9 +41,8 @@ preset **Other**, no build command. `vercel.json` turns on clean URLs so `/check
 
 ## Design notes
 
-- Type: Archivo (display, set slightly extended), Instrument Sans (body), IBM Plex Mono (numbers,
-  labels, tickers). Loaded from Google Fonts.
-- Colour: ink-navy ground, brass accent (the colour of a payout). Chart green and red appear only
-  in the chart, never as UI accent.
+- Type: Onest throughout, loaded from Google Fonts. Weights 400–800.
+- Colour: warm white ground, charcoal text, one cobalt accent (`--accent` in `assets/styles.css`).
+  Swap that single token to rebrand. Chart green and red appear only in the chart.
 - The hero chart is drawn by `assets/site.js` from a fixed seed. It illustrates the key levels
   method (levels marked ahead, price reacting) and is labelled as an illustration, not data.
