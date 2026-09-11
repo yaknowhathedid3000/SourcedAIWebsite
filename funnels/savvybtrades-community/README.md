@@ -8,20 +8,47 @@ one small script. Deploys to Vercel (or any static host) as-is.
 | Path | What it is |
 |---|---|
 | `/` | The landing page: hero, ticker, what's inside, weekly schedule, membership, Brad's bio, FAQ, final CTA |
-| `/checkout` | Demo checkpoint. Redirects to the live checkout the moment `checkoutUrl` is set |
-| `/privacy` | Privacy policy |
+| `/checkout` | Step 1: opt-in form (first name, email, mobile, SMS consent). Posts to `/api/lead`, then sends people to `checkoutUrl` or `/thanks` |
+| `/thanks` | Landing page after opt-in when no payment link is set yet. Also a good success URL for the payment provider |
+| `/api/lead` | Vercel serverless function. Validates the form, normalises the phone to E.164, forwards everything to the GoHighLevel inbound webhook |
+| `/privacy` | Privacy policy, including the SMS consent clause |
 | `/terms` | Terms of service |
 
-## Going live: edit one file
+## Going live: one env var and one file
 
-Everything that changes between demo and live lives in `config.js`:
+**1. GoHighLevel webhook (the only required step).**
+In GHL: Automation → Workflows → Create workflow → trigger **Inbound Webhook**. Copy the
+webhook URL. In Vercel: Project → Settings → Environment Variables → add
+`GHL_WEBHOOK_URL` = that URL (Production). Redeploy once so the function picks it up.
+
+Send a test through the form, then in the GHL trigger click "Map reference" and map:
+
+| Field sent | GHL contact field |
+|---|---|
+| `first_name`, `last_name` | First name, Last name |
+| `email` | Email |
+| `phone` | Phone (already E.164, e.g. `+15551234567`) |
+| `tags` | Add tags: `payout-room`, `opt-in`, `trial-intent` |
+| `source` | Contact source |
+| `consent_sms`, `consent_text`, `consent_at` | Custom fields, keep for compliance |
+| `utm_*`, `page_url`, `referrer` | Custom fields for attribution |
+
+Then add the follow-up steps after the trigger: send SMS with the Discord invite, send
+the welcome email, add to the trial nurture sequence. Until the env var is set, the form still
+works and shows `/thanks`, but leads are only logged in the Vercel function logs, not forwarded.
+
+**2. `config.js`** for everything else:
 
 ```js
-checkoutUrl:   ""   // Skool / Whop / Stripe Payment Link. Every "Join" button follows it.
+checkoutUrl:   ""   // Step 2. GHL order form or Stripe Payment Link. Empty → /thanks.
 videoEmbedUrl: ""   // Optional VSL embed. Replaces the hero chart when set.
 instagramUrl:  "https://www.instagram.com/savvybtrades"
 discordUrl:    ""   // Free Discord invite, once there is one.
+metaPixelId:   ""   // Meta pixel. Fires PageView on every page and Lead on opt-in.
+gtmId:         ""   // Google Tag Manager container. Lead pushed to dataLayer.
 ```
+
+If `checkoutUrl` is a Stripe Payment Link, the email is prefilled automatically.
 
 ## Assets still needed from the client
 
@@ -35,9 +62,18 @@ discordUrl:    ""   // Free Discord invite, once there is one.
 
 ## Deploying on Vercel
 
+Live project: `savvybtrades-community` (https://savvybtrades-community.vercel.app).
 Import the repo, set the **Root Directory** to `funnels/savvybtrades-community`, framework
-preset **Other**, no build command. `vercel.json` turns on clean URLs so `/checkout`,
-`/privacy`, and `/terms` resolve without the trailing slash.
+preset **Other**, no build command. `vercel.json` turns on clean URLs. The `api/` folder is
+picked up automatically as Node serverless functions.
+
+## Local check
+
+```
+node -e "require('./api/lead.js')"   # syntax
+```
+The form can be exercised locally with any static server plus a stub for `/api/lead`; the
+production function needs Node 18+ (global `fetch`).
 
 ## Design notes
 

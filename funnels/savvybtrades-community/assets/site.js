@@ -6,13 +6,16 @@
 
   /* ---- Config wiring -------------------------------------------------- */
 
-  // Every element with data-checkout points at the live checkout once it's set.
-  if (cfg.checkoutUrl) {
-    document.querySelectorAll("[data-checkout]").forEach(function (a) {
-      a.setAttribute("href", cfg.checkoutUrl);
-      a.setAttribute("rel", "noopener");
-    });
-  }
+  // Remember campaign parameters from the first page someone lands on so
+  // they travel with the lead when the form is submitted.
+  var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  try {
+    var qs = new URLSearchParams(location.search);
+    var found = {};
+    UTM_KEYS.forEach(function (k) { if (qs.get(k)) found[k] = qs.get(k); });
+    if (Object.keys(found).length) sessionStorage.setItem("pr_utm", JSON.stringify(found));
+    if (!sessionStorage.getItem("pr_ref") && document.referrer) sessionStorage.setItem("pr_ref", document.referrer);
+  } catch (e) { /* storage unavailable, carry on */ }
   if (cfg.instagramUrl) {
     document.querySelectorAll("[data-instagram]").forEach(function (a) {
       a.setAttribute("href", cfg.instagramUrl);
@@ -207,6 +210,108 @@
       faqs.forEach(function (o) { if (o !== d) o.open = false; });
     });
   });
+
+  /* ---- Tracking (only when IDs are set in config.js) ------------------- */
+
+  if (cfg.metaPixelId) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq("init", cfg.metaPixelId);
+    window.fbq("track", "PageView");
+  }
+  if (cfg.gtmId) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var gtm = document.createElement("script");
+    gtm.async = true;
+    gtm.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(cfg.gtmId);
+    document.head.appendChild(gtm);
+  }
+  function track(eventName, data) {
+    try { if (window.fbq) window.fbq("track", eventName, data || {}); } catch (e) {}
+    try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: eventName }, data || {})); } catch (e) {}
+  }
+
+  /* ---- Opt-in form (/checkout) ---------------------------------------- */
+
+  var form = document.getElementById("lead-form");
+  if (form) {
+    var status = document.getElementById("form-status");
+    var submit = document.getElementById("lead-submit");
+    var label = submit.querySelector(".label");
+
+    function setStatus(msg, ok) {
+      status.textContent = msg || "";
+      status.classList.toggle("ok", !!ok);
+    }
+    function markInvalid(input, bad) {
+      input.setAttribute("aria-invalid", bad ? "true" : "false");
+    }
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      setStatus("");
+
+      var first = form.first_name, email = form.email, phone = form.phone, consent = form.consent_sms;
+      var digits = phone.value.replace(/\D/g, "");
+      var problems = [];
+      markInvalid(first, !first.value.trim());
+      markInvalid(email, !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim()));
+      markInvalid(phone, digits.length < 10);
+      if (first.getAttribute("aria-invalid") === "true") problems.push("your first name");
+      if (email.getAttribute("aria-invalid") === "true") problems.push("a valid email");
+      if (phone.getAttribute("aria-invalid") === "true") problems.push("a mobile number");
+      if (!consent.checked) problems.push("the consent box");
+      if (problems.length) {
+        setStatus("Add " + problems.join(", ").replace(/, ([^,]*)$/, " and $1") + " to continue.");
+        return;
+      }
+
+      var utm = {};
+      try { utm = JSON.parse(sessionStorage.getItem("pr_utm") || "{}"); } catch (e) {}
+      var payload = {
+        first_name: first.value.trim(),
+        last_name: "",
+        email: email.value.trim(),
+        phone: phone.value.trim(),
+        consent_sms: true,
+        consent_text: (document.getElementById("consent-text") || {}).textContent || "",
+        website: form.website ? form.website.value : "",
+        page_url: location.href,
+        referrer: (function () { try { return sessionStorage.getItem("pr_ref") || document.referrer; } catch (e) { return document.referrer; } })(),
+      };
+      UTM_KEYS.forEach(function (k) { payload[k] = utm[k] || ""; });
+
+      submit.disabled = true;
+      label.textContent = "Saving…";
+
+      fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }).then(function (j) { j.status = r.status; return j; }); })
+        .then(function (j) {
+          if (!j.ok) throw new Error(j.error || "Something went wrong. Try again.");
+          track("Lead", { content_name: "The Payout Room", currency: "USD", value: 27 });
+          setStatus("Saved. Taking you to checkout…", true);
+          label.textContent = "One moment…";
+          var next = cfg.checkoutUrl || "/thanks";
+          if (cfg.checkoutUrl && /stripe\.com|buy\.stripe/.test(cfg.checkoutUrl)) {
+            next += (next.indexOf("?") > -1 ? "&" : "?") + "prefilled_email=" + encodeURIComponent(payload.email);
+          }
+          setTimeout(function () { location.href = next; }, 350);
+        })
+        .catch(function (err) {
+          setStatus(err.message || "Something went wrong. Try again.");
+          submit.disabled = false;
+          label.textContent = "Continue to checkout";
+        });
+    });
+  }
 
   /* ---- Footer year ----------------------------------------------------- */
 
